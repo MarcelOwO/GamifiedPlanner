@@ -1,7 +1,7 @@
 package marcel.uni.gamifiedplanner
 
 import android.app.Application
-import marcel.uni.gamifiedplanner.core.di.AppModule
+import marcel.uni.gamifiedplanner.common.AppModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
