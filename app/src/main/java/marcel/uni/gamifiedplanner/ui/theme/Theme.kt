@@ -2,6 +2,7 @@ package marcel.uni.gamifiedplanner.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
@@ -15,6 +16,7 @@ private val DarkColorScheme = darkColorScheme(
     secondary = LightGrayDark,
     tertiary = MediumGrayDark,
     background = DarkDark,
+    surface = DarkGrayDark,
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -22,16 +24,8 @@ private val LightColorScheme = lightColorScheme(
     secondary = LightGrayLight,
     tertiary = MediumGrayLight,
     background = LightLight,
+    surface = DarkGrayLight,
 
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
 )
 
 @Composable
@@ -40,14 +34,10 @@ fun GamifiedPlannerTheme(
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
 
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+    val colorScheme: ColorScheme = when{
+        darkTheme->DarkColorScheme
+        else->LightColorScheme
     }
 
     MaterialTheme(

@@ -18,16 +18,16 @@ import androidx.navigation.NavHostController
 fun NavButton(label: String, route: String, nav: NavHostController) {
 
     val buttonColor = ButtonColors(
-        containerColor = MaterialTheme.colorScheme.primary,
+        containerColor = MaterialTheme.colorScheme.surface,
         contentColor = MaterialTheme.colorScheme.onPrimary,
-        disabledContentColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.12f),
+        disabledContentColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.12f),
         disabledContainerColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.12f)
     )
     Button(
         colors = buttonColor,
         modifier = Modifier.defaultMinSize(0.dp,0.dp),
         contentPadding= PaddingValues(0.dp),
-        shape = RoundedCornerShape(10.dp),
+        shape = RoundedCornerShape(20.dp),
         onClick = { nav.navigate(route) },
     ) {
         Text(text = label, modifier = Modifier.padding(1.dp))

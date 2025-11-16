@@ -3,6 +3,8 @@ package marcel.uni.gamifiedplanner.ui.components
 import android.view.Surface
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -22,9 +24,9 @@ fun AppHeader() {
         }
         Row(modifier=Modifier.fillMaxWidth()) {
             Surface(
-                shape = RoundedCornerShape(10.dp),
+                shape = RoundedCornerShape(20.dp),
                 color = MaterialTheme.colorScheme.tertiary,
-                modifier = Modifier.weight(1f).padding(5.dp)
+                modifier = Modifier.weight(1f).padding(5.dp).fillMaxHeight(0.07f)
             ) {
                 Column(modifier = Modifier.padding(10.dp)) {
                     Row {
@@ -35,9 +37,9 @@ fun AppHeader() {
                 }
             }
             Surface(
-                shape = RoundedCornerShape(10.dp),
+                shape = RoundedCornerShape(20.dp),
                 color = MaterialTheme.colorScheme.tertiary,
-                modifier = Modifier.weight(1f).padding(5.dp)
+                modifier = Modifier.weight(1f).padding(5.dp).fillMaxHeight(0.07f)
             ) {
                 Text("Streak 0")
             }

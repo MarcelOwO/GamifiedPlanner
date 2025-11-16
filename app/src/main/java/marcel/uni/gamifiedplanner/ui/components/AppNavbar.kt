@@ -17,7 +17,7 @@ import marcel.uni.gamifiedplanner.ui.navigation.AppRoutes
 
 @Composable
 fun AppNavbar(nav: NavHostController) {
-    Surface(shape = RoundedCornerShape(10.dp),
+    Surface(shape = RoundedCornerShape(20.dp),
         color = MaterialTheme.colorScheme.tertiary,
         modifier = Modifier.padding(10.dp),
         ) {
