@@ -1,5 +1,5 @@
 package marcel.uni.gamifiedplanner.data.models
 
-data class TaskDto (
-    val id:String = ""
+data class ShopItemDto(
+    val id:String=""
 )

@@ -1,17 +1,17 @@
-package marcel.uni.gamifiedplanner.ui.viewmodels
+package marcel.uni.gamifiedplanner.ui.profile
+
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 
-class StatsViewModel: ViewModel() {
-    private val _state = MutableStateFlow(StatsState())
+class ProfileViewModel: ViewModel() {
+    private val _state = MutableStateFlow(ProfileState())
     val state = _state.asStateFlow()
     fun load(){
     }
 }
 
-data class StatsState(
+data class ProfileState(
     val text:String = ""
 )

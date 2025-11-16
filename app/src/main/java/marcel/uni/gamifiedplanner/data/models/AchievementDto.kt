@@ -1,4 +1,6 @@
 package marcel.uni.gamifiedplanner.data.models
 
-class AchievementDto {
-}
+data class AchievementDto(
+    val id: String = ""
+)
+
