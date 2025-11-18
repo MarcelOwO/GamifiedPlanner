@@ -1,9 +1,7 @@
-package marcel.uni.gamifiedplanner.ui.components
+package marcel.uni.gamifiedplanner.ui.header
 
-import android.view.Surface
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -15,18 +13,22 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-fun AppHeader() {
+fun AppHeader(vm: AppHeaderViewModel = viewModel()) {
     Column(modifier = Modifier.padding(5.dp)) {
         Column {
             Text("Gamified Planner")
         }
-        Row(modifier=Modifier.fillMaxWidth()) {
+        Row(modifier = Modifier.fillMaxWidth()) {
             Surface(
                 shape = RoundedCornerShape(20.dp),
                 color = MaterialTheme.colorScheme.tertiary,
-                modifier = Modifier.weight(1f).padding(5.dp).fillMaxHeight(0.07f)
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(5.dp)
+                    .fillMaxHeight(0.07f)
             ) {
                 Column(modifier = Modifier.padding(10.dp)) {
                     Row {
@@ -39,7 +41,10 @@ fun AppHeader() {
             Surface(
                 shape = RoundedCornerShape(20.dp),
                 color = MaterialTheme.colorScheme.tertiary,
-                modifier = Modifier.weight(1f).padding(5.dp).fillMaxHeight(0.07f)
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(5.dp)
+                    .fillMaxHeight(0.07f)
             ) {
                 Text("Streak 0")
             }
