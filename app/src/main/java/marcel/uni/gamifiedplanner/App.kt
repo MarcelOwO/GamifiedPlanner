@@ -1,7 +1,9 @@
 package marcel.uni.gamifiedplanner
 
 import android.app.Application
-import marcel.uni.gamifiedplanner.common.AppModule
+import marcel.uni.gamifiedplanner.di.AppModule
+import marcel.uni.gamifiedplanner.di.FirebaseModule
+import marcel.uni.gamifiedplanner.di.TaskModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -15,7 +17,9 @@ class App : Application() {
             androidLogger()
             androidContext(this@App)
             modules(
-                AppModule().appModule
+                AppModule().appModule,
+                FirebaseModule().firebaseModule,
+                TaskModule().taskModule,
             )
 
         }

@@ -1,0 +1,11 @@
+package marcel.uni.gamifiedplanner.data.task.repository
+
+import kotlinx.coroutines.flow.Flow
+import marcel.uni.gamifiedplanner.domain.models.Task
+
+interface TaskRepository {
+    fun observeTasks(): Flow<List<Task>>
+    suspend fun createTask(task: Task)
+    suspend fun updateTask(task: Task)
+    suspend fun deleteTask(task: Task)
+}
