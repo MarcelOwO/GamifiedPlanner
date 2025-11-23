@@ -41,24 +41,23 @@ android {
         compose = true
     }
 }
-
-
 dependencies {
+    implementation("androidx.compose.material3:material3:1.4.0")
+    implementation("androidx.compose.material3:material3-window-size-class:1.4.0")
+    implementation("androidx.compose.material3:material3-adaptive-navigation-suite:1.5.0-alpha09")
+
+    implementation(platform(libs.koin.bom))
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
+    implementation(libs.koin.compose)
+    implementation(libs.koin.nav)
+
     implementation(platform("com.google.firebase:firebase-bom:34.5.0"))
-
     implementation("com.google.firebase:firebase-analytics")
-
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-firestore")
 
     implementation(libs.androidx.navigation.compose)
-
-    val composeBom = platform("androidx.compose:compose-bom:2025.10.01")
-    implementation(composeBom)
-    testImplementation(composeBom)
-    androidTestImplementation(composeBom)
-
-    implementation(libs.koin.android)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -68,6 +67,8 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.runtime)
+    implementation(libs.androidx.material3)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
