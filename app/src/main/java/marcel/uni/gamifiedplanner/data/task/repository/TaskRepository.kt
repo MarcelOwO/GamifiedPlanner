@@ -7,5 +7,5 @@ interface TaskRepository {
     fun observeTasks(): Flow<List<Task>>
     suspend fun createTask(task: Task)
     suspend fun updateTask(task: Task)
-    suspend fun deleteTask(task: Task)
+    suspend fun deleteTask(taskId: String)
 }

@@ -7,6 +7,7 @@ import marcel.uni.gamifiedplanner.data.task.dto.toDomain
 import marcel.uni.gamifiedplanner.data.task.dto.toDto
 import marcel.uni.gamifiedplanner.data.task.remote.TaskRemoteDataSource
 import marcel.uni.gamifiedplanner.domain.models.Task
+import java.util.UUID
 import kotlin.collections.map
 
 class TaskRepositoryImpl(
@@ -22,10 +23,16 @@ class TaskRepositoryImpl(
         remote.observeTasks(uid).map { list -> list.map { it.toDomain() } }
 
 
-    override suspend fun createTask(task: Task) = remote.createTask(uid, task.toDto())
+    override suspend fun createTask(task: Task) {
+        val now = System.currentTimeMillis()
+        val id = UUID.randomUUID()
+        val taskWithMeta = task.copy(id = id.toString(), createdAt = now)
 
-    override suspend fun updateTask(task: Task) =remote.updateTask(uid, task.toDto())
+        remote.createTask(uid, taskWithMeta.toDto())
+    }
 
-    override suspend fun deleteTask(task: Task) = remote.deleteTask(uid, task.id)
+    override suspend fun updateTask(task: Task) = remote.updateTask(uid, task.toDto())
+
+    override suspend fun deleteTask(taskId: String) = remote.deleteTask(uid, taskId)
 
 }

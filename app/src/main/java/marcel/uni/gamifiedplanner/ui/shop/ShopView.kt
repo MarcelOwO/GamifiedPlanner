@@ -7,10 +7,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.viewmodel.compose.viewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ShopView(
-    vm: ShopViewModel = viewModel()
+    vm: ShopViewModel = koinViewModel()
 ) {
 
     val state by vm.state.collectAsState()
