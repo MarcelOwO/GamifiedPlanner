@@ -2,7 +2,6 @@ package marcel.uni.gamifiedplanner.ui.navigation
 
 object AppRoutes {
     const val Home = "home"
-
     const val Settings = "settings"
     const val Profile = "profile"
     const val Shop = "shop"
@@ -10,3 +9,4 @@ object AppRoutes {
     const val Login = "login"
     const val Register = "register"
 }
+

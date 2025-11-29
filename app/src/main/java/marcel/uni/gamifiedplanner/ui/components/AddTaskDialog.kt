@@ -5,8 +5,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -42,84 +44,83 @@ fun AddTaskDialog(
         return
     }
 
-
     Box(
-        contentAlignment = Alignment.Center,
         modifier = Modifier
             .fillMaxSize()
-            .blur(
-                20.dp
-            )
-            .background(
-                Color.Black.copy(alpha = 0.2f)
-            )
             .clickable {
                 if (show) {
                     onDismiss()
                 }
             },
-    ){}
+    ) {}
 
-    Surface(
-        modifier = Modifier.padding(10.dp), shape = RoundedCornerShape(20.dp)
+    Column(modifier= Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Column(
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(10.dp)
+        Surface(
+            modifier = Modifier.padding(20.dp), shape = RoundedCornerShape(20.dp)
         ) {
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.padding(20.dp, 10.dp, 20.dp, 10.dp)
+            ) {
 
-            TextField(
-                value = taskTitle,
-                onValueChange = { taskTitle = it },
-                label = { Text("Title") })
-            Spacer(modifier = Modifier.padding(5.dp))
+                TextField(
+                    modifier = Modifier.padding(10.dp),
+                    value = taskTitle,
+                    onValueChange = { taskTitle = it },
+                    label = { Text("Title") })
 
-            TextField(
-                value = taskDescription,
-                onValueChange = { taskDescription = it },
-                label = { Text("Description") })
-            Spacer(modifier = Modifier.padding(5.dp))
-            DropDownSelector(
-                Priority.entries.map { it.name },
-                taskPriority.name,
-                onSelect = { item -> taskPriority = Priority.valueOf(item) })
-            Spacer(modifier = Modifier.padding(5.dp))
-            DropDownSelector(
-                TaskStatus.entries.map { it.name },
-                taskStatus.name,
-                onSelect = { item -> taskStatus = TaskStatus.valueOf(item) })
-            Spacer(modifier = Modifier.padding(5.dp))
-            Button(onClick = {
-                vm.CreateTask(
-                    taskTitle,
-                    taskDescription,
-                    taskPriority,
-                    taskStatus,
-                    onResult = { result ->
+                Spacer(modifier = Modifier.padding(5.dp))
 
-                        when (result) {
-                            is CreateTaskResult.Success -> {
-                                onDismiss()
+                TextField(
+                    modifier = Modifier.padding(10.dp),
+                    value = taskDescription,
+                    onValueChange = { taskDescription = it },
+                    label = { Text("Description") })
+
+                Spacer(modifier = Modifier.padding(5.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    DropDownSelector(
+                        Priority.entries.map { it.name },
+                        taskPriority.name,
+                        onSelect = { item -> taskPriority = Priority.valueOf(item) })
+                    DropDownSelector(
+                        TaskStatus.entries.map { it.name },
+                        taskStatus.name,
+                        onSelect = { item -> taskStatus = TaskStatus.valueOf(item) })
+                }
+
+                Spacer(modifier = Modifier.padding(5.dp))
+
+                Button(onClick = {
+                    vm.CreateTask(
+                        taskTitle,
+                        taskDescription,
+                        taskPriority,
+                        taskStatus,
+                        onResult = { result ->
+                            when (result) {
+                                is CreateTaskResult.Success -> {
+                                    onDismiss()
+                                }
+                                is CreateTaskResult.Failure -> {
+                                }
+                                is CreateTaskResult.ValidationError -> {
+                                }
                             }
-
-                            is CreateTaskResult.Failure -> {
-
-                            }
-
-                            is CreateTaskResult.ValidationError -> {
-
-                            }
-
-                        }
-                    })
-
-            }) {
-                Text("Create Task")
+                        })
+                }) {
+                    Text("Create Task")
+                }
             }
         }
-
-
     }
 
 }

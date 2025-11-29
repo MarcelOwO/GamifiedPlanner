@@ -5,4 +5,5 @@ data class ShopItemDto(
     val name:String="",
     val description:String="",
     val price:Int=0,
+    val iconUrl:String="",
 )

@@ -4,10 +4,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
@@ -18,6 +18,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,11 +31,16 @@ import androidx.compose.ui.unit.dp
 import marcel.uni.gamifiedplanner.ui.auth.AuthViewModel
 import org.koin.androidx.compose.koinViewModel
 import marcel.uni.gamifiedplanner.R
+
+
 @Preview
 @Composable
 fun AppHeader(vm: AppHeaderViewModel = koinViewModel(), authVm: AuthViewModel = koinViewModel()) {
 
     var expanded by remember { mutableStateOf(false) }
+    val level by vm.currentLevel.collectAsState()
+    val xp by vm.currentXp.collectAsState()
+    val progress by vm.xpProgress.collectAsState()
 
     Column(modifier = Modifier.padding(5.dp)) {
         Row(
@@ -42,24 +48,42 @@ fun AppHeader(vm: AppHeaderViewModel = koinViewModel(), authVm: AuthViewModel = 
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
-            Text("Gamified Planner")
-            Spacer(modifier = Modifier.padding(10.dp))
+            Text(
+                "Gamified Planner",
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.primary
+            )
 
-            IconButton(onClick = { expanded = !expanded }) {
-                Icon(
-                    painter = painterResource(R.drawable.outline_person_24),
-                    contentDescription = "User Menu"
-                )
-            }
-            Spacer(modifier = Modifier.padding(10.dp))
-            DropdownMenu(
-                expanded = expanded,
-                onDismissRequest = { expanded = false }) {
-                Button(onClick = { authVm.logout() }) {
-                    Text("Logout")
+
+
+            Row(
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Box {
+                    IconButton(onClick = { expanded = !expanded }) {
+                        Icon(
+                            painter = painterResource(R.drawable.outline_person_24),
+                            contentDescription = "User Menu",
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                    }
+
+                    DropdownMenu(
+                        shape= RoundedCornerShape(20.dp),
+                        expanded = expanded,
+                        onDismissRequest = { expanded = false }) {
+
+                        Button(modifier = Modifier.padding(10.dp),
+                            onClick = { authVm.logout() }) {
+                            Text("Logout")
+                        }
+                    }
                 }
             }
         }
+
         Row(modifier = Modifier.fillMaxWidth()) {
             Surface(
                 shape = RoundedCornerShape(20.dp),
@@ -69,13 +93,27 @@ fun AppHeader(vm: AppHeaderViewModel = koinViewModel(), authVm: AuthViewModel = 
                     .padding(5.dp)
                     .fillMaxHeight(0.07f)
             ) {
-                Column(modifier = Modifier.padding(10.dp)) {
-                    Row {
-                        Text("Level 1")
-                        Text("XP 0/100")
+                if (level == null || xp == null) {
+                    Column(
+                        modifier = Modifier.padding(10.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center,
+                    ) {
+
+                        Text("Loading...")
                     }
-                    LinearProgressIndicator()
+                } else {
+                    Column(modifier = Modifier.padding(10.dp)) {
+                        Row {
+                            Text("Level ${level}")
+                            Text("XP ${xp}/100")
+                        }
+
+                        LinearProgressIndicator(progress = progress)
+                    }
                 }
+
+
             }
             Surface(
                 shape = RoundedCornerShape(20.dp),
@@ -97,4 +135,6 @@ fun AppHeader(vm: AppHeaderViewModel = koinViewModel(), authVm: AuthViewModel = 
 
     }
 }
+
+
 

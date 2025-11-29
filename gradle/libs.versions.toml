@@ -15,6 +15,7 @@ firebaseFirestoreKtx = "26.0.2"
 firebaseAuth = "24.0.1"
 runtime = "1.9.5"
 material3 = "1.4.0"
+foundation = "1.9.5"
 
 [libraries]
 
@@ -45,6 +46,7 @@ firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-fires
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 androidx-compose-runtime = { group = "androidx.compose.runtime", name = "runtime", version.ref = "runtime" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
+androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "foundation" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

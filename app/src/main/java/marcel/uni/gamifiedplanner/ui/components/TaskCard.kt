@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,11 +34,35 @@ fun TaskCard(task: Task, vm: HomeViewModel) {
     ) {
         Column(
             modifier = Modifier.padding(10.dp),
-            horizontalAlignment = Alignment.Start,
+            horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text(text = task.title)
-            Spacer(modifier = Modifier.padding(10.dp))
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Spacer(modifier = Modifier.padding(10.dp))
+                Text(
+                    text = task.title,
+                    style = MaterialTheme.typography.titleLarge,
+                    color = MaterialTheme.colorScheme.primary
+                )
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    IconButton(onClick = {
+                        vm.DeleteTask(task.id)
+                    }) {
+                        Icon(
+                            painter = painterResource(R.drawable.outline_delete_24),
+                            contentDescription = "Edit Task"
+                        )
+                    }
+                }
+            }
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceEvenly
@@ -46,36 +71,12 @@ fun TaskCard(task: Task, vm: HomeViewModel) {
                     collection = Priority.entries.map { it -> it.name },
                     task.priority.name,
                     onSelect = {})
-
-                Spacer(modifier = Modifier.padding(10.dp))
-
                 DropDownSelector(
                     collection = TaskStatus.entries.map { it -> it.name },
                     task.status.name,
                     onSelect = {})
             }
-            Spacer(modifier = Modifier.padding(10.dp))
             Text(text = task.description ?: "")
         }
-        Column(
-            modifier = Modifier.padding(10.dp),
-            horizontalAlignment = Alignment.End,
-            verticalArrangement = Arrangement.Center
-        ) {
-            IconButton(onClick = {
-                vm.DeleteTask(task.id)
-            }) {
-                Icon(
-                    painter = painterResource(R.drawable.outline_delete_24),
-                    contentDescription = "Edit Task"
-                )
-            }
-
-
-        }
-
-
     }
-
-
 }

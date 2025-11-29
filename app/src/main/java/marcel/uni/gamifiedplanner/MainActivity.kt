@@ -5,10 +5,13 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
+import marcel.uni.gamifiedplanner.di.AchievementModule
 import marcel.uni.gamifiedplanner.di.AppModule
 import marcel.uni.gamifiedplanner.di.AuthModule
 import marcel.uni.gamifiedplanner.di.FirebaseModule
+import marcel.uni.gamifiedplanner.di.ShopModule
 import marcel.uni.gamifiedplanner.di.TaskModule
+import marcel.uni.gamifiedplanner.di.UserModule
 import marcel.uni.gamifiedplanner.ui.RootView
 import marcel.uni.gamifiedplanner.ui.theme.GamifiedPlannerTheme
 import org.koin.compose.KoinApplication
@@ -33,6 +36,9 @@ class MainActivity : ComponentActivity() {
                     FirebaseModule().firebaseModule,
                     TaskModule().taskModule,
                     AuthModule().authModule,
+                    AchievementModule().achievementModule,
+                    ShopModule().shopModule,
+                    UserModule().userModule,
                 )
             }
         ) {

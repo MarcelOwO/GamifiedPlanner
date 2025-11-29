@@ -2,7 +2,9 @@ package marcel.uni.gamifiedplanner.ui.components
 
 import android.provider.CalendarContract
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -20,13 +22,17 @@ import marcel.uni.gamifiedplanner.ui.navigation.AppRoutes
 
 @Composable
 fun CustomSelect(options: List<String>, selected: String, onSelect: (String) -> Unit) {
-    val selectedButtonColors = ButtonDefaults.buttonColors(
-        containerColor = MaterialTheme.colorScheme.primary,
-        contentColor = MaterialTheme.colorScheme.onPrimary
+    val selectedButtonColors = ButtonColors(
+        containerColor = MaterialTheme.colorScheme.surface,
+        contentColor = MaterialTheme.colorScheme.onPrimary,
+        disabledContentColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.12f),
+        disabledContainerColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.12f)
     )
-    val unSelctedButtonColors = ButtonDefaults.buttonColors(
-        containerColor = MaterialTheme.colorScheme.tertiaryContainer,
-        contentColor = MaterialTheme.colorScheme.onTertiaryContainer
+    val unSelctedButtonColors = ButtonColors(
+        containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.5f),
+        contentColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5f),
+        disabledContentColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.12f),
+        disabledContainerColor = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.12f)
     )
 
     Surface(
@@ -43,6 +49,8 @@ fun CustomSelect(options: List<String>, selected: String, onSelect: (String) -> 
         ) {
             options.forEach { option ->
                 Button(
+                    modifier = Modifier.defaultMinSize(0.dp,0.dp),
+                    contentPadding= PaddingValues(0.dp),
                     colors = if (option == selected) selectedButtonColors else unSelctedButtonColors,
                     onClick = { onSelect(option) },
                     shape = RoundedCornerShape(20.dp)

@@ -40,8 +40,8 @@ fun HomeView(
     vm: HomeViewModel = koinViewModel()
 ) {
     var showMenu by remember { mutableStateOf(false) }
-    val tasks: List<Task> by vm.tasks.collectAsStateWithLifecycle()
 
+    val tasks: List<Task> by vm.tasks.collectAsStateWithLifecycle()
 
     Column(
         horizontalAlignment = Alignment.End,
@@ -50,10 +50,16 @@ fun HomeView(
         IconButton(
             onClick = { showMenu = true },
         ) {
-            Icon(
-                painter = painterResource(R.drawable.outline_add_24),
-                contentDescription = "Add Task",
-            )
+            Surface(modifier = Modifier.fillMaxSize(),
+                shape = RoundedCornerShape(20.dp),
+                color = MaterialTheme.colorScheme.primary,
+                ){
+                Icon(
+                    painter = painterResource(R.drawable.outline_add_24),
+                    contentDescription = "Add Task",
+                )
+            }
+
         }
 
         var selectedOption by remember { mutableStateOf("Today") }
