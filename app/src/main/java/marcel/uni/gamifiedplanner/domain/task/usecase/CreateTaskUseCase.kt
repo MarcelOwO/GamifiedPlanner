@@ -1,6 +1,6 @@
 package marcel.uni.gamifiedplanner.domain.task.usecase
 
-import marcel.uni.gamifiedplanner.data.task.repository.TaskRepository
+import marcel.uni.gamifiedplanner.domain.task.repository.TaskRepository
 import marcel.uni.gamifiedplanner.domain.task.model.Priority
 import marcel.uni.gamifiedplanner.domain.task.model.Task
 import marcel.uni.gamifiedplanner.domain.task.model.TaskStatus

@@ -10,6 +10,7 @@ import marcel.uni.gamifiedplanner.data.task.dto.TaskDto
 import marcel.uni.gamifiedplanner.data.task.dto.toDomain
 import marcel.uni.gamifiedplanner.data.task.dto.toDto
 import marcel.uni.gamifiedplanner.domain.task.model.Task
+import marcel.uni.gamifiedplanner.domain.task.repository.TaskRepository
 import java.util.UUID
 import kotlin.collections.map
 

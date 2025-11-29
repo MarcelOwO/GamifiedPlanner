@@ -9,6 +9,7 @@ import marcel.uni.gamifiedplanner.data.cloud.FirebaseFirestoreDataSource
 import marcel.uni.gamifiedplanner.data.user.dto.ToDomain
 import marcel.uni.gamifiedplanner.data.user.dto.UserDto
 import marcel.uni.gamifiedplanner.domain.user.model.UserData
+import marcel.uni.gamifiedplanner.domain.user.repository.UserRepository
 
 class UserRepositoryImpl(
     private val auth: FirebaseAuthDataSource,

@@ -1,4 +1,4 @@
-package marcel.uni.gamifiedplanner.data.task.repository
+package marcel.uni.gamifiedplanner.domain.task.repository
 
 import kotlinx.coroutines.flow.Flow
 import marcel.uni.gamifiedplanner.domain.task.model.Task
