@@ -1,6 +1,6 @@
 package marcel.uni.gamifiedplanner.data.user.dto
 
-import marcel.uni.gamifiedplanner.domain.models.Task
+import marcel.uni.gamifiedplanner.domain.task.model.Task
 
 data class UserDto (
     val uid: String = "",

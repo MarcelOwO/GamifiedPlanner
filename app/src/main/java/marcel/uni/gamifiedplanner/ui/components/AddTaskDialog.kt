@@ -1,6 +1,5 @@
 package marcel.uni.gamifiedplanner.ui.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -23,12 +21,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.blur
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import marcel.uni.gamifiedplanner.domain.models.Priority
-import marcel.uni.gamifiedplanner.domain.models.TaskStatus
-import marcel.uni.gamifiedplanner.domain.usecases.task.CreateTaskResult
+import marcel.uni.gamifiedplanner.domain.task.model.Priority
+import marcel.uni.gamifiedplanner.domain.task.model.TaskStatus
+import marcel.uni.gamifiedplanner.domain.task.usecase.CreateTaskResult
 import marcel.uni.gamifiedplanner.ui.home.HomeViewModel
 
 @Composable

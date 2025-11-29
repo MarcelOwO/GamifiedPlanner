@@ -1,7 +1,7 @@
 package marcel.uni.gamifiedplanner.data.task.dto
 
-import marcel.uni.gamifiedplanner.domain.models.Priority
-import marcel.uni.gamifiedplanner.domain.models.TaskStatus
+import marcel.uni.gamifiedplanner.domain.task.model.Priority
+import marcel.uni.gamifiedplanner.domain.task.model.TaskStatus
 
 data class TaskDto(
     val id: String = "",

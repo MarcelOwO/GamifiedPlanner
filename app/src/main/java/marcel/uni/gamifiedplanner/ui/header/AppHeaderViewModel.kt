@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import marcel.uni.gamifiedplanner.domain.models.UserData
-import marcel.uni.gamifiedplanner.domain.usecases.user.GetUserDataUseCase
+import marcel.uni.gamifiedplanner.domain.user.model.UserData
+import marcel.uni.gamifiedplanner.domain.user.usecase.GetUserDataUseCase
 
 class AppHeaderViewModel(
     private val getUserDataUseCase: GetUserDataUseCase,

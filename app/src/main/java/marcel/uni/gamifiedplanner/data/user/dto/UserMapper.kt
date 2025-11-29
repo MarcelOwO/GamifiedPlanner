@@ -1,6 +1,6 @@
 package marcel.uni.gamifiedplanner.data.user.dto
 
-import marcel.uni.gamifiedplanner.domain.models.UserData
+import marcel.uni.gamifiedplanner.domain.user.model.UserData
 
 
 fun UserDto.ToDomain() =

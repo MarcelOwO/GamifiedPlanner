@@ -18,9 +18,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import marcel.uni.gamifiedplanner.R
-import marcel.uni.gamifiedplanner.domain.models.Priority
-import marcel.uni.gamifiedplanner.domain.models.Task
-import marcel.uni.gamifiedplanner.domain.models.TaskStatus
+import marcel.uni.gamifiedplanner.domain.task.model.Priority
+import marcel.uni.gamifiedplanner.domain.task.model.Task
+import marcel.uni.gamifiedplanner.domain.task.model.TaskStatus
 import marcel.uni.gamifiedplanner.ui.home.HomeViewModel
 
 @Composable

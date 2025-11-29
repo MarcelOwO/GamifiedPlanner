@@ -1,6 +1,6 @@
 package marcel.uni.gamifiedplanner.data.task.dto
 
-import marcel.uni.gamifiedplanner.domain.models.Task
+import marcel.uni.gamifiedplanner.domain.task.model.Task
 
 
 fun TaskDto.toDomain() = Task(

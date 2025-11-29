@@ -6,12 +6,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import marcel.uni.gamifiedplanner.domain.usecases.auth.AuthStatusUseCase
-import marcel.uni.gamifiedplanner.domain.usecases.auth.login.LogInUseCase
-import marcel.uni.gamifiedplanner.domain.usecases.auth.LogoutUseCase
-import marcel.uni.gamifiedplanner.domain.usecases.auth.login.LogInResult
-import marcel.uni.gamifiedplanner.domain.usecases.auth.register.RegisterResult
-import marcel.uni.gamifiedplanner.domain.usecases.auth.register.RegisterUseCase
+import marcel.uni.gamifiedplanner.domain.auth.usecase.AuthStatusUseCase
+import marcel.uni.gamifiedplanner.domain.auth.usecase.login.LogInUseCase
+import marcel.uni.gamifiedplanner.domain.auth.usecase.LogoutUseCase
+import marcel.uni.gamifiedplanner.domain.auth.usecase.login.LogInResult
+import marcel.uni.gamifiedplanner.domain.auth.usecase.register.RegisterResult
+import marcel.uni.gamifiedplanner.domain.auth.usecase.register.RegisterUseCase
 
 
 class AuthViewModel(

@@ -1,7 +1,7 @@
 package marcel.uni.gamifiedplanner.data.task.repository
 
 import kotlinx.coroutines.flow.Flow
-import marcel.uni.gamifiedplanner.domain.models.Task
+import marcel.uni.gamifiedplanner.domain.task.model.Task
 
 interface TaskRepository {
     fun observeTasks(): Flow<List<Task>>
