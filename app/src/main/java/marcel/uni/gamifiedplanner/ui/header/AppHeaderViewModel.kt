@@ -7,14 +7,14 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import marcel.uni.gamifiedplanner.domain.user.model.UserData
+import marcel.uni.gamifiedplanner.domain.user.model.UserStats
 import marcel.uni.gamifiedplanner.domain.user.usecase.GetUserDataUseCase
 
 class AppHeaderViewModel(
     private val getUserDataUseCase: GetUserDataUseCase,
     ) : ViewModel() {
 
-    private val userData: StateFlow<UserData?> = getUserDataUseCase()
+    private val userData: StateFlow<UserStats?> = getUserDataUseCase()
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),

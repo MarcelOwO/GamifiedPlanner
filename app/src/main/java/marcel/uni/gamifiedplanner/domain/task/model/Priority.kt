@@ -5,3 +5,11 @@ enum class Priority {
     MEDIUM,
     HIGH,
 }
+
+fun Priority.toString(): String{
+    return when(this){
+        Priority.LOW -> "Low"
+        Priority.MEDIUM -> "Medium"
+        Priority.HIGH -> "High"
+    }
+}

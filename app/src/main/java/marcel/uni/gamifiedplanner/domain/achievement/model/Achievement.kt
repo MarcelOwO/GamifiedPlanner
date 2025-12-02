@@ -4,5 +4,5 @@ data class Achievement(
     val id: String = "",
     val name: String = "",
     val description: String = "",
-    val achievedAt: Long = System.currentTimeMillis(),
+    val iconUrl: String = "",
     )

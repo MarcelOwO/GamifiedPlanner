@@ -1,10 +1,10 @@
 package marcel.uni.gamifiedplanner.data.user.dto
 
-import marcel.uni.gamifiedplanner.domain.user.model.UserData
+import marcel.uni.gamifiedplanner.domain.user.model.UserStats
 
 
 fun UserDto.ToDomain() =
-    UserData(
+    UserStats(
         uid = this.uid,
         username = this.username,
         level = this.level,
@@ -15,7 +15,7 @@ fun UserDto.ToDomain() =
         completedTasks = this.completedTasks
     );
 
-fun UserData.ToDto() =
+fun UserStats.ToDto() =
     UserDto(
         uid = this.uid,
         username = this.username,
