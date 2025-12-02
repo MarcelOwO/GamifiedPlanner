@@ -10,7 +10,7 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
-import marcel.uni.gamifiedplanner.data.auth.FirebaseAuthDataSource
+import marcel.uni.gamifiedplanner.domain.auth.repository.FirebaseAuthRepository
 import marcel.uni.gamifiedplanner.data.user.dto.TaskLogDto
 import marcel.uni.gamifiedplanner.data.user.dto.ToDomain
 import marcel.uni.gamifiedplanner.data.user.dto.UserAchievementDto
@@ -25,7 +25,7 @@ import marcel.uni.gamifiedplanner.domain.user.model.UserStats
 import marcel.uni.gamifiedplanner.domain.user.repository.UserRepository
 
 class UserRepositoryImpl(
-    private val auth: FirebaseAuthDataSource,
+    private val auth: FirebaseAuthRepository,
     private val firestore: FirebaseFirestore,
 ) : UserRepository {
     private val uid: String
@@ -187,26 +187,27 @@ class UserRepositoryImpl(
             val userInventoryRef = getInventoryColl(uid).document(itemId)
 
             val inventorySnapshot = transaction.get(userInventoryRef)
-            if(inventorySnapshot.exists()){
+            if (inventorySnapshot.exists())
                 throw IllegalStateException("Items already owned")
-            }
             val shopItemSnapshot = transaction.get(showItemRef)
-            if(!shopItemSnapshot.exists())
+            if (!shopItemSnapshot.exists())
                 throw IllegalStateException("Item does not exist")
 
-            val cost  = shopItemSnapshot.getLong("cost")?: 0L
+            val cost = shopItemSnapshot.getLong("cost") ?: 0L
 
             val userSnapshot = transaction.get(userRef)
-            val currentBalance = userSnapshot.getLong("currency")?: 0L
-            if(currentBalance < cost)
+            val currentBalance = userSnapshot.getLong("currency") ?: 0L
+
+            if (currentBalance < cost)
                 throw IllegalArgumentException("Insufficient funds")
 
-                transaction.update(userRef,"currency", currentBalance-cost)
-                val newItemData = mapOf(
-                    "purchasedAt" to System.currentTimeMillis(),
-                    "itemId" to itemId
-                )
-            transaction.set(userInventoryRef,newItemData)
+            transaction.update(userRef, "currency", currentBalance - cost)
+
+            val newItemData = mapOf(
+                "purchasedAt" to System.currentTimeMillis(),
+                "itemId" to itemId
+            )
+            transaction.set(userInventoryRef, newItemData)
 
         }.await()
 

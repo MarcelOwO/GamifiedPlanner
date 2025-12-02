@@ -1,10 +1,10 @@
 package marcel.uni.gamifiedplanner.domain.auth.usecase.register
 
 import android.util.Patterns.EMAIL_ADDRESS
-import marcel.uni.gamifiedplanner.data.auth.FirebaseAuthDataSource
+import marcel.uni.gamifiedplanner.domain.auth.repository.FirebaseAuthRepository
 
 class RegisterUseCase(
-    private val source: FirebaseAuthDataSource
+    private val source: FirebaseAuthRepository
 ) {
     suspend operator fun invoke(email: String, password: String): RegisterResult {
 

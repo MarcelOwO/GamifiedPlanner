@@ -4,11 +4,11 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.tasks.await
+import marcel.uni.gamifiedplanner.domain.auth.repository.FirebaseAuthRepository
 
-class FirebaseAuthDataSourceImpl(
+class FirebaseAuthRepositoryImpl(
     private val auth: FirebaseAuth
-) : FirebaseAuthDataSource {
+) : FirebaseAuthRepository {
     override val currentUserId: String?
         get() = auth.currentUser?.uid
 

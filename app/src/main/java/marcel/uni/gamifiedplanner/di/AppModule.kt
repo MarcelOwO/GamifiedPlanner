@@ -1,5 +1,6 @@
 package marcel.uni.gamifiedplanner.di
 
+import marcel.uni.gamifiedplanner.domain.services.ProgressionService
 import marcel.uni.gamifiedplanner.ui.header.AppHeaderViewModel
 import marcel.uni.gamifiedplanner.ui.profile.ProfileViewModel
 import marcel.uni.gamifiedplanner.ui.settings.SettingsViewModel
@@ -10,7 +11,8 @@ import org.koin.dsl.module
 
 class AppModule {
     val appModule = module {
-        viewModel { AppHeaderViewModel(get()) }
+        single{ ProgressionService() }
+        viewModel { AppHeaderViewModel(get(),get()) }
         viewModel { ShopViewModel() }
         viewModel { StatsViewModel() }
         viewModel { SettingsViewModel() }

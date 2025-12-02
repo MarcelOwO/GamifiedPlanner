@@ -1,5 +1,6 @@
 package marcel.uni.gamifiedplanner.domain.achievement.usecase
 
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import marcel.uni.gamifiedplanner.domain.achievement.model.Achievement
 import marcel.uni.gamifiedplanner.domain.achievement.repository.AchievementRepository
@@ -9,13 +10,24 @@ class GetAchievementsUseCase(
     private val achievementRepo: AchievementRepository,
     private val userRepo: UserRepository
 ) {
-    operator suspend fun invoke():List<Achievement>{
-        val achievements = achievementRepo.getAchievements()
-        val completed = userRepo.getCompletedAchievements()
+    operator suspend fun invoke(): List<Achievement> {
+        val allAchievements = achievementRepo.getAchievements().first()
+        val userProgress = userRepo.observeAchievementsProgress().first()
 
-        var  all = achievements.map
+        val progressMap = userProgress.associateBy { it.achievementId }
 
+        return allAchievements.map { achievement ->
+            val progress = progressMap[achievement.id]
 
-        return emptyList()
+            if (progress != null) {
+                achievement.copy(
+                    achieved = true,
+                    achievedAt = progress.unlockedAt
+                )
+            }
+            else {
+                achievement
+            }
+        }
     }
 }

@@ -5,16 +5,15 @@ import marcel.uni.gamifiedplanner.domain.achievement.model.Achievement
 class AchievementMapper {
 }
 
-fun AchievementDto.ToDomain(): Achievement=
-     Achievement(
+fun AchievementDto.ToDomain(): Achievement =
+    Achievement(
         id = this.id,
         name = this.name,
         description = this.description,
-         iconUrl = this.iconUrl,
-
+        iconUrl = this.iconUrl,
     )
 
-fun Achievement.ToDto(): AchievementDto=
+fun Achievement.ToDto(): AchievementDto =
     AchievementDto(
         id = this.id,
         name = this.name,

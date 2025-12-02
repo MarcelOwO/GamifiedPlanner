@@ -78,6 +78,7 @@ fun AddTaskDialog(
                     label = { Text("Description") })
 
                 Spacer(modifier = Modifier.padding(5.dp))
+
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceEvenly,
@@ -87,6 +88,7 @@ fun AddTaskDialog(
                         Priority.entries.map { it.name },
                         taskPriority.name,
                         onSelect = { item -> taskPriority = Priority.valueOf(item) })
+
                     DropDownSelector(
                         TaskStatus.entries.map { it.name },
                         taskStatus.name,

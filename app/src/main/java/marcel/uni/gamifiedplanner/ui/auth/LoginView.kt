@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
@@ -23,11 +22,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.google.firebase.auth.AuthResult
+import marcel.uni.gamifiedplanner.domain.auth.usecase.login.LogInResult
 import marcel.uni.gamifiedplanner.ui.components.NavButton
 import marcel.uni.gamifiedplanner.ui.navigation.AppRoutes
 import org.koin.androidx.compose.koinViewModel
@@ -44,6 +44,9 @@ fun LoginView(
 
     var isEmailValid by remember { mutableStateOf(true) }
 
+    var isError by remember { mutableStateOf(false) }
+    var errorMessage by remember { mutableStateOf("") }
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
@@ -59,6 +62,14 @@ fun LoginView(
                 verticalArrangement = Arrangement.Center,
                 modifier = Modifier.padding(16.dp)
             ) {
+
+                Text(
+                    text = "Login",
+                    style = MaterialTheme.typography.headlineMedium
+                )
+
+                Spacer(modifier = Modifier.height(10.dp))
+
                 TextField(
                     value = email,
                     onValueChange = {
@@ -69,7 +80,7 @@ fun LoginView(
                         }
                         email = it.trim()
                     },
-                    label = { Text("Username") },
+                    label = { Text("Email") },
                     isError = !isEmailValid,
                     singleLine = true,
                     shape = RoundedCornerShape(20.dp)
@@ -90,12 +101,35 @@ fun LoginView(
 
                 )
                 Spacer(modifier = Modifier.height(10.dp))
+
+                if (isError) {
+                    Text(
+                        text = errorMessage,
+                        color = MaterialTheme.colorScheme.error
+                    )
+                    Spacer(modifier = Modifier.height(10.dp))
+                }
+
+
                 Button(onClick = {
-                    vm.login(email, password, {
+                    vm.login(email, password, { result ->
+                        when (result) {
+                            is LogInResult.Success -> {
+                            }
+
+                            is LogInResult.Failure -> {
+                                isError = true
+                                errorMessage = result.error.localizedMessage ?: "Unknown error"
+                            }
+
+                            is LogInResult.ValidationError -> {
+                                isError = true
+                                errorMessage = result.message
+                            }
+                        }
                     })
                 }) {
                     Text("Login")
-
                 }
 
                 Spacer(modifier = Modifier.height(10.dp))

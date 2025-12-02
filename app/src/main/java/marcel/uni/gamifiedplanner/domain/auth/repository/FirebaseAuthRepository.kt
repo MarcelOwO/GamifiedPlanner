@@ -1,8 +1,8 @@
-package marcel.uni.gamifiedplanner.data.auth
+package marcel.uni.gamifiedplanner.domain.auth.repository
 
 import kotlinx.coroutines.flow.Flow
 
-interface FirebaseAuthDataSource {
+interface FirebaseAuthRepository {
     val currentUserId:String?
     fun observerAuthState(): Flow<Boolean>
     suspend fun login(email:String,password:String)
