@@ -10,6 +10,6 @@ class UserModule {
     val userModule = module{
         single<UserRepository> { UserRepositoryImpl(get(), get()) }
         factory { GetUserDataUseCase(get()) }
-        factory { PurchaseItemUseCase(get(),get()) }
+        factory { PurchaseItemUseCase(get(),get(),get()) }
     }
 }

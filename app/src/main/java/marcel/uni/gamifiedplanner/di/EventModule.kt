@@ -1,11 +1,12 @@
 package marcel.uni.gamifiedplanner.di
 
-import marcel.uni.gamifiedplanner.domain.events.SimpleEventPublisher
+import marcel.uni.gamifiedplanner.domain.achievement.event.AchievementEventHandler
+import marcel.uni.gamifiedplanner.domain.services.EventPublisherService
 import org.koin.dsl.module
 
 class EventModule {
     val eventModule = module{
-
-       single{ SimpleEventPublisher(listOf(get())) }
+        single{ AchievementEventHandler(get(), get()) }
+       single{ EventPublisherService(get()) }
     }
 }

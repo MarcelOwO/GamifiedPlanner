@@ -7,7 +7,6 @@ import marcel.uni.gamifiedplanner.domain.user.model.UserInventoryItem
 import marcel.uni.gamifiedplanner.domain.user.model.UserStats
 
 interface UserRepository {
-
     fun observeUserStats():Flow<UserStats>
     suspend fun addXp(amoung:Int)
     suspend fun spendCurrency(amount:Int): Result<Unit>

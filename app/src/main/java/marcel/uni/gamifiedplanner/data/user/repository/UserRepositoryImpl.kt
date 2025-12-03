@@ -181,7 +181,6 @@ class UserRepositoryImpl(
 
     override suspend fun purchaseItem(itemId: String) {
         firestore.runTransaction { transaction ->
-
             val userRef = getUserDoc(uid)
             val showItemRef = getShopItemsColl().document(itemId)
             val userInventoryRef = getInventoryColl(uid).document(itemId)
