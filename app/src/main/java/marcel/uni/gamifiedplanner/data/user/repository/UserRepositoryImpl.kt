@@ -31,12 +31,25 @@ class UserRepositoryImpl(
     private val uid: String
         get() = auth.currentUserId ?: error("User not logged in")
 
+
     private fun getUserDoc(uid: String) = firestore.collection("users").document(uid)
     private fun getAchievementsColl(uid: String) = getUserDoc(uid).collection("achievements")
     private fun getTaskHistoryColl(uid: String) = getUserDoc(uid).collection("task_history")
 
     private fun getShopItemsColl() = firestore.collection("shop_items")
     private fun getInventoryColl(uid: String) = getUserDoc(uid).collection("inventory")
+
+    override suspend fun createUserProfile(username: String) {
+        val userId = uid
+        val initialData = UserDto(
+            uid = userId,
+            username = username,
+            xp = 0,
+            currency = 0
+        )
+        getUserDoc(userId).set(initialData).await()
+    }
+
 
     override fun observeUserStats(): Flow<UserStats> = callbackFlow {
         val listener = getUserDoc(uid).addSnapshotListener { snapshot, error ->

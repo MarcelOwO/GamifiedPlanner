@@ -17,7 +17,7 @@ class AchievementRepositoryImpl(
 
     override fun getAchievements(): Flow<List<Achievement>> = callbackFlow {
 
-        getCollection().addSnapshotListener { snapshot, error ->
+        val listener = getCollection().addSnapshotListener { snapshot, error ->
             if (error != null) {
                 close(error)
                 return@addSnapshotListener
@@ -27,6 +27,9 @@ class AchievementRepositoryImpl(
                 val achievements = dtos.map { it.ToDomain() }
                 trySend(achievements)
             }
+        }
+        awaitClose(){
+            listener.remove()
         }
     }
 }

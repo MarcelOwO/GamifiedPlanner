@@ -13,7 +13,6 @@ class AppModule {
     val appModule = module {
         single{ ProgressionService() }
         viewModel { AppHeaderViewModel(get(),get()) }
-        viewModel { ShopViewModel() }
         viewModel { StatsViewModel() }
         viewModel { SettingsViewModel() }
         viewModel { ProfileViewModel() }

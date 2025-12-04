@@ -36,9 +36,9 @@ class AuthViewModel(
         }
     }
 
-    fun register(email: String, password: String, onResult: (RegisterResult) -> Unit) {
+    fun register(email: String,username:String, password: String, onResult: (RegisterResult) -> Unit) {
         viewModelScope.launch {
-            registerUseCase(email, password).also { result ->
+            registerUseCase(email,username, password).also { result ->
                 onResult(result)
             }
         }

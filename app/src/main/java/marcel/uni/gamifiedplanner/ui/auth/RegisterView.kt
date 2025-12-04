@@ -36,7 +36,9 @@ fun RegisterView(
     vm: AuthViewModel = koinViewModel()
 ) {
     var email by remember { mutableStateOf("") }
+    var username by remember {mutableStateOf("")}
     var password by remember { mutableStateOf("") }
+
     var showPassword by remember { mutableStateOf(false) }
     var isError by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf("") }
@@ -75,6 +77,15 @@ fun RegisterView(
                 Spacer(modifier = Modifier.height(10.dp))
 
                 TextField(
+                    value = username,
+                    onValueChange = { username = it },
+                    label = { Text("Username") },
+                    shape = RoundedCornerShape(20.dp)
+                )
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                TextField(
                     value = password,
                     onValueChange = { password = it },
                     label = { Text("Password") },
@@ -100,7 +111,7 @@ fun RegisterView(
                 }
 
                 Button(onClick = {
-                    vm.register(email, password, { result ->
+                    vm.register(email,"Default User", password, { result ->
                         when (result){
                             is RegisterResult.Success -> {
 

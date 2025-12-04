@@ -15,7 +15,7 @@ class AuthModule {
         single<FirebaseAuthRepository> { FirebaseAuthRepositoryImpl(get()) }
         factory { AuthStatusUseCase(get()) }
         factory { LogInUseCase(get()) }
-        factory { RegisterUseCase(get()) }
+        factory { RegisterUseCase(get(),get()) }
         factory { LogoutUseCase(get()) }
         viewModel { AuthViewModel(get(), get(), get(), get()) }
     }

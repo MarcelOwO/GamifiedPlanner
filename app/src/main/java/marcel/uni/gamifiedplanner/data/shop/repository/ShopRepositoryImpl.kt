@@ -3,6 +3,7 @@ package marcel.uni.gamifiedplanner.data.shop.repository
 import androidx.compose.runtime.snapshotFlow
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.toObjects
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import marcel.uni.gamifiedplanner.data.shop.dto.ShopItemDto
@@ -16,7 +17,7 @@ class ShopRepositoryImpl(
     private fun getCollection() = firestore.collection("shop_items")
 
     override fun getShopItems(): Flow<List<ShopItem>> = callbackFlow {
-        getCollection().addSnapshotListener { snapshot, error ->
+        val listener = getCollection().addSnapshotListener { snapshot, error ->
             if (error != null) {
 
                 close(error)
@@ -27,6 +28,9 @@ class ShopRepositoryImpl(
                 val items = dtos.map { it.ToDomain() }
                 trySend(items)
             }
+        }
+        awaitClose(){
+            listener.remove()
         }
     }
 }
