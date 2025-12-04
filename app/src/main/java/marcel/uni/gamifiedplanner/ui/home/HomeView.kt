@@ -1,8 +1,11 @@
 package marcel.uni.gamifiedplanner.ui.home
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -24,6 +27,7 @@ import org.koin.androidx.compose.koinViewModel
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
 import androidx.compose.ui.res.painterResource
 import marcel.uni.gamifiedplanner.R
 import marcel.uni.gamifiedplanner.ui.components.CustomSelect
@@ -40,22 +44,33 @@ fun HomeView(
         horizontalAlignment = Alignment.End,
         modifier = Modifier.padding(5.dp)
     ) {
-        IconButton(
-            onClick = { showMenu = true },
-        ) {
-            Surface(modifier = Modifier.fillMaxSize(),
-                shape = RoundedCornerShape(20.dp),
-                color = MaterialTheme.colorScheme.primary,
-                ){
-                Icon(
-                    painter = painterResource(R.drawable.outline_add_24),
-                    contentDescription = "Add Task",
-                )
-            }
 
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween){
+
+            Text(
+                "Tasks",
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.padding(10.dp)
+            )
+
+            IconButton(
+                onClick = { showMenu = true },
+            ) {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    shape = RoundedCornerShape(20.dp),
+                    color = MaterialTheme.colorScheme.primary,
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.outline_add_24),
+                        contentDescription = "Add Task",
+                    )
+                }
+            }
         }
 
         var selectedOption by remember { mutableStateOf("Today") }
+
         CustomSelect(options = listOf("Today", "All"), selectedOption, onSelect = { selected ->
             selectedOption = selected
         }
@@ -76,7 +91,7 @@ fun HomeView(
                     .padding(10.dp)
             ) {
                 items(tasks) { task ->
-                    TaskCard(task,vm)
+                    TaskCard(task, vm)
                     Spacer(modifier = Modifier.padding(5.dp))
                 }
             }

@@ -30,7 +30,7 @@ class HomeViewModel(
         onResult: (CreateTaskResult) -> Unit
     ) {
         viewModelScope.launch {
-            val result = createTaskUseCase.invoke(
+            val result = createTaskUseCase(
                 title,
                 description,
                 priority,
@@ -48,7 +48,7 @@ class HomeViewModel(
         taskStatus: TaskStatus
     ) {
         viewModelScope.launch {
-            updateTaskUseCase.invoke(taskId, taskName, taskDescription, taskPriority, taskStatus)
+            updateTaskUseCase(taskId, taskName, taskDescription, taskPriority, taskStatus)
         }
     }
 

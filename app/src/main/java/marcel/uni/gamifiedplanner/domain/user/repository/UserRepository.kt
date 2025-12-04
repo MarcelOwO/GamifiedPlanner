@@ -9,7 +9,7 @@ import marcel.uni.gamifiedplanner.domain.user.model.UserStats
 interface UserRepository {
 
     suspend fun createUserProfile(username:String)
-    fun observeUserStats():Flow<UserStats>
+    fun observeUserStats(): Flow<UserStats?>
     suspend fun addXp(amoung:Int)
     suspend fun spendCurrency(amount:Int): Result<Unit>
 

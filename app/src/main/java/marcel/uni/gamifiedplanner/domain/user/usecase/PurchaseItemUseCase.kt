@@ -11,20 +11,12 @@ class PurchaseItemUseCase(
     private val shopRepo: ShopRepository,
     private val eventService: DomainEventPublisher
     ) {
-
-    suspend operator fun invoke(itemId:String){
-
-       userRepo.purchaseItem(itemId);
+    suspend operator fun invoke(itemId:String): PurchaseItemResult{
+        userRepo.purchaseItem(itemId);
 
         val event = DomainEvent.ItemPurchasedEvent(itemId)
         eventService.publish(event)
-
-
-
-
-
-
-
+        return PurchaseItemResult.Success
     }
 
 

@@ -28,31 +28,40 @@ class UserRepositoryImpl(
     private val auth: FirebaseAuthRepository,
     private val firestore: FirebaseFirestore,
 ) : UserRepository {
-    private val uid: String
-        get() = auth.currentUserId ?: error("User not logged in")
+
+    private val uid: String?
+        get() = auth.currentUserId
 
 
     private fun getUserDoc(uid: String) = firestore.collection("users").document(uid)
     private fun getAchievementsColl(uid: String) = getUserDoc(uid).collection("achievements")
     private fun getTaskHistoryColl(uid: String) = getUserDoc(uid).collection("task_history")
-
     private fun getShopItemsColl() = firestore.collection("shop_items")
     private fun getInventoryColl(uid: String) = getUserDoc(uid).collection("inventory")
 
     override suspend fun createUserProfile(username: String) {
-        val userId = uid
+        if (uid == null) {
+            return;
+        }
+
         val initialData = UserDto(
-            uid = userId,
+            uid = uid!!,
             username = username,
             xp = 0,
             currency = 0
         )
-        getUserDoc(userId).set(initialData).await()
+
+        getUserDoc(uid!!).set(initialData).await()
     }
 
 
-    override fun observeUserStats(): Flow<UserStats> = callbackFlow {
-        val listener = getUserDoc(uid).addSnapshotListener { snapshot, error ->
+    override fun observeUserStats(): Flow<UserStats?> = callbackFlow {
+        if (uid == null) {
+            trySend(null)
+            return@callbackFlow
+        }
+
+        val listener = getUserDoc(uid!!).addSnapshotListener { snapshot, error ->
             if (error != null) {
                 close(error);
                 return@addSnapshotListener
@@ -72,14 +81,23 @@ class UserRepositoryImpl(
     }
 
     override suspend fun addXp(amount: Int) {
-        getUserDoc(uid).update("xp", FieldValue.increment(amount.toLong())).await()
+        if (uid == null) {
+            return
+        }
+
+        getUserDoc(uid!!).update("xp", FieldValue.increment(amount.toLong())).await()
     }
 
     override suspend fun spendCurrency(amount: Int): Result<Unit> {
+
+        if (uid == null) {
+            return Result.failure(IllegalStateException("User not logged in"))
+        }
+
         return try {
             firestore.runTransaction { transaction ->
 
-                val userRef = getUserDoc(uid)
+                val userRef = getUserDoc(uid!!)
                 val snapShot = transaction.get(userRef)
 
                 val currentBalance = snapShot.getLong("currency") ?: 0L
@@ -97,7 +115,12 @@ class UserRepositoryImpl(
     }
 
     override fun observeAchievementsProgress(): Flow<List<UserAchievement>> = callbackFlow {
-        val listener = getAchievementsColl(uid).addSnapshotListener { snapshot, error ->
+        if (uid == null) {
+            trySend(emptyList())
+            return@callbackFlow
+        }
+
+        val listener = getAchievementsColl(uid!!).addSnapshotListener { snapshot, error ->
             if (error != null) {
                 close(error)
                 return@addSnapshotListener
@@ -115,13 +138,18 @@ class UserRepositoryImpl(
 
     override suspend fun unlockAchievement(achivementId: String) {
 
+
+        if (uid == null) {
+            return
+        }
+
         val updateData = UserAchievementDto(
-            uuid = uid,
+            uuid = uid!!,
             achievementId = achivementId,
             unlockedAt = System.currentTimeMillis()
         )
 
-        getAchievementsColl(uid).document(achivementId).set(
+        getAchievementsColl(uid!!).document(achivementId).set(
             updateData, SetOptions.merge()
         ).await()
     }
@@ -131,7 +159,12 @@ class UserRepositoryImpl(
         endTime: Long
     ): Flow<List<TaskHistoryItem>> = callbackFlow {
 
-        val query = getTaskHistoryColl(uid)
+        if (uid == null) {
+            trySend(emptyList())
+            return@callbackFlow
+        }
+
+        val query = getTaskHistoryColl(uid!!)
             .whereGreaterThanOrEqualTo("completedAt", startTime)
             .whereLessThanOrEqualTo("completedAt", endTime)
             .orderBy("completedAt", Query.Direction.DESCENDING)
@@ -153,9 +186,14 @@ class UserRepositoryImpl(
     }
 
     override suspend fun logCompletedTask(task: TaskHistoryItem) {
+
+        if (uid == null) {
+            return
+        }
+
         firestore.runTransaction { transaction ->
-            val userRef = getUserDoc(uid)
-            val newLogRef = getTaskHistoryColl(uid).document()
+            val userRef = getUserDoc(uid!!)
+            val newLogRef = getTaskHistoryColl(uid!!).document()
 
             val xpEarned: Long = when (task.taskPriority) {
                 Priority.LOW -> 10L
@@ -176,7 +214,12 @@ class UserRepositoryImpl(
     }
 
     override fun observeInventory(): Flow<List<UserInventoryItem>> = callbackFlow {
-        val listener = getInventoryColl(uid).addSnapshotListener { snapshot, error ->
+        if (uid == null) {
+            trySend(emptyList())
+            return@callbackFlow
+        }
+
+        val listener = getInventoryColl(uid!!).addSnapshotListener { snapshot, error ->
             if (error != null) {
                 close(error)
                 return@addSnapshotListener
@@ -193,10 +236,14 @@ class UserRepositoryImpl(
     }
 
     override suspend fun purchaseItem(itemId: String) {
+        if( uid == null ){
+            return
+        }
+
         firestore.runTransaction { transaction ->
-            val userRef = getUserDoc(uid)
+            val userRef = getUserDoc(uid!!)
             val showItemRef = getShopItemsColl().document(itemId)
-            val userInventoryRef = getInventoryColl(uid).document(itemId)
+            val userInventoryRef = getInventoryColl(uid!!).document(itemId)
 
             val inventorySnapshot = transaction.get(userInventoryRef)
             if (inventorySnapshot.exists())

@@ -13,8 +13,8 @@ class FirebaseAuthRepositoryImpl(
         get() = auth.currentUser?.uid
 
     override fun observerAuthState(): Flow<Boolean> = callbackFlow {
-        val listener = FirebaseAuth.AuthStateListener { a ->
-            trySend(a.currentUser != null)
+        val listener = FirebaseAuth.AuthStateListener { users ->
+            trySend(users.currentUser != null)
         }
         auth.addAuthStateListener(listener)
 

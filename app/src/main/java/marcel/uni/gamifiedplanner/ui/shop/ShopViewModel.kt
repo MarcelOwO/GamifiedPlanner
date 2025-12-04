@@ -7,16 +7,17 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import marcel.uni.gamifiedplanner.domain.shop.model.ShopItem
 import marcel.uni.gamifiedplanner.domain.shop.usecase.GetShopItemsUseCase
 import marcel.uni.gamifiedplanner.domain.task.model.Task
+import marcel.uni.gamifiedplanner.domain.user.usecase.PurchaseItemResult
 import marcel.uni.gamifiedplanner.domain.user.usecase.PurchaseItemUseCase
 
 class ShopViewModel(
     private val getItemsUseCase: GetShopItemsUseCase,
-    private val buyItemUseCase: PurchaseItemUseCase,
-    ): ViewModel() {
-
+    private val purchaseItemUseCase: PurchaseItemUseCase,
+) : ViewModel() {
 
     val shopItems: StateFlow<List<ShopItem>> = getItemsUseCase()
         .stateIn(
@@ -25,6 +26,12 @@ class ShopViewModel(
             initialValue = emptyList() // The initial List<Task>
         )
 
-
-
+    fun BuyItem(itemId: String,onResult: (PurchaseItemResult)->Unit) {
+        viewModelScope.launch {
+            purchaseItemUseCase(itemId).also { result ->
+                onResult(result)
+            }
+        }
     }
+}
+

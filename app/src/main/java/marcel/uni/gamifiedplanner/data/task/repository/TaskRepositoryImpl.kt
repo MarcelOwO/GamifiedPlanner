@@ -20,23 +20,30 @@ class TaskRepositoryImpl(
     private val firestore: FirebaseFirestore,
 ) : TaskRepository {
 
-    private val uid: String
-        get() = auth.currentUserId ?: error("User not logged in")
+    private val uid: String?
+        get() = auth.currentUserId
 
     private fun getUserDoc(uid: String) = firestore.collection("users").document(uid)
-    private fun getTasksColl(uid:String) = getUserDoc(uid)
+
+    private fun getTasksColl(uid: String) = getUserDoc(uid)
         .collection("tasks")
 
     override fun observeTasks(): Flow<List<Task>> = callbackFlow {
-        val listener = getTasksColl(uid).addSnapshotListener { snapshot, error ->
-            if( error !=null){
+
+        if (uid == null) {
+            trySend(emptyList())
+            return@callbackFlow
+        }
+
+        val listener = getTasksColl(uid!!).addSnapshotListener { snapshot, error ->
+            if (error != null) {
                 close(error)
                 return@addSnapshotListener
             }
-            if(snapshot !=null){
+            if (snapshot != null) {
                 val taskDtos = snapshot.toObjects<TaskDto>()
 
-                val tasks = taskDtos.map { it-> it.toDomain() }
+                val tasks = taskDtos.map { it -> it.toDomain() }
 
                 trySend(tasks)
             }
@@ -48,14 +55,18 @@ class TaskRepositoryImpl(
     }
 
     override suspend fun createTask(
-        task:Task,
+        task: Task,
     ) {
+        if (uid == null) {
+            return;
+        }
+
         val now = System.currentTimeMillis()
         val id = UUID.randomUUID()
         val taskWithMeta = task.copy(id = id.toString(), createdAt = now)
         val dto = taskWithMeta.toDto()
 
-        getTasksColl(uid)
+        getTasksColl(uid!!)
             .document(id.toString())
             .set(dto)
             .await()
@@ -63,16 +74,24 @@ class TaskRepositoryImpl(
 
 
     override suspend fun updateTask(
-        task:Task,
+        task: Task,
     ) {
-        getTasksColl(uid)
+        if (uid == null) {
+            return
+        }
+
+        getTasksColl(uid!!)
             .document(task.id)
             .set(task.toDto())
             .await()
     }
 
-    override suspend fun deleteTask( taskId: String) {
-        getTasksColl(uid)
+    override suspend fun deleteTask(taskId: String) {
+        if (uid == null) {
+            return
+        }
+
+        getTasksColl(uid!!)
             .document(taskId)
             .delete()
             .await()
