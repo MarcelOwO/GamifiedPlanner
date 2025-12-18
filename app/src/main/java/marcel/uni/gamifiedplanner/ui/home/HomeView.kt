@@ -76,7 +76,6 @@ fun HomeView(
         }
         )
 
-
         Surface(
             color = MaterialTheme.colorScheme.tertiary,
             modifier = Modifier

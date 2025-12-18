@@ -11,6 +11,6 @@ class ShopModule {
     val shopModule = module{
         single<ShopRepository> { ShopRepositoryImpl(get()) }
         factory{ GetShopItemsUseCase(get())}
-        viewModel { ShopViewModel(get(),get()) }
+        viewModel { ShopViewModel(get(),get(),get()) }
     }
 }

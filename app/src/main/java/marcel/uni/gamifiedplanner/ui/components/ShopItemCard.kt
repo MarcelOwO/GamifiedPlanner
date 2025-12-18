@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import marcel.uni.gamifiedplanner.domain.shop.model.ShopItem
 
 @Composable
-fun ShopItemCard(item: ShopItem, onClick: () -> Unit) {
+fun ShopItemCard(item: ShopItem,isOwned:Boolean=false, onClick: () -> Unit) {
     Button(shape= RoundedCornerShape(20.dp),
         modifier=Modifier.padding(10.dp).fillMaxWidth(),onClick= onClick){
             Column(

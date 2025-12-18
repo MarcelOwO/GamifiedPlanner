@@ -13,7 +13,6 @@ import marcel.uni.gamifiedplanner.domain.auth.usecase.login.LogInResult
 import marcel.uni.gamifiedplanner.domain.auth.usecase.register.RegisterResult
 import marcel.uni.gamifiedplanner.domain.auth.usecase.register.RegisterUseCase
 
-
 class AuthViewModel(
     statusUseCase: AuthStatusUseCase,
     private val loginUseCase: LogInUseCase,
