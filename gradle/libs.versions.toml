@@ -17,6 +17,8 @@ runtime = "1.9.5"
 material3 = "1.4.0"
 foundation = "1.9.5"
 cronetEmbedded = "141.7340.3"
+lifecycleRuntimeCompose = "2.10.0"
+foundationLayout = "1.10.0"
 
 [libraries]
 
@@ -49,6 +51,8 @@ androidx-compose-runtime = { group = "androidx.compose.runtime", name = "runtime
 androidx-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
 androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "foundation" }
 cronet-embedded = { group = "org.chromium.net", name = "cronet-embedded", version.ref = "cronetEmbedded" }
+androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycleRuntimeCompose" }
+androidx-compose-foundation-layout = { group = "androidx.compose.foundation", name = "foundation-layout", version.ref = "foundationLayout" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

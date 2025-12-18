@@ -7,7 +7,6 @@ import marcel.uni.gamifiedplanner.domain.user.model.UserInventoryItem
 import marcel.uni.gamifiedplanner.domain.user.model.UserStats
 
 interface UserRepository {
-
     suspend fun createUserProfile(username:String)
     fun observeUserStats(): Flow<UserStats?>
     suspend fun addXp(amoung:Int)
@@ -22,5 +21,11 @@ interface UserRepository {
 
     fun observeInventory() : Flow<List<UserInventoryItem>>
     suspend fun purchaseItem(itemId:String)
+
+    fun observeDarkMode():Flow<Boolean>
+    suspend fun toggleDarkMode(enabled:Boolean)
+
+    fun observeNotifications():Flow<Boolean>
+    suspend fun toggleNotifications(enabled:Boolean)
 
 }

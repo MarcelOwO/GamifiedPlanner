@@ -2,7 +2,6 @@ package marcel.uni.gamifiedplanner.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-//why the fuck is alpha first
 val PrimaryDark = Color(0xFFF1C388)
 val DarkDark = Color(0xFF13171F)
 val DarkGrayDark =Color(0xFF3A455C)

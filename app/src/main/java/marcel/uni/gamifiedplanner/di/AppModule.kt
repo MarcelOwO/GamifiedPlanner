@@ -14,7 +14,7 @@ class AppModule {
         single{ ProgressionService() }
         viewModel { AppHeaderViewModel(get(),get()) }
         viewModel { StatsViewModel() }
-        viewModel { SettingsViewModel() }
+        viewModel { SettingsViewModel(get(),get(),get(),get(),get()) }
         viewModel { ProfileViewModel() }
 
     }

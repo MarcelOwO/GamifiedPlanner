@@ -236,7 +236,7 @@ class UserRepositoryImpl(
     }
 
     override suspend fun purchaseItem(itemId: String) {
-        if( uid == null ){
+        if (uid == null) {
             return
         }
 
@@ -269,8 +269,65 @@ class UserRepositoryImpl(
             transaction.set(userInventoryRef, newItemData)
 
         }.await()
+    }
 
+    override fun observeDarkMode(): Flow<Boolean> = callbackFlow {
+        if (uid == null) {
+            trySend(false)
+            return@callbackFlow
+        }
 
+        val listener = getUserDoc(uid!!).addSnapshotListener { snapshot, error ->
+            if (error != null) {
+                close(error)
+                return@addSnapshotListener
+            }
+            if (snapshot != null && snapshot.exists()) {
+                val enabled = snapshot.getBoolean("darkMode") ?: false
+                trySend(enabled)
+            } else trySend(false)
+
+        }
+
+        awaitClose() {
+            listener.remove()
+        }
+    }
+
+    override suspend fun toggleDarkMode(enabled: Boolean) {
+        if (uid == null){
+            return
+        }
+        getUserDoc(uid!!).update("darkmode",enabled).await()
+    }
+
+    override fun observeNotifications(): Flow<Boolean> = callbackFlow{
+        if(uid == null){
+            trySend(false)
+            return@callbackFlow
+        }
+        val listener = getUserDoc(uid!!).addSnapshotListener { snapshot, error ->
+            if (error != null) {
+                close(error)
+                return@addSnapshotListener
+            }
+            if (snapshot != null && snapshot.exists()) {
+                val enabled = snapshot.getBoolean("notifications") ?: false
+                trySend(enabled)
+            } else trySend(false)
+
+        }
+
+        awaitClose() {
+            listener.remove()
+        }
+    }
+
+    override suspend fun toggleNotifications(enabled: Boolean) {
+        if (uid == null)
+            return
+
+        getUserDoc(uid!!).update("notifications",enabled).await()
     }
 
 }
