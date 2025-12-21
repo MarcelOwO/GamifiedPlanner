@@ -7,6 +7,9 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 
+
+
+
 private val DarkColorScheme = darkColorScheme(
     primary = PrimaryDark,
     secondary = LightGrayDark,
@@ -23,6 +26,8 @@ private val LightColorScheme = lightColorScheme(
     surface = DarkGrayLight,
 
 )
+
+// this needs fixes later to get it to work with custom settings
 
 @Composable
 fun GamifiedPlannerTheme(

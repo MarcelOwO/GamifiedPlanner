@@ -9,13 +9,17 @@ import marcel.uni.gamifiedplanner.ui.stats.StatsViewModel
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
-class AppModule {
-    val appModule = module {
-        single{ ProgressionService() }
-        viewModel { AppHeaderViewModel(get(),get()) }
-        viewModel { StatsViewModel() }
-        viewModel { SettingsViewModel(get(),get(),get(),get(),get()) }
-        viewModel { ProfileViewModel() }
+//
+// Remaining modules get dumped here if I don't know where else to save them
+//
 
-    }
+class AppModule {
+    val appModule =
+        module {
+            single { ProgressionService() }
+            viewModel { AppHeaderViewModel(get(), get()) }
+            viewModel { StatsViewModel() }
+            viewModel { SettingsViewModel(get(), get(), get(), get(), get()) }
+            viewModel { ProfileViewModel() }
+        }
 }

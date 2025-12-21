@@ -2,13 +2,13 @@ package marcel.uni.gamifiedplanner.domain.user.repository
 
 import kotlinx.coroutines.flow.Flow
 import marcel.uni.gamifiedplanner.domain.user.model.TaskHistoryItem
+import marcel.uni.gamifiedplanner.domain.user.model.User
 import marcel.uni.gamifiedplanner.domain.user.model.UserAchievement
 import marcel.uni.gamifiedplanner.domain.user.model.UserInventoryItem
-import marcel.uni.gamifiedplanner.domain.user.model.UserStats
 
 interface UserRepository {
     suspend fun createUserProfile(username:String)
-    fun observeUserStats(): Flow<UserStats?>
+    fun observeUser(): Flow<User?>
     suspend fun addXp(amoung:Int)
     suspend fun spendCurrency(amount:Int): Result<Unit>
 

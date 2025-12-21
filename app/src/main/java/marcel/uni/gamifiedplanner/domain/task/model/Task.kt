@@ -5,6 +5,7 @@ data class Task(
     val title: String="",
     val priority: Priority = Priority.MEDIUM,
     val status: TaskStatus = TaskStatus.OPEN,
+    val startTime : Long? = null,
     val description: String? = null,
     val duration: Long? = null,
     val createdAt: Long = System.currentTimeMillis()

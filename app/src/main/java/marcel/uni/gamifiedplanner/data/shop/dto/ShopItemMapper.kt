@@ -9,6 +9,7 @@ fun ShopItemDto.ToDomain()=
         name = this.name,
         description = this.description,
         price = this.price,
+        iconResId = this.iconResId,
     )
 
 fun ShopItem.ToDto()=
@@ -17,4 +18,5 @@ fun ShopItem.ToDto()=
         name = this.name,
         description = this.description,
         price = this.price,
+        iconResId = this.iconResId,
     )

@@ -4,7 +4,7 @@ data class Achievement(
     val id: String = "",
     val name: String = "",
     val description: String = "",
-    val iconUrl: String = "",
+    val iconResId: Int? = null,
     val achieved : Boolean = false,
     val achievedAt : Long? = null,
     )

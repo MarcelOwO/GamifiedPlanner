@@ -4,7 +4,7 @@ import marcel.uni.gamifiedplanner.domain.task.model.Priority
 
 
 data class TaskHistoryItem(
-    val uuid: String,
+    val id: String,
     val taskId: String,
     val completedAt: Long,
     val taskPriority: Priority,
