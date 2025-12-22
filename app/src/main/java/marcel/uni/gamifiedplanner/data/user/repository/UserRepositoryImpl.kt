@@ -118,10 +118,10 @@ class UserRepositoryImpl(
         }
     }
 
-    override fun observeAchievementsProgress(): Flow<List<UserAchievement>> =
+    override fun observeAchievementsProgress(): Flow<Map<String,Long> =
         callbackFlow {
             if (uid == null) {
-                trySend(emptyList())
+                trySend(emptyMap())
                 return@callbackFlow
             }
 
@@ -132,9 +132,9 @@ class UserRepositoryImpl(
                         return@addSnapshotListener
                     }
                     if (snapshot != null) {
-                        val userAchievementsDto = snapshot.toObjects<UserAchievementDto>()
-                        val userAchievements = userAchievementsDto.map { it.toDomain() }
-                        trySend(userAchievements)
+                        val userAchievementsMap = snapshot.to
+                            .toObjects<UserAchievementDto>()
+                        trySend(userAchievementsMap)
                     }
                 }
             awaitClose {

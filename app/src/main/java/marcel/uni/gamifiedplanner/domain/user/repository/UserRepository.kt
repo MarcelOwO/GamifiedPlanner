@@ -7,25 +7,34 @@ import marcel.uni.gamifiedplanner.domain.user.model.UserAchievement
 import marcel.uni.gamifiedplanner.domain.user.model.UserInventoryItem
 
 interface UserRepository {
-    suspend fun createUserProfile(username:String)
+    suspend fun createUserProfile(username: String)
+
     fun observeUser(): Flow<User?>
-    suspend fun addXp(amoung:Int)
-    suspend fun spendCurrency(amount:Int): Result<Unit>
 
-    fun observeAchievementsProgress(): Flow<List<UserAchievement>>
-    suspend fun unlockAchievement(achivementId:String)
+    suspend fun addXp(amoung: Int)
 
+    suspend fun spendCurrency(amount: Int): Result<Unit>
 
-    fun getTaskHistory(startTime:Long, endTime:Long): Flow<List<TaskHistoryItem>>
+    fun observeAchievementsProgress(): Flow<Map<String, Long>>
+
+    suspend fun unlockAchievement(achivementId: String)
+
+    fun getTaskHistory(
+        startTime: Long,
+        endTime: Long,
+    ): Flow<List<TaskHistoryItem>>
+
     suspend fun logCompletedTask(task: TaskHistoryItem)
 
-    fun observeInventory() : Flow<List<UserInventoryItem>>
-    suspend fun purchaseItem(itemId:String)
+    fun observeInventory(): Flow<List<UserInventoryItem>>
 
-    fun observeDarkMode():Flow<Boolean>
-    suspend fun toggleDarkMode(enabled:Boolean)
+    suspend fun purchaseItem(itemId: String)
 
-    fun observeNotifications():Flow<Boolean>
-    suspend fun toggleNotifications(enabled:Boolean)
+    fun observeDarkMode(): Flow<Boolean>
 
+    suspend fun toggleDarkMode(enabled: Boolean)
+
+    fun observeNotifications(): Flow<Boolean>
+
+    suspend fun toggleNotifications(enabled: Boolean)
 }
