@@ -1,40 +1,37 @@
 package marcel.uni.gamifiedplanner.domain.user.repository
 
+import com.google.firebase.firestore.Transaction
 import kotlinx.coroutines.flow.Flow
 import marcel.uni.gamifiedplanner.domain.user.model.TaskHistoryItem
 import marcel.uni.gamifiedplanner.domain.user.model.User
 import marcel.uni.gamifiedplanner.domain.user.model.UserAchievement
 import marcel.uni.gamifiedplanner.domain.user.model.UserInventoryItem
+import marcel.uni.gamifiedplanner.domain.user.model.UserSettings
+import marcel.uni.gamifiedplanner.util.PlannerResult
 
 interface UserRepository {
-    suspend fun createUserProfile(username: String)
+    fun observeUser(uid: String): Flow<User?>
 
-    fun observeUser(): Flow<User?>
+    fun observeInventory(uid: String): Flow<List<UserInventoryItem>>
 
-    suspend fun addXp(amoung: Int)
+    suspend fun addXp(
+        uid: String,
+        amount: Long,
+    )
 
-    suspend fun spendCurrency(amount: Int): Result<Unit>
+    suspend fun purchaseItem(
+        uid: String,
+        itemId: String,
+        cost: Long,
+    ): Result<Transaction?>
 
-    fun observeAchievementsProgress(): Flow<Map<String, Long>>
 
-    suspend fun unlockAchievement(achivementId: String)
+    fun observeAchievementsProgress(userId: String): Flow<List<UserAchievement>
 
-    fun getTaskHistory(
-        startTime: Long,
-        endTime: Long,
-    ): Flow<List<TaskHistoryItem>>
+    fun observeSettings(userId: String): Flow<UserSettings>
 
-    suspend fun logCompletedTask(task: TaskHistoryItem)
-
-    fun observeInventory(): Flow<List<UserInventoryItem>>
-
-    suspend fun purchaseItem(itemId: String)
-
-    fun observeDarkMode(): Flow<Boolean>
-
-    suspend fun toggleDarkMode(enabled: Boolean)
-
-    fun observeNotifications(): Flow<Boolean>
-
-    suspend fun toggleNotifications(enabled: Boolean)
+    fun updateSettings(
+        userId: String,
+        new: UserSettings,
+    )
 }

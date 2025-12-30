@@ -10,27 +10,13 @@ import marcel.uni.gamifiedplanner.data.shop.dto.ShopItemDto
 import marcel.uni.gamifiedplanner.data.shop.dto.ToDomain
 import marcel.uni.gamifiedplanner.domain.shop.model.ShopItem
 import marcel.uni.gamifiedplanner.domain.shop.repository.ShopRepository
+import marcel.uni.gamifiedplanner.util.firebaseConstants
+import marcel.uni.gamifiedplanner.util.observeList
 
 class ShopRepositoryImpl(
-    private val firestore: FirebaseFirestore
+    private val firestore: FirebaseFirestore,
 ) : ShopRepository {
-    private fun getCollection() = firestore.collection("shop_items")
+    private fun getCollection() = firestore.collection(firebaseConstants.SHOPITEMS)
 
-    override fun getShopItems(): Flow<List<ShopItem>> = callbackFlow {
-        val listener = getCollection().addSnapshotListener { snapshot, error ->
-            if (error != null) {
-
-                close(error)
-                return@addSnapshotListener
-            }
-            if (snapshot != null) {
-                val dtos = snapshot.toObjects<ShopItemDto>()
-                val items = dtos.map { it.ToDomain() }
-                trySend(items)
-            }
-        }
-        awaitClose(){
-            listener.remove()
-        }
-    }
+    override fun getShopItems(): Flow<List<ShopItem>> = getCollection().observeList<ShopItem>()
 }

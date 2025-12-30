@@ -9,7 +9,6 @@ import kotlinx.coroutines.launch
 import marcel.uni.gamifiedplanner.domain.task.model.Priority
 import marcel.uni.gamifiedplanner.domain.task.model.Task
 import marcel.uni.gamifiedplanner.domain.task.model.TaskStatus
-import marcel.uni.gamifiedplanner.domain.task.usecase.CreateTaskResult
 import marcel.uni.gamifiedplanner.domain.task.usecase.CreateTaskUseCase
 import marcel.uni.gamifiedplanner.domain.task.usecase.DeleteTaskUseCase
 import marcel.uni.gamifiedplanner.domain.task.usecase.GetTasksUseCase

@@ -5,8 +5,8 @@ import com.google.firebase.firestore.IgnoreExtraProperties
 
 @IgnoreExtraProperties
 data class AchievementDto(
-    @DocumentId    val id: String = "",
+    @DocumentId val id: String = "",
     val name: String = "",
     val description: String = "",
-    val iconResId: Int? =null,
+    val iconResId: Int? = null,
 )

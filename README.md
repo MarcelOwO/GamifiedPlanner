@@ -47,4 +47,5 @@ A task planner app with gamification features. Implemented for android using kot
 
     ``` bash
     ./gradlew installDebug
+
     ```

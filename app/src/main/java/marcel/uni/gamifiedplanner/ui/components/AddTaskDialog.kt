@@ -24,7 +24,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import marcel.uni.gamifiedplanner.domain.task.model.Priority
 import marcel.uni.gamifiedplanner.domain.task.model.TaskStatus
-import marcel.uni.gamifiedplanner.domain.task.usecase.CreateTaskResult
 import marcel.uni.gamifiedplanner.ui.home.HomeViewModel
 
 @Composable

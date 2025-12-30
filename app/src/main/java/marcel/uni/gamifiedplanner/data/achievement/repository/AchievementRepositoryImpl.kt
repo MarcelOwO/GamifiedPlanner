@@ -2,34 +2,21 @@ package marcel.uni.gamifiedplanner.data.achievement.repository
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.toObjects
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import marcel.uni.gamifiedplanner.data.achievement.dto.AchievementDto
 import marcel.uni.gamifiedplanner.data.achievement.dto.ToDomain
 import marcel.uni.gamifiedplanner.domain.achievement.model.Achievement
 import marcel.uni.gamifiedplanner.domain.achievement.repository.AchievementRepository
+import marcel.uni.gamifiedplanner.util.PlannerResult
+import marcel.uni.gamifiedplanner.util.firebaseConstants
+import marcel.uni.gamifiedplanner.util.observeList
 
 class AchievementRepositoryImpl(
-    private val firestore: FirebaseFirestore
+    private val firestore: FirebaseFirestore,
 ) : AchievementRepository {
-    private fun getCollection() = firestore.collection("achievements")
+    private fun getCollection() = firestore.collection(firebaseConstants.ACHIEVEMENTS)
 
-    override fun getAchievements(): Flow<List<Achievement>> = callbackFlow {
-
-        val listener = getCollection().addSnapshotListener { snapshot, error ->
-            if (error != null) {
-                close(error)
-                return@addSnapshotListener
-            }
-            if (snapshot != null) {
-                val dtos = snapshot.toObjects<AchievementDto>()
-                val achievements = dtos.map { it.ToDomain() }
-                trySend(achievements)
-            }
-        }
-        awaitClose(){
-            listener.remove()
-        }
-    }
+    override fun observeAchievements(uid: String): Flow<List<Achievement>> = getCollection().observeList<Achievement>()
 }

@@ -4,8 +4,8 @@ import kotlinx.coroutines.flow.Flow
 import marcel.uni.gamifiedplanner.domain.task.model.Task
 
 interface TaskRepository {
-    fun observeTasks(): Flow<List<Task>>
-    suspend fun createTask(task: Task)
-    suspend fun updateTask(task: Task)
-    suspend fun deleteTask(taskId: String)
+    fun observeTasks(uid: String): Flow<List<Task>>
+    suspend fun createTask(uid: String, task: Task)
+    suspend fun updateTask(uid: String, task: Task)
+    suspend fun deleteTask(uid: String, taskId: String)
 }

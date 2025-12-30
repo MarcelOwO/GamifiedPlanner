@@ -9,6 +9,7 @@ import marcel.uni.gamifiedplanner.domain.auth.repository.FirebaseAuthRepository
 class FirebaseAuthRepositoryImpl(
     private val auth: FirebaseAuth
 ) : FirebaseAuthRepository {
+
     override val currentUserId: String?
         get() = auth.currentUser?.uid
 

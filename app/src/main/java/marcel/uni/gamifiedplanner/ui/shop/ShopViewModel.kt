@@ -12,13 +12,12 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import marcel.uni.gamifiedplanner.domain.shop.model.ShopItem
 import marcel.uni.gamifiedplanner.domain.shop.usecase.GetShopItemsUseCase
-import marcel.uni.gamifiedplanner.domain.user.usecase.GetUserInventoryUseCase
-import marcel.uni.gamifiedplanner.domain.user.usecase.PurchaseItemResult
+import marcel.uni.gamifiedplanner.domain.user.usecase.ObserveUserInventoryUseCase
 import marcel.uni.gamifiedplanner.domain.user.usecase.PurchaseItemUseCase
 
 class ShopViewModel(
     private val getItemsUseCase: GetShopItemsUseCase,
-    private val getInventoryUseCase: GetUserInventoryUseCase,
+    private val getInventoryUseCase: ObserveUserInventoryUseCase,
     private val purchaseItemUseCase: PurchaseItemUseCase,
 ) : ViewModel() {
 

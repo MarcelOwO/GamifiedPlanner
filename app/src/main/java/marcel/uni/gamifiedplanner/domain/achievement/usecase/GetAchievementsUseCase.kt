@@ -4,30 +4,44 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import marcel.uni.gamifiedplanner.domain.achievement.model.Achievement
 import marcel.uni.gamifiedplanner.domain.achievement.repository.AchievementRepository
+import marcel.uni.gamifiedplanner.domain.auth.repository.FirebaseAuthRepository
 import marcel.uni.gamifiedplanner.domain.user.repository.UserRepository
+import marcel.uni.gamifiedplanner.util.PlannerResult
 
 class GetAchievementsUseCase(
     private val achievementRepo: AchievementRepository,
-    private val userRepo: UserRepository
+    private val userRepo: UserRepository,
+    private val authRepo: FirebaseAuthRepository,
 ) {
-    operator suspend fun invoke(): List<Achievement> {
-        val allAchievements = achievementRepo.getAchievements().first()
-        val userProgress = userRepo.observeAchievementsProgress().first()
+    suspend operator fun invoke(): PlannerResult<List<Achievement>> {
+        val userId =
+            authRepo.currentUserId ?: return PlannerResult.ValidationError("User not logged in")
 
+        return achievementRepo.observeAchievements(userId).first().mapSuccess { allAchievements ->
+            userRepo.obser
+        }
+
+        val allAchievements =
+            achievementRepo
+                .getAchievements(userId)
+                .first()
+        val userProgress = userRepo.observeAchievementsProgress(userId).first()
         val progressMap = userProgress.associateBy { it.achievementId }
 
-        return allAchievements.map { achievement ->
-            val progress = progressMap[achievement.id]
+        val updatedAchievements = allAchievements.map { it }
 
-            if (progress != null) {
-                achievement.copy(
-                    achieved = true,
-                    achievedAt = progress.unlockedAt
-                )
+        val map =
+            allAchievements.map { achievement ->
+                val progress = progressMap[achievement.id]
+
+                if (progress != null) {
+                    achievement.copy(
+                        achieved = true,
+                        achievedAt = progress.unlockedAt,
+                    )
+                } else {
+                    achievement
+                }
             }
-            else {
-                achievement
-            }
-        }
     }
 }

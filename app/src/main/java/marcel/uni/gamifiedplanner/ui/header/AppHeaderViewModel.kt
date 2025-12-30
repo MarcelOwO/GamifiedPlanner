@@ -9,10 +9,10 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import marcel.uni.gamifiedplanner.domain.services.ProgressionService
 import marcel.uni.gamifiedplanner.domain.user.model.UserStats
-import marcel.uni.gamifiedplanner.domain.user.usecase.GetUserDataUseCase
+import marcel.uni.gamifiedplanner.domain.user.usecase.ObserveUserDataUseCase
 
 class AppHeaderViewModel(
-    private val getUserDataUseCase: GetUserDataUseCase,
+    private val getUserDataUseCase: ObserveUserDataUseCase,
     private val progressionService: ProgressionService
     ) : ViewModel() {
 
