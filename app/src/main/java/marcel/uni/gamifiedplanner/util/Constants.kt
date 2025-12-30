@@ -7,4 +7,6 @@ object firebaseConstants{
     const val DARKMODE ="dark_mode"
     const val SHOPITEMS="shop_items"
     const val TASKS ="tasks"
+    const val INVENTORY=        "inventory"
+    const val USERACHIEVEMENT ="user_achievements"
 }

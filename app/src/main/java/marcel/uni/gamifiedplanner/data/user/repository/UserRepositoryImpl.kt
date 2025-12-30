@@ -30,9 +30,9 @@ import marcel.uni.gamifiedplanner.util.firebaseConstants
 class UserRepositoryImpl(
     private val db: FirebaseFirestore,
 ) : UserRepository {
-    private fun userRef(uid: String) = db.collection("users").document(uid)
+    private fun userRef(uid: String) = db.collection(firebaseConstants.USERS).document(uid)
 
-    private fun inventoryColl(uid: String) = userRef(uid).collection("inventory")
+    private fun inventoryColl(uid: String) = userRef(uid).collection(firebaseConstants.INVENTORY)
 
     override fun observeUser(uid: String): Flow<User?> = userRef(uid).observeModel<UserDto>().map { it?.toDomain() }
 
@@ -62,15 +62,11 @@ class UserRepositoryImpl(
             }.await()
     }
 
-    override fun observeAchievementsProgress(userId: String): PlannerResult<Flow<List<UserAchievement>>> {
-        return PlannerResult.Success(userRef(userId).collection("user_achievements").observeList<UserAchievement>().map{list->
-        list.map{it.toDomain}})
+
+    override fun observeAchievementsProgress(userId: String): Flow<List<UserAchievement>> = userRef(userId).observeList<UserAchievement>()
+
+    override  fun observeSettings(userId: String): Flow<UserSettings> = userRef(userId).observeModel<UserSettings>()
+
+    override suspend fun updateSettings(userId: String, new: UserSettings) {
+        userRef(userId).set(new,SetOptions.merge()).await()
     }
-
-
-
-    override fun observeSettings(userId: String): PlannerResult<Flow<UserSettings>> {
-        return PlannerResult.Success(userRef(userId).observeModel<UserSettings>())
-    }
-
-    override fun updateSettings(userId: String, new: UserSettings): PlannerResult<Nothing> { }

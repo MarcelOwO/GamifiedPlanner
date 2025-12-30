@@ -34,6 +34,6 @@ class AchievementEventHandler(
             else -> {
             }
         }
-        return PlannerResult.Success()
+        return PlannerResult.Success<Nothing>(null)
     }
 }

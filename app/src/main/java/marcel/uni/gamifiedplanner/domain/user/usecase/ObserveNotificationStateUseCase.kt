@@ -1,10 +1,24 @@
 package marcel.uni.gamifiedplanner.domain.user.usecase
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
+import marcel.uni.gamifiedplanner.domain.auth.repository.FirebaseAuthRepository
 import marcel.uni.gamifiedplanner.domain.user.repository.UserRepository
 
 class ObserveNotificationStateUseCase(
     private val userRepo: UserRepository,
-){
-    operator fun  invoke(): Flow<Boolean> = userRepo.observeNotifications()
+    private val authRepo: FirebaseAuthRepository,
+) {
+    operator fun invoke(): Flow<Boolean> {
+        val userId = authRepo.currentUserId
+
+        if (userId == null) {
+            return flowOf(false)
+        }
+
+        return userRepo.observeSettings(userId).map { settings ->
+            settings.notificationState
+        }
+    }
 }
