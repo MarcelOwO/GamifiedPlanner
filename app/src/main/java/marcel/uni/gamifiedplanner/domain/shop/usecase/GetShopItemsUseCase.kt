@@ -5,6 +5,7 @@ import marcel.uni.gamifiedplanner.domain.shop.model.ShopItem
 import marcel.uni.gamifiedplanner.domain.shop.repository.ShopRepository
 
 class GetShopItemsUseCase(
-    private val repo: ShopRepository) {
-    operator fun invoke(): Flow<List<ShopItem>> = repo.getShopItems()
+    private val repo: ShopRepository,
+) {
+    operator fun invoke(): Flow<List<ShopItem>> = repo.observeShopItems()
 }

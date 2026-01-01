@@ -5,12 +5,12 @@ import marcel.uni.gamifiedplanner.domain.auth.repository.FirebaseAuthRepository
 import marcel.uni.gamifiedplanner.util.PlannerResult
 import kotlinx.coroutines.flow.first
 
-class SetDarkModeUseCase(
+class SetUserNameUseCase(
     private val userRepo: UserRepository
     private val authRepo:FirebaseAuthRepository
 ) {
 
-    suspend operator fun invoke(enabled:Boolean):PlannerResult<Nothing>{
+    suspend operator fun invoke(new:String):PlannerResult<Nothing>{
 
         val userId = authRepo.currentUserId
 
@@ -18,11 +18,11 @@ class SetDarkModeUseCase(
             return PlannerResult.ValidationError("User was not logged in")
         }
 
-        val currentSettings = userRepo.observeSettings(userId).first()
+        val currentProfile = userRepo.observeProfile(userId).first()
 
-        var copy = currentSettings.copy(darkMode=enabled)
+        var copy = currentProfile.copy(username=new)
 
-        userRepo.updateSettings(userId,copy)
+        userRepo.updateProfile(userId,copy)
 
         return PlannerResult.Success<Nothing>()
 

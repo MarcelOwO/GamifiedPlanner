@@ -14,7 +14,7 @@ class AchievementEventHandler(
 ) : DomainEventHandler {
     override val order = 0
 
-    override suspend fun handle(event: DomainEvent): PlannerResult {
+    override suspend fun handle(event: DomainEvent): PlannerResult<Nothing> {
         val userId = authRepo.currentUserId
 
         if (userId == null) {

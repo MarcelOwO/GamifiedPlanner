@@ -1,6 +1,7 @@
 package marcel.uni.gamifiedplanner.domain.user.usecase
 
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
 import marcel.uni.gamifiedplanner.domain.auth.repository.FirebaseAuthRepository
 import marcel.uni.gamifiedplanner.domain.events.DomainEvent
 import marcel.uni.gamifiedplanner.domain.events.DomainEventPublisher
@@ -15,7 +16,7 @@ class PurchaseItemUseCase(
     private val eventService: DomainEventPublisher,
     private val authRepo: FirebaseAuthRepository,
 ) {
-    suspend operator fun invoke(itemId: String): PlannerResult {
+    suspend operator fun invoke(itemId: String): PlannerResult<Nothing> {
         val userId = authRepo.currentUserId
 
         if (userId == null) {
@@ -30,7 +31,7 @@ class PurchaseItemUseCase(
             return PlannerResult.ValidationError("Item does not exist")
         }
 
-        userRepo.purchaseItem(userId, itemId, item.cost)
+        userRepo.purchaseItem(userId, itemId, item.price)
 
         val event = DomainEvent.ItemPurchasedEvent(itemId)
 

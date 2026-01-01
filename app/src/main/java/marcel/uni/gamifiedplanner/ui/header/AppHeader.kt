@@ -32,7 +32,6 @@ import org.koin.androidx.compose.koinViewModel
 import marcel.uni.gamifiedplanner.R
 
 
-// implement the  remaining user stats loading into the menu and stuff like it
 
 @Preview
 @Composable

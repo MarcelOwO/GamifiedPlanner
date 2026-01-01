@@ -18,8 +18,11 @@ import marcel.uni.gamifiedplanner.data.user.dto.mapper.toDomain
 import marcel.uni.gamifiedplanner.domain.task.model.Priority
 import marcel.uni.gamifiedplanner.domain.user.model.TaskHistoryItem
 import marcel.uni.gamifiedplanner.domain.user.model.User
+import marcel.uni.gamifiedplanner.domain.user.model.UserStats
 import marcel.uni.gamifiedplanner.domain.user.model.UserSettings
-import marcel.uni.gamifiedplanner.domain.user.model.UserAchievement
+import marcel.uni.gamifiedplanner.domain.user.model.UserInventory
+import marcel.uni.gamifiedplanner.domain.user.model.UserProfile
+import marcel.uni.gamifiedplanner.domain.user.model.UserAchievementItem
 import marcel.uni.gamifiedplanner.domain.user.model.UserInventoryItem
 import marcel.uni.gamifiedplanner.domain.user.repository.UserRepository
 import marcel.uni.gamifiedplanner.util.PlannerResult
@@ -36,10 +39,6 @@ class UserRepositoryImpl(
 
     override fun observeUser(uid: String): Flow<User?> = userRef(uid).observeModel<UserDto>().map { it?.toDomain() }
 
-    override fun observeInventory(uid: String): Flow<List<UserInventoryItem>> =
-        inventoryColl(uid).observeList<UserInventoryItemDto>().map { list ->
-            list.map { it.toDomain() }
-        }
 
     override suspend fun addXp(
         uid: String,
@@ -63,10 +62,28 @@ class UserRepositoryImpl(
     }
 
 
-    override fun observeAchievementsProgress(userId: String): Flow<List<UserAchievement>> = userRef(userId).observeList<UserAchievement>()
 
     override  fun observeSettings(userId: String): Flow<UserSettings> = userRef(userId).observeModel<UserSettings>()
 
     override suspend fun updateSettings(userId: String, new: UserSettings) {
         userRef(userId).set(new,SetOptions.merge()).await()
+    }
+
+    override fun observeProfile(userId: String): Flow<UserProfile> = userRef(userId).observeModel<UserProfile>()
+
+    override suspend fun updateProfile(userId: String, new: UserProfile) {
+        userRef(userId).set(new,SetOptions.merge()).await()
+    }
+
+    override fun observeInventory(userId: String): Flow<UserInventory> = userRef(userId).observeModel<UserInventory>()
+
+    override suspend fun updateInventory(userId: String, new: UserInventory) {
+        userRef(userId).set(new,SetOptions.merge()).await()
+    }
+
+    override fun observeStats(userId: String): Flow<UserStats> = userRef(userId).observeModel<UserStats>()
+
+    override suspend fun updateStats(userId: String, new: UserStats) {
+        userRef(userId).set(new,SetOptions.merge()).await()
+
     }

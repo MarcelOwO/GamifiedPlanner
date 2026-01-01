@@ -4,5 +4,5 @@ import kotlinx.coroutines.flow.Flow
 import marcel.uni.gamifiedplanner.domain.shop.model.ShopItem
 
 interface ShopRepository {
-    fun getShopItems(): Flow<List<ShopItem>>
+    fun observeShopItems(): Flow<List<ShopItem>>
 }

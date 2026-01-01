@@ -13,6 +13,7 @@ import marcel.uni.gamifiedplanner.domain.task.usecase.CreateTaskUseCase
 import marcel.uni.gamifiedplanner.domain.task.usecase.DeleteTaskUseCase
 import marcel.uni.gamifiedplanner.domain.task.usecase.GetTasksUseCase
 import marcel.uni.gamifiedplanner.domain.task.usecase.UpdateTaskUseCase
+import marcel.uni.gamifiedplanner.util.PlannerResult
 
 class HomeViewModel(
     private val createTaskUseCase: CreateTaskUseCase,
@@ -26,7 +27,7 @@ class HomeViewModel(
         description: String,
         priority: Priority,
         status: TaskStatus,
-        onResult: (CreateTaskResult) -> Unit
+        onResult: (PlannerResult<Nothing>) -> Unit
     ) {
         viewModelScope.launch {
             val result = createTaskUseCase(
@@ -62,7 +63,4 @@ class HomeViewModel(
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
-            initialValue = emptyList() // The initial List<Task>
-        )}
-
-
+            initialValue = emptyList()         )}

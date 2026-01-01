@@ -9,10 +9,10 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlin.collections.emptyList
 
 
-inline fun <reified T : Any> DocumentReference.observeModel(): Flow<T?> = callbackFlow {
+inline fun <reified T : Any> DocumentReference.observeModel(): Flow<T> = callbackFlow {
     val listener = addSnapshotListener { snapshot, error ->
         if (error != null) { close(error); return@addSnapshotListener }
-        trySend(snapshot?.toObject(T::class.java))
+        trySend(snapshot.toObject(T::class.java))
     }
     awaitClose { listener.remove() }
 }
