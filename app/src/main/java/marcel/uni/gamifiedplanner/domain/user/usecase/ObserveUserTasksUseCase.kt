@@ -9,18 +9,13 @@ import marcel.uni.gamifiedplanner.domain.user.repository.UserRepository
 import marcel.uni.gamifiedplanner.domain.auth.repository.FirebaseAuthRepository
 
 class ObserveUserTaskUseCase(
-    private val userRepo: UserRepository
+    private val userRepo: UserRepository,
     private val authRepo: FirebaseAuthRepository
 ) {
 
     operator fun invoke(): Flow<List<TaskHistoryItem>> {
-        val userId = authRepo.currentUserId
+        val userId = authRepo.currentUserId ?: return flowOf(emptyList())
 
-        if( userId == null ){
-            return flowOf(emptyList())
-        }
-        return userRepo.observeInventory(userId).map{inventory->
-            inventory.tasks
-        }
+        return userRepo.observeHistoryItems(userId)
     }
 }

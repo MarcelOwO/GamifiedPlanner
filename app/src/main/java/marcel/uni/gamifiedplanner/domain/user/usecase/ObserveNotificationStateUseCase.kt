@@ -11,11 +11,7 @@ class ObserveNotificationStateUseCase(
     private val authRepo: FirebaseAuthRepository,
 ) {
     operator fun invoke(): Flow<Boolean> {
-        val userId = authRepo.currentUserId
-
-        if (userId == null) {
-            return flowOf(false)
-        }
+        val userId = authRepo.currentUserId ?: return flowOf(false)
 
         return userRepo.observeSettings(userId).map { settings ->
             settings.notificationState

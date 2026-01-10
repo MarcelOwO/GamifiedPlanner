@@ -9,12 +9,14 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import marcel.uni.gamifiedplanner.domain.user.model.UserStats
 import marcel.uni.gamifiedplanner.domain.user.usecase.ObserveLevelUseCase
+import marcel.uni.gamifiedplanner.domain.user.usecase.ObserveXpProgressUseCase
 import marcel.uni.gamifiedplanner.domain.user.usecase.ObserveXpUseCase
 import marcel.uni.gamifiedplanner.util.calculateProgress
 
 class AppHeaderViewModel(
     private val observeXp: ObserveXpUseCase,
     private val observeLevel: ObserveLevelUseCase,
+    private val observeXpProgress: ObserveXpProgressUseCase
 ) : ViewModel() {
     val currentLevel: StateFlow<Int> =
         observeLevel().stateIn(
@@ -24,23 +26,18 @@ class AppHeaderViewModel(
         )
 
     val currentXp: StateFlow<Long> =
-        flow {
-            val xp = observeXp()
-            emit(xp)
-        }.stateIn(
+        observeXp().stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
-            initialValue = 0f,
+            initialValue = 0,
         )
 
-    val xpProgress: StateFlow<Float> =
-        flow {
-            val xp = observeXp()
-            emit(xp)
-        }.map { xp -> calculateProgress(xp) }
-            .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5000),
-                initialValue = 0f,
-            )
+
+    val xpProgress: StateFlow<Long> =
+        observeXpProgress().stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = 0,
+        )
+
 }

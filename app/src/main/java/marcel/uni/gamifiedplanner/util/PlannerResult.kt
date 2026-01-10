@@ -2,22 +2,23 @@ package marcel.uni.gamifiedplanner.util
 
 sealed class PlannerResult<out T> {
     data class Success<out T>(
-        val data: T? = null,
+        val data: T,
     ) : PlannerResult<T>()
 
-    data class ValidationError(
+    data class Error(
         val message: String,
-        val field: String? = null,
+        val cause: Throwable? = null,
     ) : PlannerResult<Nothing>()
 
-    data class Failure(
-        val error: Throwable,
-    ) : PlannerResult<Nothing>()
+    val isSuccess: Boolean get() = this is Success
+
+    fun getOrNull(): T? = (this as? Success)?.data
 }
 
-inline fun <T, R> PlannerResult<T>.mapSuccess(transform: (T?) -> PlannerResult<R>): PlannerResult<R> =
-    when (this) {
-        is PlannerResult.Success -> transform(data)
-        is PlannerResult.ValidationError -> this
-        is PlannerResult.Failure -> this
+inline fun <T> PlannerResult<T>.onFailure(action: (PlannerResult.Error) -> Unit): PlannerResult<T> {
+    if (this is PlannerResult.Error) {
+        action(this)
     }
+    return this
+}
+

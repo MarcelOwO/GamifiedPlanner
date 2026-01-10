@@ -103,9 +103,8 @@ fun AddTaskDialog(
                                 is PlannerResult.Success -> {
                                     onDismiss()
                                 }
-                                is PlannerResult.Failure -> {
-                                }
-                                is PlannerResult.ValidationError -> {
+                                is PlannerResult.Error -> {
+
                                 }
                             }
                         })

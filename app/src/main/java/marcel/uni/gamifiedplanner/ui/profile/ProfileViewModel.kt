@@ -20,16 +20,16 @@ class ProfileViewModel(
     private val setUsernameUseCase: SetUserNameUseCase,
 ) : ViewModel(){
 
-    fun UpdateUsername(new:String):PlannerResult<Nothing>{
+    fun UpdateUsername(new:String):PlannerResult<Unit>{
          if (new.isBlank()){
-             return PlannerResult.ValidationError("Name can't be empty");
+             return PlannerResult.Error("Name can't be empty");
          }
 
          viewModelScope.launch{
              setUsernameUseCase(new)
          }
 
-        return PlannerResult.Success<Nothing>()
+        return PlannerResult.Success(Unit)
     }
 
     val username :StateFlow<String> = observeUsernameUseCase()

@@ -14,23 +14,17 @@ class PurchaseItemUseCase(
     private val shopRepo: ShopRepository,
     private val authRepo: FirebaseAuthRepository,
 ) {
-    suspend operator fun invoke(itemId: String): PlannerResult<Nothing> {
-        val userId = authRepo.currentUserId
-
-        if (userId == null) {
-            return PlannerResult.ValidationError("User is not logged in")
-        }
+    suspend operator fun invoke(itemId: String): PlannerResult<Unit> {
+        val userId = authRepo.currentUserId ?: return PlannerResult.Error("User is not logged in")
 
         val items = shopRepo.observeShopItems().first()
 
-        val item = items.find { it.id == itemId }
+        val item =
+            items.find { it.id == itemId } ?: return PlannerResult.Error("Item does not exist")
 
-        if (item == null) {
-            return PlannerResult.ValidationError("Item does not exist")
-        }
 
         userRepo.purchaseItem(userId, itemId, item.price)
 
-        return PlannerResult.Success<Nothing>()
+        return PlannerResult.Success(Unit)
     }
 }

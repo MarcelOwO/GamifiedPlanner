@@ -12,15 +12,11 @@ class AddXpUseCase(
     private val userRepo: UserRepository,
     private val authRepo: FirebaseAuthRepository,
 ) {
-    suspend operator fun invoke(amount: Long): PlannerResult<Nothing> {
-        val userId = authRepo.currentUserId
-
-        if (userId == null) {
-            return PlannerResult.ValidationError("User is not logged in")
-        }
+    suspend operator fun invoke(amount: Long): PlannerResult<Unit> {
+        val userId = authRepo.currentUserId ?: return PlannerResult.Error("User is not logged in")
 
         userRepo.addXp(userId, amount)
 
-        return PlannerResult.Success()
+        return PlannerResult.Success(Unit)
     }
 }

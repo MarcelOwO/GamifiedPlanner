@@ -18,7 +18,7 @@ class GetAchievementsUseCase(
     suspend operator fun invoke(): PlannerResult<List<AchievementDisplay>> {
 
         val userId =
-            authRepo.currentUserId ?: return PlannerResult.ValidationError("User not logged in")
+            authRepo.currentUserId ?: return PlannerResult.Error("User not logged in")
 
         val globalAchievements =
             achievementRepo

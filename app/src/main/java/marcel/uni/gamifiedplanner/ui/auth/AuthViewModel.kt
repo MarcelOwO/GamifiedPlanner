@@ -10,6 +10,7 @@ import marcel.uni.gamifiedplanner.domain.auth.usecase.AuthStatusUseCase
 import marcel.uni.gamifiedplanner.domain.auth.usecase.login.LogInUseCase
 import marcel.uni.gamifiedplanner.domain.auth.usecase.LogoutUseCase
 import marcel.uni.gamifiedplanner.domain.auth.usecase.register.RegisterUseCase
+import marcel.uni.gamifiedplanner.util.PlannerResult
 
 class AuthViewModel(
     statusUseCase: AuthStatusUseCase,
@@ -24,7 +25,7 @@ class AuthViewModel(
         initialValue = false
     )
 
-    fun login(email: String, password: String, onResult: (LogInResult) -> Unit) {
+    fun login(email: String, password: String, onResult: (PlannerResult<Unit>) -> Unit) {
         viewModelScope.launch {
             loginUseCase(email, password)
                 .also { result ->
@@ -33,7 +34,7 @@ class AuthViewModel(
         }
     }
 
-    fun register(email: String,username:String, password: String, onResult: (RegisterResult) -> Unit) {
+    fun register(email: String,username:String, password: String, onResult: (PlannerResult<Unit>) -> Unit) {
         viewModelScope.launch {
             registerUseCase(email,username, password).also { result ->
                 onResult(result)

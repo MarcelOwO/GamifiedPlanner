@@ -17,7 +17,7 @@ class UserModule {
             factory { PurchaseItemUseCase(get(), get(),get()) }
             factory { ObserveUserInventoryUseCase(get(),get()) }
             factory { SetDarkModeUseCase(get(),get()) }
-            factory { SetNotificationStateUseCase(get()) }
+            factory { SetNotificationStateUseCase(get(),get()) }
             factory { ObserveDarkModeUseCase(get(),get()) }
             factory { ObserveNotificationStateUseCase(get(),get()) }
         }

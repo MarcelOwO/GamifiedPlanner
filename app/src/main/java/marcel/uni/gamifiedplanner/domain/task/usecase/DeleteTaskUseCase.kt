@@ -8,12 +8,13 @@ class DeleteTaskUseCase(
     private val repo: TaskRepository,
     private val authRepo: FirebaseAuthRepository
 ) {
-    suspend operator fun invoke(taskId: String): PlannerResult {
+    suspend operator fun invoke(taskId: String): PlannerResult<Unit> {
 
         val userId =
-            authRepo.currentUserId ?: return PlannerResult.ValidationError("User is not logged in");
+            authRepo.currentUserId ?: return PlannerResult.Error("User is not logged in");
 
         repo.deleteTask(userId, taskId)
-        return PlannerResult.Success
+
+        return PlannerResult.Success(Unit)
     }
 }

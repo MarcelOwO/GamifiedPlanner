@@ -105,8 +105,7 @@ fun AppHeader(vm: AppHeaderViewModel = koinViewModel(), authVm: AuthViewModel = 
                             Text("Level ${level}")
                             Text("XP ${xp}/100")
                         }
-
-                        LinearProgressIndicator(progress = progress)
+                    LinearProgressIndicator(progress = { progress.toFloat() / 100 })
                     }
                 }
 

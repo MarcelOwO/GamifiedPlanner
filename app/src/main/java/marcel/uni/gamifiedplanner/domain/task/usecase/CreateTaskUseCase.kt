@@ -16,21 +16,21 @@ class CreateTaskUseCase(
         description: String,
         priority: Priority,
         status: TaskStatus,
-    ): PlannerResult {
+    ): PlannerResult<Unit> {
         val userId =
-            authRepo.currentUserId ?: return PlannerResult.ValidationError("User is not logged in");
+            authRepo.currentUserId ?: return PlannerResult.Error("User is not logged in");
 
         if (title.isEmpty()) {
-            return PlannerResult.ValidationError("Title cannot be empty")
+            return PlannerResult.Error("Title cannot be empty")
         }
         if (description.isEmpty()) {
-            return PlannerResult.ValidationError("Description cannot be empty")
+            return PlannerResult.Error("Description cannot be empty")
         }
         if (title.length > 50) {
-            return PlannerResult.ValidationError("Title cannot be longer than 50 characters")
+            return PlannerResult.Error("Title cannot be longer than 50 characters")
         }
         if (description.length > 200) {
-            return PlannerResult.ValidationError("Description cannot be longer than 200 characters")
+            return PlannerResult.Error("Description cannot be longer than 200 characters")
         }
 
         val task = Task(
@@ -41,7 +41,7 @@ class CreateTaskUseCase(
         )
 
         repository.createTask(userId,task)
-        return PlannerResult.Success
+        return PlannerResult.Success(Unit)
     }
 
 }

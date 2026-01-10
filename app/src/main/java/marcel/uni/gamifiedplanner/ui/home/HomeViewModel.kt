@@ -27,7 +27,7 @@ class HomeViewModel(
         description: String,
         priority: Priority,
         status: TaskStatus,
-        onResult: (PlannerResult<Nothing>) -> Unit
+        onResult: (PlannerResult<Unit>) -> Unit
     ) {
         viewModelScope.launch {
             val result = createTaskUseCase(

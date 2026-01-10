@@ -56,7 +56,7 @@ class ShopViewModel(
 
     fun buyItem(
         itemId: String,
-        onResult: (PlannerResult<Nothing>) -> Unit,
+        onResult: (PlannerResult<Unit>) -> Unit,
     ) {
         viewModelScope.launch {
             purchaseItemUseCase(itemId).also { result ->

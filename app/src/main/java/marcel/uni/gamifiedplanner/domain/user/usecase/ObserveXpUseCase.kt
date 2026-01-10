@@ -10,12 +10,8 @@ class ObserveXpUseCase(
     private val userRepo: UserRepository,
     private val authRepo: FirebaseAuthRepository,
 ) {
-    suspend operator fun invoke(): Flow<Long> {
-        val userId = authRepo.currentUserId
-
-        if (userId == null) {
-            return flowOf(0)
-        }
+     operator fun invoke(): Flow<Long> {
+        val userId = authRepo.currentUserId ?: return flowOf(0)
 
         return userRepo.observeStats(userId).map { stats ->
             stats.xp

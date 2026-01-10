@@ -9,16 +9,12 @@ import marcel.uni.gamifiedplanner.domain.auth.repository.FirebaseAuthRepository
 import marcel.uni.gamifiedplanner.domain.user.model.UserProfile
 
 class ObserveUserUsernameUseCase(
-    private val userRepo: UserRepository
+    private val userRepo: UserRepository,
     private val authRepo: FirebaseAuthRepository
 ) {
-
     operator fun invoke(): Flow<String> {
-        val userId = authRepo.currentUserId
+        val userId = authRepo.currentUserId ?: return flowOf("")
 
-        if( userId == null ){
-            return flowOf("")
-        }
         return userRepo.observeProfile(userId).map{profile->
             profile.username
         }
