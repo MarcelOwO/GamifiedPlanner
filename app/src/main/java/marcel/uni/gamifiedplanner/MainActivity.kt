@@ -39,7 +39,6 @@ class MainActivity : ComponentActivity() {
                     AchievementModule().achievementModule,
                     ShopModule().shopModule,
                     UserModule().userModule,
-                    EventModule().eventModule,
                 )
             }
         ) {

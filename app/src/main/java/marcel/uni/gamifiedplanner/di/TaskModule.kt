@@ -14,10 +14,10 @@ class TaskModule {
 
     val taskModule = module {
         single<TaskRepository> { TaskRepositoryImpl(get(), get()) }
-        factory { CreateTaskUseCase(get()) }
-        factory { GetTasksUseCase(get()) }
-        factory { UpdateTaskUseCase(get()) }
-        factory { DeleteTaskUseCase(get()) }
+        factory { CreateTaskUseCase(get(),get()) }
+        factory { GetTasksUseCase(get(),get()) }
+        factory { UpdateTaskUseCase(get(),get()) }
+        factory { DeleteTaskUseCase(get(),get()) }
 
         viewModel { HomeViewModel(get(),get(),get(),get()) }
     }
