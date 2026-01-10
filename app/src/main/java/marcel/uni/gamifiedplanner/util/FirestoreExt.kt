@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlin.collections.emptyList
 
-
 inline fun <reified T : Any> DocumentReference.observeModel(): Flow<T> = callbackFlow {
     val listener = addSnapshotListener { snapshot, error ->
         if (error != null) { close(error); return@addSnapshotListener }
@@ -25,14 +24,3 @@ inline fun <reified T : Any> Query.observeList(): Flow<List<T>> = callbackFlow {
     awaitClose { listener.remove() }
 }
 
-inline fun <reified T : Any> DocumentReference.observeList(): Flow<List<T>> = callbackFlow {
-    val listener = addSnapshotListener { snapshot, error ->
-        if (error != null) { close(error); return@addSnapshotListener }
-        snapshot?.map(it->
-            it.map(it.toObject())
-
-        )
-        .toObject(T::class.java)?.let { trySend(it) }
-    }
-    awaitClose { listener.remove() }
-}

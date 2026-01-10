@@ -6,7 +6,7 @@ import marcel.uni.gamifiedplanner.ui.auth.AuthViewModel
 import org.koin.androidx.compose.koinViewModel
 
 //
-// Root of the ui and to seperate the auth views from the rest
+// Root of the ui and to separate the auth views from the rest
 //
 
 @Composable
