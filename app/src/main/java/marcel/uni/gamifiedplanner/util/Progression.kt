@@ -1,7 +1,5 @@
 package marcel.uni.gamifiedplanner.util
 
-import kotlin.math.sqrt
-
 fun calculateLevel(xp: Long): Int = (xp.toDouble() / 100).toInt() + 1
 
 fun calculateProgress(xp: Long): Long {

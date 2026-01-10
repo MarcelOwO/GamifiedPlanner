@@ -1,7 +1,7 @@
 package marcel.uni.gamifiedplanner.di
 
 import marcel.uni.gamifiedplanner.domain.shop.repository.ShopRepository
-import marcel.uni.gamifiedplanner.data.shop.repository.ShopRepositoryImpl
+import marcel.uni.gamifiedplanner.data.shop.ShopRepositoryImpl
 import marcel.uni.gamifiedplanner.domain.shop.usecase.GetShopItemsUseCase
 import marcel.uni.gamifiedplanner.ui.shop.ShopViewModel
 import org.koin.core.module.dsl.viewModel

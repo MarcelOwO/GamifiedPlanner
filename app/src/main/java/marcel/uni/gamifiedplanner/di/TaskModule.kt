@@ -1,7 +1,7 @@
 package marcel.uni.gamifiedplanner.di
 
 import marcel.uni.gamifiedplanner.domain.task.repository.TaskRepository
-import marcel.uni.gamifiedplanner.data.task.repository.TaskRepositoryImpl
+import marcel.uni.gamifiedplanner.data.task.TaskRepositoryImpl
 import marcel.uni.gamifiedplanner.domain.task.usecase.CreateTaskUseCase
 import marcel.uni.gamifiedplanner.domain.task.usecase.DeleteTaskUseCase
 import marcel.uni.gamifiedplanner.domain.task.usecase.GetTasksUseCase

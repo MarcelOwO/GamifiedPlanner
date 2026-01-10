@@ -1,12 +1,24 @@
 package marcel.uni.gamifiedplanner.util
 
 
-object firebaseConstants{
-    const val USERS ="users"
-    const val ACHIEVEMENTS ="achivements"
-    const val DARKMODE ="dark_mode"
-    const val SHOPITEMS="shop_items"
-    const val TASKS ="tasks"
-    const val INVENTORY=        "inventory"
-    const val USERACHIEVEMENT ="user_achievements"
+object firebaseConstants {
+    const val USERS = "users"
+    const val SHOP_ITEMS = "shop_items"
+    const val ACHIEVEMENTS = "achievements"
+
+    const val USERTASKHISTORY = "user_task_history"
+    const val USERACHIEVEMENTS = "user_achievements"
+    const val USERINVENTORY = "user_inventory"
+    const val TASKS = "tasks"
+
+    const val FIELD_PROFILE = "profile"
+    const val FIELD_STATS = "stats"
+
+    const val FIELD_CURRENCY = "stats.currency"
+    const val FIELD_XP = "stats.xp"
+    const val FIELD_SETTINGS = "settings"
+    const val FIELD_DARKMODE = "settings.darkMode"
+    const val FIELD_NOTIFICATIONSTATE = "settings.notificationState"
+
+
 }

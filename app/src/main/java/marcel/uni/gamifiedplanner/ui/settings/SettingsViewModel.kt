@@ -18,37 +18,35 @@ class SettingsViewModel(
     private val getDarkModeUseCase: ObserveDarkModeUseCase,
     private val getNotificationsUseCase: ObserveNotificationStateUseCase,
     private val logoutUseCase: LogoutUseCase,
-): ViewModel() {
+) : ViewModel() {
+    val notificationsEnabled: StateFlow<Boolean> =
+        getNotificationsUseCase().stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = false,
+        )
+    val darkModeEnabled =
+        getDarkModeUseCase().stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = false,
+        )
 
-    val notificationsEnabled:StateFlow<Boolean> = getNotificationsUseCase().stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5000),
-        initialValue = false
-    )
-    val darkModeEnabled  = getDarkModeUseCase().stateIn(
-        scope =viewModelScope,
-        started =SharingStarted.WhileSubscribed(5000),
-        initialValue = false
-    )
-
-    fun toggleNotifications(enabled:Boolean){
+    fun toggleNotifications(enabled: Boolean) {
         viewModelScope.launch {
             toggleNotificationsUseCase(enabled)
         }
-
     }
 
-    fun toggleDarkMode(enabled:Boolean){
-        viewModelScope.launch{
+    fun toggleDarkMode(enabled: Boolean) {
+        viewModelScope.launch {
             toggleDarkModeUseCase(enabled)
         }
     }
 
-    fun logout(){
-        viewModelScope.launch{
+    fun logout() {
+        viewModelScope.launch {
             logoutUseCase()
         }
     }
-
 }
-

@@ -25,7 +25,6 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import marcel.uni.gamifiedplanner.domain.auth.usecase.register.RegisterResult
 import marcel.uni.gamifiedplanner.ui.components.NavButton
 import marcel.uni.gamifiedplanner.ui.navigation.AppRoutes
 import org.koin.androidx.compose.koinViewModel

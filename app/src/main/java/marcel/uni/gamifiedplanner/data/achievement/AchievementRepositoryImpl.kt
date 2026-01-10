@@ -1,15 +1,9 @@
-package marcel.uni.gamifiedplanner.data.achievement.repository
+package marcel.uni.gamifiedplanner.data.achievement
 
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.toObjects
-import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
-import marcel.uni.gamifiedplanner.data.achievement.dto.AchievementDto
-import marcel.uni.gamifiedplanner.data.achievement.dto.ToDomain
 import marcel.uni.gamifiedplanner.domain.achievement.model.Achievement
 import marcel.uni.gamifiedplanner.domain.achievement.repository.AchievementRepository
-import marcel.uni.gamifiedplanner.util.PlannerResult
 import marcel.uni.gamifiedplanner.util.firebaseConstants
 import marcel.uni.gamifiedplanner.util.observeList
 

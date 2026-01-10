@@ -9,8 +9,6 @@ import kotlinx.coroutines.launch
 import marcel.uni.gamifiedplanner.domain.auth.usecase.AuthStatusUseCase
 import marcel.uni.gamifiedplanner.domain.auth.usecase.login.LogInUseCase
 import marcel.uni.gamifiedplanner.domain.auth.usecase.LogoutUseCase
-import marcel.uni.gamifiedplanner.domain.auth.usecase.login.LogInResult
-import marcel.uni.gamifiedplanner.domain.auth.usecase.register.RegisterResult
 import marcel.uni.gamifiedplanner.domain.auth.usecase.register.RegisterUseCase
 
 class AuthViewModel(

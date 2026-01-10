@@ -8,7 +8,6 @@ import androidx.compose.runtime.Composable
 import marcel.uni.gamifiedplanner.di.AchievementModule
 import marcel.uni.gamifiedplanner.di.AppModule
 import marcel.uni.gamifiedplanner.di.AuthModule
-import marcel.uni.gamifiedplanner.di.EventModule
 import marcel.uni.gamifiedplanner.di.FirebaseModule
 import marcel.uni.gamifiedplanner.di.ShopModule
 import marcel.uni.gamifiedplanner.di.TaskModule

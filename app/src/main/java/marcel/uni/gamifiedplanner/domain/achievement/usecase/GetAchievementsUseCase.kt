@@ -17,15 +17,15 @@ class GetAchievementsUseCase(
         val userId =
             authRepo.currentUserId ?: return PlannerResult.ValidationError("User not logged in")
 
-        return achievementRepo.observeAchievements(userId).first().mapSuccess { allAchievements ->
-            userRepo.obser
-        }
+        //return PlannerResult.Success(achievementRepo.observeAchievements(userId).first())
 
         val allAchievements =
             achievementRepo
-                .getAchievements(userId)
+                .observeAchievements(userId)
                 .first()
-        val userProgress = userRepo.observeAchievementsProgress(userId).first()
+
+        val userProgress = userRepo.observeInventory(userId).first().achievements
+
         val progressMap = userProgress.associateBy { it.achievementId }
 
         val updatedAchievements = allAchievements.map { it }
@@ -43,5 +43,6 @@ class GetAchievementsUseCase(
                     achievement
                 }
             }
+        return PlannerResult.Success(map)
     }
 }
