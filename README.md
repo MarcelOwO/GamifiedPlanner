@@ -12,7 +12,7 @@ A task planner app with gamification features. Implemented for android using kot
 - Task managing system
 - Level and xp system
 - Shop and currency system
-- Achievemet system
+- Achievement system
 - Daily progress view
 
 ## Tech Stack
@@ -26,6 +26,11 @@ A task planner app with gamification features. Implemented for android using kot
 -  `app/src/main/res`: contains resource files such as generated icons
 -  `app/src/main/java/marcel/uni/gamifiedplanner`: is the main root of the code
 
+- `~/data`:  contains the raw data logic and repo implementaiton to firebase/firestore
+- `~/di`: contains the koin dependency injections module definitions
+- `~/domain`: contains the domain logic 
+- `~/ui`: contains the ui built using jetpack composes
+- `~/util`: contains helper function like firebase extension methods and such
 ---
 
 ## Getting Started
@@ -38,7 +43,6 @@ A task planner app with gamification features. Implemented for android using kot
 ### Installation and Running
 
 1. Clone the repo:
-
     ``` bash
     git clone https://github.com/MarcelOwO/GamifiedPlanner.git
     ```
@@ -47,5 +51,5 @@ A task planner app with gamification features. Implemented for android using kot
 
     ``` bash
     ./gradlew installDebug
-
     ```
+    or run play using android studio
