@@ -1,6 +1,6 @@
 package marcel.uni.gamifiedplanner.domain.user.model
 
 data class UserSettings(
-    val darkMode: Boolean,
-    val notifications: Boolean,
+    val darkMode: Boolean = true,
+    val notificationState: Boolean = false,
 )

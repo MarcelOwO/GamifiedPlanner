@@ -3,33 +3,35 @@ package marcel.uni.gamifiedplanner.domain.auth.usecase.register
 import android.util.Patterns.EMAIL_ADDRESS
 import marcel.uni.gamifiedplanner.domain.auth.repository.FirebaseAuthRepository
 import marcel.uni.gamifiedplanner.domain.user.repository.UserRepository
+import marcel.uni.gamifiedplanner.util.PlannerResult
 
 class RegisterUseCase(
     private val source: FirebaseAuthRepository,
     private val userRepo: UserRepository
 ) {
-    suspend operator fun invoke(email: String, username:String, password: String): RegisterResult {
+    suspend operator fun invoke(email: String, username:String, password: String): PlannerResult<Unit> {
 
         if (email.isEmpty()) {
-            return RegisterResult.ValidationError("Email cannot be empty")
+            return PlannerResult.Error("Email cannot be empty")
         }
 
         if (EMAIL_ADDRESS.matcher(email).matches().not()) {
-            return RegisterResult.ValidationError("Invalid email format")
+            return PlannerResult.Error("Invalid email format")
         }
 
         if(username.isEmpty()) {
-            return RegisterResult.ValidationError("Username cannot be empty")
+            return PlannerResult.Error("Username cannot be empty")
         }
 
         if (password.isEmpty()) {
-            return RegisterResult.ValidationError("Password cannot be empty")
+            return PlannerResult.Error("Password cannot be empty")
         }
 
-        source.register(email, password)
+        val id =
+            source.register(email, password) ?: return PlannerResult.Error("Registration failed")
 
-        userRepo.createUserProfile(username)
+        userRepo.create(id,username,email)
 
-        return RegisterResult.Success
+        return PlannerResult.Success(Unit)
     }
 }

@@ -25,9 +25,9 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import marcel.uni.gamifiedplanner.domain.auth.usecase.register.RegisterResult
 import marcel.uni.gamifiedplanner.ui.components.NavButton
 import marcel.uni.gamifiedplanner.ui.navigation.AppRoutes
+import marcel.uni.gamifiedplanner.util.onFailure
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -53,7 +53,7 @@ fun RegisterView(
             modifier = Modifier
                 .wrapContentSize(Alignment.Center)
                 .padding(15.dp),
-            shape = RoundedCornerShape(20.dp)
+            shape = RoundedCornerShape(10.dp)
         ) {
             Column(
                 verticalArrangement = Arrangement.Center,
@@ -72,7 +72,7 @@ fun RegisterView(
                     value = email,
                     onValueChange = { email = it },
                     label = { Text("Email") },
-                    shape = RoundedCornerShape(20.dp)
+                    shape = RoundedCornerShape(10.dp)
                 )
                 Spacer(modifier = Modifier.height(10.dp))
 
@@ -80,7 +80,7 @@ fun RegisterView(
                     value = username,
                     onValueChange = { username = it },
                     label = { Text("Username") },
-                    shape = RoundedCornerShape(20.dp)
+                    shape = RoundedCornerShape(10.dp)
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
@@ -96,7 +96,7 @@ fun RegisterView(
                             showPassword = !showPassword
                         }) {
                         }
-                    }, shape = RoundedCornerShape(20.dp)
+                    }, shape = RoundedCornerShape(10.dp)
 
                 )
 
@@ -112,30 +112,15 @@ fun RegisterView(
 
                 Button(onClick = {
                     vm.register(email,"Default User", password, { result ->
-                        when (result){
-                            is RegisterResult.Success -> {
-
-                            }
-                            is RegisterResult.ValidationError -> {
-                                isError = true
-                                errorMessage = result.message
-                            }
-                            is RegisterResult.Failure -> {
-                                isError = true
-                                errorMessage = result.error.localizedMessage ?: "Unknown error"
-                            }
+                        result.onFailure { error ->
+                            errorMessage = error.message
                         }
-
-
                     })
                 }) {
                     Text("Login")
                 }
 
                 Spacer(modifier = Modifier.height(10.dp))
-
-
-
 
                 NavButton("Already have an account? Login", AppRoutes.Login, nav)
             }
@@ -145,9 +130,4 @@ fun RegisterView(
     }
 
 
-}
-
-@Composable
-fun Column() {
-    TODO("Not yet implemented")
 }

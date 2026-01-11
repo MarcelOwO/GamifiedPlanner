@@ -32,7 +32,6 @@ import org.koin.androidx.compose.koinViewModel
 import marcel.uni.gamifiedplanner.R
 
 
-// implement the  remaining user stats loading into the menu and stuff like it
 
 @Preview
 @Composable
@@ -69,7 +68,7 @@ fun AppHeader(vm: AppHeaderViewModel = koinViewModel(), authVm: AuthViewModel = 
                     }
 
                     DropdownMenu(
-                        shape= RoundedCornerShape(20.dp),
+                        shape= RoundedCornerShape(10.dp),
                         expanded = expanded,
                         onDismissRequest = { expanded = false }) {
 
@@ -84,7 +83,7 @@ fun AppHeader(vm: AppHeaderViewModel = koinViewModel(), authVm: AuthViewModel = 
 
         Row(modifier = Modifier.fillMaxWidth()) {
             Surface(
-                shape = RoundedCornerShape(20.dp),
+                shape = RoundedCornerShape(10.dp),
                 color = MaterialTheme.colorScheme.tertiary,
                 modifier = Modifier
                     .weight(1f)
@@ -98,23 +97,22 @@ fun AppHeader(vm: AppHeaderViewModel = koinViewModel(), authVm: AuthViewModel = 
                         verticalArrangement = Arrangement.Center,
                     ) {
 
-                        Text("Loading...")
+                        Text("Loading...",color  =  MaterialTheme.colorScheme.secondary)
                     }
                 } else {
                     Column(modifier = Modifier.padding(10.dp)) {
                         Row {
-                            Text("Level ${level}")
-                            Text("XP ${xp}/100")
+                            Text("Level ${level}",color  =  MaterialTheme.colorScheme.secondary)
+                            Text("XP ${xp}/100",color  =  MaterialTheme.colorScheme.secondary )
                         }
-
-                        LinearProgressIndicator(progress = progress)
+                    LinearProgressIndicator(progress = { progress.toFloat() / 100 })
                     }
                 }
 
 
             }
             Surface(
-                shape = RoundedCornerShape(20.dp),
+                shape = RoundedCornerShape(10.dp),
                 color = MaterialTheme.colorScheme.tertiary,
                 modifier = Modifier
                     .weight(1f)
@@ -126,7 +124,7 @@ fun AppHeader(vm: AppHeaderViewModel = koinViewModel(), authVm: AuthViewModel = 
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center,
                 ) {
-                    Text("Streak 0")
+                    Text("Streak 0",color  =  MaterialTheme.colorScheme.secondary)
                 }
             }
         }

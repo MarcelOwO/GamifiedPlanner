@@ -1,5 +1,7 @@
 package marcel.uni.gamifiedplanner.ui.navigation
 
+
+// navigation constants
 object AppRoutes {
     const val Home = "home"
     const val Settings = "settings"

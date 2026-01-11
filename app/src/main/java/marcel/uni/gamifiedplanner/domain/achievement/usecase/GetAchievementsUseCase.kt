@@ -3,31 +3,47 @@ package marcel.uni.gamifiedplanner.domain.achievement.usecase
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import marcel.uni.gamifiedplanner.domain.achievement.model.Achievement
+import marcel.uni.gamifiedplanner.domain.achievement.model.AchievementDisplay
 import marcel.uni.gamifiedplanner.domain.achievement.repository.AchievementRepository
+import marcel.uni.gamifiedplanner.domain.auth.repository.FirebaseAuthRepository
+import marcel.uni.gamifiedplanner.domain.user.model.UserAchievementItem
 import marcel.uni.gamifiedplanner.domain.user.repository.UserRepository
+import marcel.uni.gamifiedplanner.util.PlannerResult
 
 class GetAchievementsUseCase(
     private val achievementRepo: AchievementRepository,
-    private val userRepo: UserRepository
+    private val userRepo: UserRepository,
+    private val authRepo: FirebaseAuthRepository,
 ) {
-    operator suspend fun invoke(): List<Achievement> {
-        val allAchievements = achievementRepo.getAchievements().first()
-        val userProgress = userRepo.observeAchievementsProgress().first()
+    suspend operator fun invoke(): PlannerResult<List<AchievementDisplay>> {
 
-        val progressMap = userProgress.associateBy { it.achievementId }
+        val userId =
+            authRepo.currentUserId ?: return PlannerResult.Error("User not logged in")
 
-        return allAchievements.map { achievement ->
-            val progress = progressMap[achievement.id]
+        val globalAchievements =
+            achievementRepo
+                .observeAchievements(userId)
+                .first()
+        val userAchievements = userRepo
+            .observeAchievementItems(userId)
+            .first()
 
-            if (progress != null) {
-                achievement.copy(
-                    achieved = true,
-                    achievedAt = progress.unlockedAt
-                )
-            }
-            else {
-                achievement
-            }
-        }
+        val userAchievementMap = userAchievements.associateBy { it.achievementId }
+
+        val displayList = globalAchievements.map { achievement ->
+            val userItem = userAchievementMap[achievement.id]
+            val isUnlocked = userItem != null
+
+            AchievementDisplay(
+                id = achievement.id,
+                name = achievement.name,
+                description = achievement.description,
+                iconResId = achievement.iconResId,
+                achieved = isUnlocked,
+                achievedAt = userItem?.unlockedAt,
+            )
+        }.sortedByDescending { it.achieved }
+
+        return PlannerResult.Success(displayList)
     }
 }

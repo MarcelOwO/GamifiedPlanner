@@ -55,7 +55,7 @@ fun CustomSelect(options: List<String>, selected: String, onSelect: (String) -> 
                     onClick = { onSelect(option) },
                     shape = RoundedCornerShape(20.dp)
                 ) {
-                    Text(option)
+                    Text(option,color  =  MaterialTheme.colorScheme.secondary)
                 }
             }
         }

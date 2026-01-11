@@ -1,9 +1,8 @@
 package marcel.uni.gamifiedplanner.domain.user.model
 
 data class User(
-    val uid :String,
-    val profile: UserProfile,
-    val stats: UserStats,
-    val inventory: UserInventory,
-    val settings: UserSettings,
+    val uid :String="",
+    val profile: UserProfile = UserProfile(),
+    val stats: UserStats= UserStats(),
+    val settings: UserSettings=UserSettings(),
 )

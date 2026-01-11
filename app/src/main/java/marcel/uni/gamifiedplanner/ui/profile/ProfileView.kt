@@ -23,6 +23,7 @@ fun ProfileView(
     vm: ProfileViewModel = koinViewModel()
 ) {
 Column(){
+
     Text(
         "Profile",
         style = MaterialTheme.typography.titleLarge,

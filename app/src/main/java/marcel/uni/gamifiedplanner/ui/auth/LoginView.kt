@@ -26,10 +26,9 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.google.firebase.auth.AuthResult
-import marcel.uni.gamifiedplanner.domain.auth.usecase.login.LogInResult
 import marcel.uni.gamifiedplanner.ui.components.NavButton
 import marcel.uni.gamifiedplanner.ui.navigation.AppRoutes
+import marcel.uni.gamifiedplanner.util.onFailure
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -55,7 +54,7 @@ fun LoginView(
             modifier = Modifier
                 .wrapContentSize(Alignment.Center)
                 .padding(15.dp),
-            shape = RoundedCornerShape(20.dp)
+            shape = RoundedCornerShape(10.dp)
         ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -83,7 +82,7 @@ fun LoginView(
                     label = { Text("Email") },
                     isError = !isEmailValid,
                     singleLine = true,
-                    shape = RoundedCornerShape(20.dp)
+                    shape = RoundedCornerShape(10.dp)
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 TextField(
@@ -97,7 +96,7 @@ fun LoginView(
                             showPassword = !showPassword
                         }) {
                         }
-                    }, shape = RoundedCornerShape(20.dp)
+                    }, shape = RoundedCornerShape(10.dp)
 
                 )
                 Spacer(modifier = Modifier.height(10.dp))
@@ -112,22 +111,13 @@ fun LoginView(
 
 
                 Button(onClick = {
-                    vm.login(email, password, { result ->
-                        when (result) {
-                            is LogInResult.Success -> {
-                            }
-
-                            is LogInResult.Failure -> {
-                                isError = true
-                                errorMessage = result.error.localizedMessage ?: "Unknown error"
-                            }
-
-                            is LogInResult.ValidationError -> {
-                                isError = true
-                                errorMessage = result.message
+                    vm.login(email, password) { result ->
+                        {
+                            result.onFailure { error ->
+                                errorMessage = error.message
                             }
                         }
-                    })
+                    }
                 }) {
                     Text("Login")
                 }

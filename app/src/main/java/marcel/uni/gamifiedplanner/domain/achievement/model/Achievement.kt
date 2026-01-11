@@ -5,6 +5,4 @@ data class Achievement(
     val name: String = "",
     val description: String = "",
     val iconResId: Int? = null,
-    val achieved : Boolean = false,
-    val achievedAt : Long? = null,
     )

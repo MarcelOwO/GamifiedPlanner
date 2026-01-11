@@ -12,32 +12,32 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import marcel.uni.gamifiedplanner.domain.shop.model.ShopItem
 import marcel.uni.gamifiedplanner.domain.shop.usecase.GetShopItemsUseCase
-import marcel.uni.gamifiedplanner.domain.user.usecase.GetUserInventoryUseCase
-import marcel.uni.gamifiedplanner.domain.user.usecase.PurchaseItemResult
+import marcel.uni.gamifiedplanner.domain.user.usecase.ObserveUserInventoryUseCase
 import marcel.uni.gamifiedplanner.domain.user.usecase.PurchaseItemUseCase
+import marcel.uni.gamifiedplanner.util.PlannerResult
 
 class ShopViewModel(
     private val getItemsUseCase: GetShopItemsUseCase,
-    private val getInventoryUseCase: GetUserInventoryUseCase,
+    private val getInventoryUseCase: ObserveUserInventoryUseCase,
     private val purchaseItemUseCase: PurchaseItemUseCase,
 ) : ViewModel() {
-
     private val _selectedFilter = MutableStateFlow("All")
     val selectedFilter = _selectedFilter.asStateFlow()
 
     val inventoryIds: StateFlow<List<String>> =
-        getInventoryUseCase().map{it->it.map{it.itemId}}
+        getInventoryUseCase()
+            .map { it -> it.map { it.itemId } }
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5000),
-                initialValue = emptyList()
+                initialValue = emptyList(),
             )
 
     val shopItems: StateFlow<List<ShopItem>> =
         combine(
             getItemsUseCase(),
             inventoryIds,
-            selectedFilter
+            selectedFilter,
         ) { globalItems, ownedIds, filter ->
             if (filter == "Inventory") {
                 globalItems.filter { it.id in ownedIds }
@@ -47,15 +47,17 @@ class ShopViewModel(
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
-            initialValue = emptyList()
+            initialValue = emptyList(),
         )
-
 
     fun setFilter(filter: String) {
         _selectedFilter.value = filter
     }
 
-    fun buyItem(itemId: String, onResult: (PurchaseItemResult) -> Unit) {
+    fun buyItem(
+        itemId: String,
+        onResult: (PlannerResult<Unit>) -> Unit,
+    ) {
         viewModelScope.launch {
             purchaseItemUseCase(itemId).also { result ->
                 onResult(result)
@@ -63,4 +65,3 @@ class ShopViewModel(
         }
     }
 }
-

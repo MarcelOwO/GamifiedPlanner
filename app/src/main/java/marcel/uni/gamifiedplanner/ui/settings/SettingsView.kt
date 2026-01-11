@@ -11,7 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
@@ -36,12 +36,12 @@ fun SettingsView(
 
 
     Column(modifier = Modifier.fillMaxSize()) {
+
         Text(
             "Settings",
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.padding(16.dp)
         )
-
 
         Surface(
             modifier = Modifier
@@ -51,7 +51,9 @@ fun SettingsView(
             tonalElevation = 2.dp
         ) {
             Column(modifier = Modifier.padding(16.dp)){
+
                 Text("Appearance",color = MaterialTheme.colorScheme.primary)
+
                 Row(modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical=16.dp),
@@ -64,7 +66,8 @@ fun SettingsView(
                         onCheckedChange = {vm.toggleDarkMode(it)}
                     )
                 }
-                Divider(modifier =Modifier.padding(vertical=10.dp))
+
+                HorizontalDivider(modifier =Modifier.padding(vertical=10.dp))
 
                 Text("General",color = MaterialTheme.colorScheme.primary)
 

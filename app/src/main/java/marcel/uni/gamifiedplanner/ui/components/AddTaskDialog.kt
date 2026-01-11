@@ -24,8 +24,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import marcel.uni.gamifiedplanner.domain.task.model.Priority
 import marcel.uni.gamifiedplanner.domain.task.model.TaskStatus
-import marcel.uni.gamifiedplanner.domain.task.usecase.CreateTaskResult
+import marcel.uni.gamifiedplanner.ui.home.HomeView
 import marcel.uni.gamifiedplanner.ui.home.HomeViewModel
+import marcel.uni.gamifiedplanner.util.PlannerResult
 
 @Composable
 fun AddTaskDialog(
@@ -34,7 +35,6 @@ fun AddTaskDialog(
     var taskTitle by remember { mutableStateOf("") }
     var taskDescription by remember { mutableStateOf("") }
     var taskPriority by remember { mutableStateOf(Priority.entries.first()) }
-    var taskStatus by remember { mutableStateOf(TaskStatus.entries.first()) }
 
     if (!show) {
         return
@@ -88,11 +88,6 @@ fun AddTaskDialog(
                         Priority.entries.map { it.name },
                         taskPriority.name,
                         onSelect = { item -> taskPriority = Priority.valueOf(item) })
-
-                    DropDownSelector(
-                        TaskStatus.entries.map { it.name },
-                        taskStatus.name,
-                        onSelect = { item -> taskStatus = TaskStatus.valueOf(item) })
                 }
 
                 Spacer(modifier = Modifier.padding(5.dp))
@@ -102,15 +97,14 @@ fun AddTaskDialog(
                         taskTitle,
                         taskDescription,
                         taskPriority,
-                        taskStatus,
+                        TaskStatus.OPEN,
                         onResult = { result ->
                             when (result) {
-                                is CreateTaskResult.Success -> {
+                                is PlannerResult.Success -> {
                                     onDismiss()
                                 }
-                                is CreateTaskResult.Failure -> {
-                                }
-                                is CreateTaskResult.ValidationError -> {
+                                is PlannerResult.Error -> {
+
                                 }
                             }
                         })

@@ -1,13 +1,20 @@
 package marcel.uni.gamifiedplanner.domain.task.usecase
 
+import marcel.uni.gamifiedplanner.domain.auth.repository.FirebaseAuthRepository
 import marcel.uni.gamifiedplanner.domain.task.repository.TaskRepository
+import marcel.uni.gamifiedplanner.util.PlannerResult
 
-class DeleteTaskUseCase(private val repo: TaskRepository) {
+class DeleteTaskUseCase(
+    private val repo: TaskRepository,
+    private val authRepo: FirebaseAuthRepository
+) {
+    suspend operator fun invoke(taskId: String): PlannerResult<Unit> {
 
-    suspend operator fun invoke(taskId: String): DeleteTaskResult {
+        val userId =
+            authRepo.currentUserId ?: return PlannerResult.Error("User is not logged in");
 
+        repo.deleteTask(userId, taskId)
 
-        repo.deleteTask(taskId)
-        return DeleteTaskResult.Success
+        return PlannerResult.Success(Unit)
     }
 }

@@ -8,7 +8,6 @@ import androidx.compose.runtime.Composable
 import marcel.uni.gamifiedplanner.di.AchievementModule
 import marcel.uni.gamifiedplanner.di.AppModule
 import marcel.uni.gamifiedplanner.di.AuthModule
-import marcel.uni.gamifiedplanner.di.EventModule
 import marcel.uni.gamifiedplanner.di.FirebaseModule
 import marcel.uni.gamifiedplanner.di.ShopModule
 import marcel.uni.gamifiedplanner.di.TaskModule
@@ -17,6 +16,7 @@ import marcel.uni.gamifiedplanner.ui.RootView
 import marcel.uni.gamifiedplanner.ui.theme.GamifiedPlannerTheme
 import org.koin.compose.KoinApplication
 
+// Entry point
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +28,8 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+
+    // di modules
     @Composable
     fun App() {
         KoinApplication(
@@ -40,7 +42,6 @@ class MainActivity : ComponentActivity() {
                     AchievementModule().achievementModule,
                     ShopModule().shopModule,
                     UserModule().userModule,
-                    EventModule().eventModule,
                 )
             }
         ) {

@@ -1,6 +1,5 @@
 package marcel.uni.gamifiedplanner.di
 
-import marcel.uni.gamifiedplanner.domain.services.ProgressionService
 import marcel.uni.gamifiedplanner.ui.header.AppHeaderViewModel
 import marcel.uni.gamifiedplanner.ui.profile.ProfileViewModel
 import marcel.uni.gamifiedplanner.ui.settings.SettingsViewModel
@@ -9,17 +8,14 @@ import marcel.uni.gamifiedplanner.ui.stats.StatsViewModel
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
-//
-// Remaining modules get dumped here if I don't know where else to save them
-//
 
+// di modules I am unsure where to sort into
 class AppModule {
     val appModule =
         module {
-            single { ProgressionService() }
-            viewModel { AppHeaderViewModel(get(), get()) }
+            viewModel { AppHeaderViewModel(get(), get(),get()) }
             viewModel { StatsViewModel() }
             viewModel { SettingsViewModel(get(), get(), get(), get(), get()) }
-            viewModel { ProfileViewModel() }
+            viewModel { ProfileViewModel(get(),get()) }
         }
 }

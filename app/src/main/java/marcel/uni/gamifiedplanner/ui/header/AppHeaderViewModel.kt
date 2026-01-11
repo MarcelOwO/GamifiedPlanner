@@ -1,55 +1,43 @@
 package marcel.uni.gamifiedplanner.ui.header
 
-
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import marcel.uni.gamifiedplanner.domain.services.ProgressionService
 import marcel.uni.gamifiedplanner.domain.user.model.UserStats
-import marcel.uni.gamifiedplanner.domain.user.usecase.GetUserDataUseCase
+import marcel.uni.gamifiedplanner.domain.user.usecase.ObserveLevelUseCase
+import marcel.uni.gamifiedplanner.domain.user.usecase.ObserveXpProgressUseCase
+import marcel.uni.gamifiedplanner.domain.user.usecase.ObserveXpUseCase
+import marcel.uni.gamifiedplanner.util.calculateProgress
 
 class AppHeaderViewModel(
-    private val getUserDataUseCase: GetUserDataUseCase,
-    private val progressionService: ProgressionService
-    ) : ViewModel() {
-
-    private val userData: StateFlow<UserStats?> = getUserDataUseCase()
-        .stateIn(
+    private val observeXp: ObserveXpUseCase,
+    private val observeLevel: ObserveLevelUseCase,
+    private val observeXpProgress: ObserveXpProgressUseCase
+) : ViewModel() {
+    val currentLevel: StateFlow<Int> =
+        observeLevel().stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
-            initialValue = null
+            initialValue = 0,
         )
 
-    val currentLevel : StateFlow<Int?> = userData
-        .map{ it->
-           progressionService.calculateLevel(it?.xp ?: 0)
-        }
-        .stateIn(
+    val currentXp: StateFlow<Long> =
+        observeXp().stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
-           initialValue = null
+            initialValue = 0,
         )
 
-    val currentXp : StateFlow<Long?> = userData
-        .map{   it?.xp  }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),
-            initialValue = null
-        )
 
-    val xpProgress : StateFlow<Float> = userData
-        .map{   (it?.xp ?: 0) / 100f  }
-        .stateIn(
+    val xpProgress: StateFlow<Long> =
+        observeXpProgress().stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
-            initialValue = 0f
+            initialValue = 0,
         )
 
 }
-
-
-
