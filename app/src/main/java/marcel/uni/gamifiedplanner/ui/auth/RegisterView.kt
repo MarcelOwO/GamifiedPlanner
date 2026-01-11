@@ -53,7 +53,7 @@ fun RegisterView(
             modifier = Modifier
                 .wrapContentSize(Alignment.Center)
                 .padding(15.dp),
-            shape = RoundedCornerShape(20.dp)
+            shape = RoundedCornerShape(10.dp)
         ) {
             Column(
                 verticalArrangement = Arrangement.Center,
@@ -72,7 +72,7 @@ fun RegisterView(
                     value = email,
                     onValueChange = { email = it },
                     label = { Text("Email") },
-                    shape = RoundedCornerShape(20.dp)
+                    shape = RoundedCornerShape(10.dp)
                 )
                 Spacer(modifier = Modifier.height(10.dp))
 
@@ -80,7 +80,7 @@ fun RegisterView(
                     value = username,
                     onValueChange = { username = it },
                     label = { Text("Username") },
-                    shape = RoundedCornerShape(20.dp)
+                    shape = RoundedCornerShape(10.dp)
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
@@ -96,7 +96,7 @@ fun RegisterView(
                             showPassword = !showPassword
                         }) {
                         }
-                    }, shape = RoundedCornerShape(20.dp)
+                    }, shape = RoundedCornerShape(10.dp)
 
                 )
 

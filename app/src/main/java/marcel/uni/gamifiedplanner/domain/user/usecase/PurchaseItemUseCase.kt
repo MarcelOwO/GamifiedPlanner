@@ -1,10 +1,7 @@
 package marcel.uni.gamifiedplanner.domain.user.usecase
 
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import marcel.uni.gamifiedplanner.domain.auth.repository.FirebaseAuthRepository
-import marcel.uni.gamifiedplanner.domain.events.DomainEvent
-import marcel.uni.gamifiedplanner.domain.events.DomainEventPublisher
 import marcel.uni.gamifiedplanner.domain.shop.repository.ShopRepository
 import marcel.uni.gamifiedplanner.domain.user.repository.UserRepository
 import marcel.uni.gamifiedplanner.util.PlannerResult

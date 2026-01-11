@@ -54,7 +54,7 @@ fun LoginView(
             modifier = Modifier
                 .wrapContentSize(Alignment.Center)
                 .padding(15.dp),
-            shape = RoundedCornerShape(20.dp)
+            shape = RoundedCornerShape(10.dp)
         ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -82,7 +82,7 @@ fun LoginView(
                     label = { Text("Email") },
                     isError = !isEmailValid,
                     singleLine = true,
-                    shape = RoundedCornerShape(20.dp)
+                    shape = RoundedCornerShape(10.dp)
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 TextField(
@@ -96,7 +96,7 @@ fun LoginView(
                             showPassword = !showPassword
                         }) {
                         }
-                    }, shape = RoundedCornerShape(20.dp)
+                    }, shape = RoundedCornerShape(10.dp)
 
                 )
                 Spacer(modifier = Modifier.height(10.dp))
