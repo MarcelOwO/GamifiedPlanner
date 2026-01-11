@@ -20,6 +20,7 @@ class HomeViewModel(
     private val getTasksUseCase: GetTasksUseCase,
     private val updateTaskUseCase: UpdateTaskUseCase,
     private val deleteTaskUseCase: DeleteTaskUseCase,
+    private val completeTaskUseCase: CompleteTaskUseCase
 ) : ViewModel() {
 
     fun CreateTask(
@@ -65,4 +66,10 @@ class HomeViewModel(
             started = SharingStarted.WhileSubscribed(5000),
             initialValue = emptyList()
         )
+
+    fun CompleteTask(taskId:String){
+        viewModelScope.launch{
+            completeTaskUseCase(taskId)
+        }
+    }
 }

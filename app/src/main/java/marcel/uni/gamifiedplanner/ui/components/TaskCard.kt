@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -24,7 +25,7 @@ import marcel.uni.gamifiedplanner.domain.task.model.TaskStatus
 import marcel.uni.gamifiedplanner.ui.home.HomeViewModel
 
 @Composable
-fun TaskCard(task: Task, vm: HomeViewModel) {
+fun TaskCard(task: Task, editTask: (task: Task) -> Unit, deleteTask: (task: Task) -> Unit,completeTask:(task:Task)->Unit) {
     Surface(
         modifier = Modifier
             .padding(10.dp)
@@ -53,11 +54,28 @@ fun TaskCard(task: Task, vm: HomeViewModel) {
                     horizontalArrangement = Arrangement.End
                 ) {
                     IconButton(onClick = {
-                        vm.DeleteTask(task.id)
+                        deleteTask(task)
                     }) {
                         Icon(
                             painter = painterResource(R.drawable.outline_delete_24),
+                            contentDescription = "Delete Task"
+                        )
+                    }
+                    IconButton(onClick = {
+                        editTask(task)
+                    })
+                    {
+                        Icon(
+                            painter = painterResource(R.drawable.outline_edit_24),
                             contentDescription = "Edit Task"
+                        )
+                    }
+                    IconButton(onClick={
+                        completeTask(task)
+                    }){
+                        Icon(
+                            painter = painterResource(R.drawable.outline_check_24),
+                            contentDescription = "Complete Task"
                         )
                     }
                 }
@@ -69,13 +87,17 @@ fun TaskCard(task: Task, vm: HomeViewModel) {
                 DropDownSelector(
                     collection = Priority.entries.map { it -> it.name },
                     task.priority.name,
-                    onSelect = {})
+                    onSelect = {editTask(task)})
                 DropDownSelector(
                     collection = TaskStatus.entries.map { it -> it.name },
                     task.status.name,
-                    onSelect = {})
+                    onSelect = {
+                        editTask(task)
+                    })
             }
-            Text(text = task.description ?: "")
+
+            HorizontalDivider(modifier = Modifier.padding(10.dp))
+            Text(text = task.description ?: "", modifier = Modifier.padding(10.dp))
         }
     }
 }

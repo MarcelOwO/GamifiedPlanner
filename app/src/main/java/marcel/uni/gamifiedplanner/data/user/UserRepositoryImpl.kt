@@ -132,4 +132,11 @@ class UserRepositoryImpl(
             tx.set(newItemRef, newItem)
         }.await()
     }
+
+    override suspend fun addTaskHistoryItem(
+        uid: String,
+        taskHistoryItem: TaskHistoryItem
+    ) {
+        inventoryColl(uid).add(taskHistoryItem).await()
+    }
 }

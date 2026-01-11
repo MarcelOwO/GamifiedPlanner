@@ -9,6 +9,7 @@ import marcel.uni.gamifiedplanner.domain.user.usecase.PurchaseItemUseCase
 import marcel.uni.gamifiedplanner.domain.user.usecase.SetDarkModeUseCase
 import marcel.uni.gamifiedplanner.domain.user.usecase.SetNotificationStateUseCase
 import marcel.uni.gamifiedplanner.domain.user.usecase.AddXpUseCase
+import marcel.uni.gamifiedplanner.domain.user.usecase.CompleteTaskUseCase
 import marcel.uni.gamifiedplanner.domain.user.usecase.ObserveLevelUseCase
 import marcel.uni.gamifiedplanner.domain.user.usecase.ObserveUserAchievementsUseCase
 import marcel.uni.gamifiedplanner.domain.user.usecase.ObserveUserTaskUseCase
@@ -23,6 +24,7 @@ class UserModule {
         module {
             single<UserRepository> { UserRepositoryImpl(get()) }
             factory { AddXpUseCase(get(), get()) }
+            factory { CompleteTaskUseCase(get(), get(), get()) }
             factory { ObserveDarkModeUseCase(get(), get()) }
             factory { ObserveLevelUseCase(get(), get()) }
             factory { ObserveNotificationStateUseCase(get(), get()) }

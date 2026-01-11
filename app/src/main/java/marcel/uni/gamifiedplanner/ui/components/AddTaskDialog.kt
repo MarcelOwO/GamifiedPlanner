@@ -24,7 +24,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import marcel.uni.gamifiedplanner.domain.task.model.Priority
 import marcel.uni.gamifiedplanner.domain.task.model.TaskStatus
-import marcel.uni.gamifiedplanner.ui.home.HomeView
 import marcel.uni.gamifiedplanner.ui.home.HomeViewModel
 import marcel.uni.gamifiedplanner.util.PlannerResult
 
@@ -55,7 +54,7 @@ fun AddTaskDialog(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Surface(
-            modifier = Modifier.padding(20.dp), shape = RoundedCornerShape(20.dp)
+            modifier = Modifier.padding(20.dp), shape = RoundedCornerShape(10.dp)
         ) {
             Column(
                 verticalArrangement = Arrangement.Center,

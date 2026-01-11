@@ -90,7 +90,26 @@ fun HomeView(
                     .padding(10.dp)
             ) {
                 items(tasks) { task ->
-                    TaskCard(task, vm)
+                    TaskCard(
+                        task,
+                        editTask = {task->{
+                            vm.UpdateTasks(
+                                task.id,
+                                task.title,
+                                task.description ?: "",
+                                task.priority,
+                                task.status
+                            )
+                        }},
+
+                        deleteTask = {task->
+                            vm.DeleteTask(task.id)
+                        },
+                        completeTask = {task->
+                            vm.CompleteTask(task.id)
+                        }
+                    )
+
                     Spacer(modifier = Modifier.padding(5.dp))
                 }
             }

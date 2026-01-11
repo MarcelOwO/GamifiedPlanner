@@ -23,4 +23,6 @@ interface UserRepository {
     suspend fun updateSettings(uid: String, new: UserSettings)
     suspend fun updateProfile(uid: String, new: UserProfile)
     suspend fun purchaseItem(uid: String, itemId: String, cost: Long): Result<Unit>
+
+    suspend fun addTaskHistoryItem(uid: String, taskHistoryItem: TaskHistoryItem)
 }
