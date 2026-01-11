@@ -5,6 +5,7 @@ import marcel.uni.gamifiedplanner.domain.achievement.repository.AchievementRepos
 import marcel.uni.gamifiedplanner.domain.achievement.usecase.GetAchievementsUseCase
 import org.koin.dsl.module
 
+
 class AchievementModule {
     val achievementModule =
         module {

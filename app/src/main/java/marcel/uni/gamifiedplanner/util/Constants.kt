@@ -1,6 +1,8 @@
 package marcel.uni.gamifiedplanner.util
 
 
+// constants used in repos
+
 object firebaseConstants {
     const val USERS = "users"
     const val SHOP_ITEMS = "shop_items"

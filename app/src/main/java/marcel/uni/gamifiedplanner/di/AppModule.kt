@@ -8,10 +8,8 @@ import marcel.uni.gamifiedplanner.ui.stats.StatsViewModel
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
-//
-// Remaining modules get dumped here if I don't know where else to save them
-//
 
+// di modules I am unsure where to sort into
 class AppModule {
     val appModule =
         module {

@@ -11,6 +11,5 @@ class AchievementRepositoryImpl(
     private val firestore: FirebaseFirestore,
 ) : AchievementRepository {
     private fun getCollection() = firestore.collection(firebaseConstants.ACHIEVEMENTS)
-
     override fun observeAchievements(uid: String): Flow<List<Achievement>> = getCollection().observeList<Achievement>()
 }

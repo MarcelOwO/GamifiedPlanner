@@ -25,7 +25,6 @@ import marcel.uni.gamifiedplanner.ui.home.HomeViewModel
 
 @Composable
 fun TaskCard(task: Task, vm: HomeViewModel) {
-
     Surface(
         modifier = Modifier
             .padding(10.dp)

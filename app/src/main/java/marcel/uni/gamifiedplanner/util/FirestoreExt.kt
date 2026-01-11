@@ -8,6 +8,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlin.collections.emptyList
 
+// extensions to reduce all that boilerplate for writing repos
+
 inline fun <reified T : Any> DocumentReference.observeModel(): Flow<T> = callbackFlow {
     val listener = addSnapshotListener { snapshot, error ->
         if (error != null) { close(error); return@addSnapshotListener }

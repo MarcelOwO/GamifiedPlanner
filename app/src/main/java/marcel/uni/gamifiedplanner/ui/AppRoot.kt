@@ -12,6 +12,8 @@ import marcel.uni.gamifiedplanner.ui.header.AppHeader
 import marcel.uni.gamifiedplanner.ui.components.AppNavbar
 import marcel.uni.gamifiedplanner.ui.navigation.AppNavHost
 
+
+// app root ui
 @Composable
 fun AppRoot() {
     val navController = rememberNavController()

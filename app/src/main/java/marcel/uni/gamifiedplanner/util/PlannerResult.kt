@@ -1,5 +1,7 @@
 package marcel.uni.gamifiedplanner.util
 
+// extension methods for simplifiying error handling
+
 sealed class PlannerResult<out T> {
     data class Success<out T>(
         val data: T,

@@ -16,6 +16,7 @@ import marcel.uni.gamifiedplanner.ui.RootView
 import marcel.uni.gamifiedplanner.ui.theme.GamifiedPlannerTheme
 import org.koin.compose.KoinApplication
 
+// Entry point
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +28,8 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+
+    // di modules
     @Composable
     fun App() {
         KoinApplication(
