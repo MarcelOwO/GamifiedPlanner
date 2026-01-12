@@ -8,6 +8,7 @@ import marcel.uni.gamifiedplanner.domain.user.model.TaskHistoryItem
 import marcel.uni.gamifiedplanner.domain.user.repository.UserRepository
 import marcel.uni.gamifiedplanner.util.PlannerResult
 import marcel.uni.gamifiedplanner.util.calculateXp
+import java.util.UUID
 
 class CompleteTaskUseCase(
     private val userRepo: UserRepository,
@@ -27,7 +28,7 @@ class CompleteTaskUseCase(
         val task  = tasks.first()
 
         val taskHistoryItem = TaskHistoryItem(
-            id = "",
+            id = UUID.randomUUID().toString(),
             taskId = taskId,
             taskTitle = task.title,
             taskPriority = task.priority,
@@ -36,9 +37,7 @@ class CompleteTaskUseCase(
         val gainedXp = calculateXp(task.priority)
 
         userRepo.addXp(userId, gainedXp)
-
         userRepo.addTaskHistoryItem(userId, taskHistoryItem)
-
         taskRepo.deleteTask(userId,taskId)
 
         achievementEngine.checkAchievements(userId)
