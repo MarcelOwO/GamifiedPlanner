@@ -24,7 +24,7 @@ class UserModule {
         module {
             single<UserRepository> { UserRepositoryImpl(get()) }
             factory { AddXpUseCase(get(), get()) }
-            factory { CompleteTaskUseCase(get(), get(), get()) }
+            factory { CompleteTaskUseCase(get(), get(), get(),get()) }
             factory { ObserveDarkModeUseCase(get(), get()) }
             factory { ObserveLevelUseCase(get(), get()) }
             factory { ObserveNotificationStateUseCase(get(), get()) }

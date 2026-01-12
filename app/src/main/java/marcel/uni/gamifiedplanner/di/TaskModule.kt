@@ -19,6 +19,6 @@ class TaskModule {
         factory { UpdateTaskUseCase(get(),get()) }
         factory { DeleteTaskUseCase(get(),get()) }
 
-        viewModel { HomeViewModel(get(),get(),get(),get()) }
+        viewModel { HomeViewModel(get(),get(),get(),get(),get()) }
     }
 }
