@@ -45,7 +45,7 @@ fun HomeView(
         modifier = Modifier.padding(5.dp)
     ) {
 
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween){
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
 
             Text(
                 "Tasks",
@@ -58,7 +58,7 @@ fun HomeView(
             ) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    shape = RoundedCornerShape(20.dp),
+                    shape = RoundedCornerShape(10.dp),
                     color = MaterialTheme.colorScheme.primary,
                 ) {
                     Icon(
@@ -81,7 +81,7 @@ fun HomeView(
             modifier = Modifier
                 .padding(5.dp)
                 .fillMaxSize(),
-            shape = RoundedCornerShape(20.dp)
+            shape = RoundedCornerShape(10.dp)
 
         ) {
             LazyColumn(
@@ -92,20 +92,22 @@ fun HomeView(
                 items(tasks) { task ->
                     TaskCard(
                         task,
-                        editTask = {task->{
-                            vm.UpdateTasks(
-                                task.id,
-                                task.title,
-                                task.description ?: "",
-                                task.priority,
-                                task.status
-                            )
-                        }},
+                        editTask = { task ->
+                            {
+                                vm.UpdateTasks(
+                                    task.id,
+                                    task.title,
+                                    task.description ?: "",
+                                    task.priority,
+                                    task.status
+                                )
+                            }
+                        },
 
-                        deleteTask = {task->
+                        deleteTask = { task ->
                             vm.DeleteTask(task.id)
                         },
-                        completeTask = {task->
+                        completeTask = { task ->
                             vm.CompleteTask(task.id)
                         }
                     )
@@ -117,7 +119,21 @@ fun HomeView(
     }
 
     AddTaskDialog(
-        showMenu, onDismiss = { showMenu = false }, vm
+        showMenu,
+        onDismiss = { showMenu = false },
+        createTask = { title, priority, description, taskDuration, taskStartTime ->
+            vm.CreateTask(
+                title,
+                priority,
+                taskDuration,
+                description,
+                taskStartTime,
+                onResult = { result ->
+                    {
+
+                    }
+                })
+        }
     )
 
 

@@ -13,6 +13,7 @@ import marcel.uni.gamifiedplanner.domain.task.usecase.CreateTaskUseCase
 import marcel.uni.gamifiedplanner.domain.task.usecase.DeleteTaskUseCase
 import marcel.uni.gamifiedplanner.domain.task.usecase.GetTasksUseCase
 import marcel.uni.gamifiedplanner.domain.task.usecase.UpdateTaskUseCase
+import marcel.uni.gamifiedplanner.domain.user.usecase.CompleteTaskUseCase
 import marcel.uni.gamifiedplanner.util.PlannerResult
 
 class HomeViewModel(
@@ -25,17 +26,20 @@ class HomeViewModel(
 
     fun CreateTask(
         title: String,
-        description: String,
         priority: Priority,
-        status: TaskStatus,
+        duration: Int?,
+        description: String?,
+        startTime: Long?,
         onResult: (PlannerResult<Unit>) -> Unit
     ) {
         viewModelScope.launch {
             val result = createTaskUseCase(
-                title,
-                description,
-                priority,
-                status
+                title = title,
+                priority = priority,
+                description = description ?: "",
+                status = TaskStatus.OPEN,
+                duration = (duration ?: 0).toLong(),
+                startTime = startTime ?: System.currentTimeMillis()
             )
             onResult(result)
         }
@@ -67,8 +71,8 @@ class HomeViewModel(
             initialValue = emptyList()
         )
 
-    fun CompleteTask(taskId:String){
-        viewModelScope.launch{
+    fun CompleteTask(taskId: String) {
+        viewModelScope.launch {
             completeTaskUseCase(taskId)
         }
     }

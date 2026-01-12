@@ -9,13 +9,15 @@ import marcel.uni.gamifiedplanner.util.PlannerResult
 
 class CreateTaskUseCase(
     private val repository: TaskRepository,
-    private val authRepo : FirebaseAuthRepository
+    private val authRepo: FirebaseAuthRepository
 ) {
     suspend operator fun invoke(
         title: String,
-        description: String,
         priority: Priority,
+        description: String,
         status: TaskStatus,
+        duration: Long,
+        startTime: Long,
     ): PlannerResult<Unit> {
         val userId =
             authRepo.currentUserId ?: return PlannerResult.Error("User is not logged in");
@@ -38,9 +40,11 @@ class CreateTaskUseCase(
             description = description,
             priority = priority,
             status = status,
+            startTime = startTime,
+            duration = duration
         )
 
-        repository.createTask(userId,task)
+        repository.createTask(userId, task)
         return PlannerResult.Success(Unit)
     }
 
