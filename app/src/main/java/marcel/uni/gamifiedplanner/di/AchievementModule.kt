@@ -4,14 +4,17 @@ import marcel.uni.gamifiedplanner.data.achievement.AchievementRepositoryImpl
 import marcel.uni.gamifiedplanner.domain.achievement.repository.AchievementRepository
 import marcel.uni.gamifiedplanner.domain.achievement.service.AchievementEngine
 import marcel.uni.gamifiedplanner.domain.achievement.usecase.GetAchievementsUseCase
+import org.koin.core.module.dsl.bind
+import org.koin.core.module.dsl.factoryOf
+import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
 
 class AchievementModule {
     val achievementModule =
         module {
-            single<AchievementRepository> { AchievementRepositoryImpl(get()) }
-            factory { GetAchievementsUseCase(get(), get(), get()) }
-            single { AchievementEngine() }
+            singleOf(::AchievementRepositoryImpl) {bind<AchievementRepository>()}
+            factoryOf(::GetAchievementsUseCase)
+            singleOf(::AchievementEngine)
         }
 }

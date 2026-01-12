@@ -5,11 +5,13 @@ import marcel.uni.gamifiedplanner.domain.task.model.Priority
 import marcel.uni.gamifiedplanner.domain.task.model.Task
 import marcel.uni.gamifiedplanner.domain.task.model.TaskStatus
 import marcel.uni.gamifiedplanner.domain.task.repository.TaskRepository
+import marcel.uni.gamifiedplanner.domain.user.usecase.CompleteTaskUseCase
 import marcel.uni.gamifiedplanner.util.PlannerResult
 
 class UpdateTaskUseCase(
     private val repo: TaskRepository,
     private val authRepo: FirebaseAuthRepository,
+    private val completeUseCase: CompleteTaskUseCase
 ) {
     suspend operator fun invoke(
         id: String,
@@ -33,6 +35,12 @@ class UpdateTaskUseCase(
         if (description.length > 200) {
             return PlannerResult.Error("Description cannot be longer than 200 characters")
         }
+
+        if (status == TaskStatus.DONE) {
+            completeUseCase(id)
+            return PlannerResult.Success(Unit);
+        }
+
 
         val task =
             Task(

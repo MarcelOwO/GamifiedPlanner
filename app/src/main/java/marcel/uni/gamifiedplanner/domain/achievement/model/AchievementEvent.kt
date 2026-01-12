@@ -1,9 +1,10 @@
 package marcel.uni.gamifiedplanner.domain.achievement.model
 
-import java.time.LocalTime
+import com.google.firebase.Timestamp
+
 
 data class AchievementEvent(
     val totalTasksCompleted:Int,
     val currentStreak:Int,
-    val taskCompletedAt: LocalTime? = null
+    val taskCompletedAt: Timestamp = Timestamp.now()
 )

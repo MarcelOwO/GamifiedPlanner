@@ -25,12 +25,12 @@ import marcel.uni.gamifiedplanner.domain.task.model.TaskStatus
 import marcel.uni.gamifiedplanner.ui.home.HomeViewModel
 
 @Composable
-fun TaskCard(task: Task, editTask: (task: Task) -> Unit, deleteTask: (task: Task) -> Unit,completeTask:(task:Task)->Unit) {
+fun TaskCard(task: Task, editTask: (task: Task) -> Unit, deleteTask: (task: Task) -> Unit) {
     Surface(
         modifier = Modifier
             .padding(10.dp)
             .fillMaxWidth(),
-        shape = RoundedCornerShape(20.dp)
+        shape = RoundedCornerShape(10.dp)
     ) {
         Column(
             modifier = Modifier.padding(10.dp),
@@ -68,14 +68,6 @@ fun TaskCard(task: Task, editTask: (task: Task) -> Unit, deleteTask: (task: Task
                         Icon(
                             painter = painterResource(R.drawable.outline_edit_24),
                             contentDescription = "Edit Task"
-                        )
-                    }
-                    IconButton(onClick={
-                        completeTask(task)
-                    }){
-                        Icon(
-                            painter = painterResource(R.drawable.outline_check_24),
-                            contentDescription = "Complete Task"
                         )
                     }
                 }

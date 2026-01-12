@@ -15,7 +15,7 @@ class AuthModule {
     val authModule = module {
         single<FirebaseAuthRepository> { FirebaseAuthRepositoryImpl(get()) }
         factory { AuthStatusUseCase(get()) }
-        factory { LogInUseCase(get()) }
+        factory { LogInUseCase(get(),get()) }
         factory { RegisterUseCase(get(),get()) }
         factory { LogoutUseCase(get()) }
         viewModel { AuthViewModel(get(), get(), get(), get()) }

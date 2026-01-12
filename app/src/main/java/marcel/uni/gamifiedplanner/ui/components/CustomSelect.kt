@@ -36,7 +36,7 @@ fun CustomSelect(options: List<String>, selected: String, onSelect: (String) -> 
     )
 
     Surface(
-        shape = RoundedCornerShape(20.dp),
+        shape = RoundedCornerShape(10.dp),
         color = MaterialTheme.colorScheme.tertiary,
         modifier = Modifier.padding(10.dp)
     ) {
@@ -53,7 +53,7 @@ fun CustomSelect(options: List<String>, selected: String, onSelect: (String) -> 
                     contentPadding= PaddingValues(0.dp),
                     colors = if (option == selected) selectedButtonColors else unSelctedButtonColors,
                     onClick = { onSelect(option) },
-                    shape = RoundedCornerShape(20.dp)
+                    shape = RoundedCornerShape(10.dp)
                 ) {
                     Text(option,color  =  MaterialTheme.colorScheme.secondary)
                 }

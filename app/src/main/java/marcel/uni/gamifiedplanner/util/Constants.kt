@@ -15,6 +15,7 @@ object firebaseConstants {
 
     const val FIELD_PROFILE = "profile"
     const val FIELD_STATS = "stats"
+    const val FIELD_LASTLOGIN ="stats.lastLogin"
 
     const val FIELD_CURRENCY = "stats.currency"
     const val FIELD_XP = "stats.xp"

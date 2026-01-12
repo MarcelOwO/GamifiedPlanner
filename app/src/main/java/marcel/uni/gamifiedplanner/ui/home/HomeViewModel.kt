@@ -2,6 +2,7 @@ package marcel.uni.gamifiedplanner.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.Timestamp
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
@@ -21,7 +22,6 @@ class HomeViewModel(
     private val getTasksUseCase: GetTasksUseCase,
     private val updateTaskUseCase: UpdateTaskUseCase,
     private val deleteTaskUseCase: DeleteTaskUseCase,
-    private val completeTaskUseCase: CompleteTaskUseCase
 ) : ViewModel() {
 
     fun CreateTask(
@@ -29,7 +29,7 @@ class HomeViewModel(
         priority: Priority,
         duration: Int?,
         description: String?,
-        startTime: Long?,
+        startTime: Timestamp?,
         onResult: (PlannerResult<Unit>) -> Unit
     ) {
         viewModelScope.launch {
@@ -39,7 +39,7 @@ class HomeViewModel(
                 description = description ?: "",
                 status = TaskStatus.OPEN,
                 duration = (duration ?: 0).toLong(),
-                startTime = startTime ?: System.currentTimeMillis()
+                startTime = startTime ?: Timestamp.now()
             )
             onResult(result)
         }
@@ -70,10 +70,4 @@ class HomeViewModel(
             started = SharingStarted.WhileSubscribed(5000),
             initialValue = emptyList()
         )
-
-    fun CompleteTask(taskId: String) {
-        viewModelScope.launch {
-            completeTaskUseCase(taskId)
-        }
-    }
 }

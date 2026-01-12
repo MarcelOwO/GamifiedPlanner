@@ -106,9 +106,6 @@ fun HomeView(
 
                         deleteTask = { task ->
                             vm.DeleteTask(task.id)
-                        },
-                        completeTask = { task ->
-                            vm.CompleteTask(task.id)
                         }
                     )
 

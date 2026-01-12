@@ -1,5 +1,6 @@
 package marcel.uni.gamifiedplanner.data.user
 
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
@@ -17,6 +18,7 @@ import marcel.uni.gamifiedplanner.domain.user.repository.UserRepository
 import marcel.uni.gamifiedplanner.util.firebaseConstants
 import marcel.uni.gamifiedplanner.util.observeModel
 import marcel.uni.gamifiedplanner.util.observeList
+
 
 class UserRepositoryImpl(
     private val db: FirebaseFirestore,
@@ -66,6 +68,8 @@ class UserRepositoryImpl(
             stats = UserStats(
                 xp = 0,
                 currency = 0,
+                streak = 0,
+                lastLogin = Timestamp.now()
             ),
             settings = UserSettings(
                 darkMode = true,
@@ -138,5 +142,9 @@ class UserRepositoryImpl(
         taskHistoryItem: TaskHistoryItem
     ) {
         inventoryColl(uid).add(taskHistoryItem).await()
+    }
+
+    override suspend fun setLastLogin(uid:String) {
+        userRef(uid).update(firebaseConstants.FIELD_LASTLOGIN, FieldValue.serverTimestamp()).await()
     }
 }

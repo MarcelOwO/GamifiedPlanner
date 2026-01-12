@@ -33,8 +33,14 @@ class FirebaseAuthRepositoryImpl(
     override suspend fun login(
         email: String,
         password: String,
-    ) {
-        auth.signInWithEmailAndPassword(email, password)
+    ):String? {
+        val result =auth.signInWithEmailAndPassword(email, password)
+
+        if (!result.isSuccessful) {
+            return null
+        }
+
+        return result.result.user?.uid
     }
 
     override suspend fun register(

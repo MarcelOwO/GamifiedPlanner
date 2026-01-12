@@ -1,5 +1,6 @@
 package marcel.uni.gamifiedplanner.data.task
 
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.tasks.await
@@ -33,7 +34,7 @@ class TaskRepositoryImpl(
            val docRef = getTasksColl(uid).document()
            val taskWithMeta =  task.copy(
                id = docRef.id,
-               createdAt = System.currentTimeMillis()
+               createdAt = Timestamp.now()
            )
            docRef.set(taskWithMeta).await()
         }.onFailure{

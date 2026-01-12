@@ -1,5 +1,6 @@
 package marcel.uni.gamifiedplanner.domain.task.usecase
 
+import com.google.firebase.Timestamp
 import marcel.uni.gamifiedplanner.domain.auth.repository.FirebaseAuthRepository
 import marcel.uni.gamifiedplanner.domain.task.repository.TaskRepository
 import marcel.uni.gamifiedplanner.domain.task.model.Priority
@@ -17,7 +18,7 @@ class CreateTaskUseCase(
         description: String,
         status: TaskStatus,
         duration: Long,
-        startTime: Long,
+        startTime: Timestamp,
     ): PlannerResult<Unit> {
         val userId =
             authRepo.currentUserId ?: return PlannerResult.Error("User is not logged in");

@@ -16,9 +16,9 @@ class TaskModule {
         single<TaskRepository> { TaskRepositoryImpl(get(), get()) }
         factory { CreateTaskUseCase(get(),get()) }
         factory { GetTasksUseCase(get(),get()) }
-        factory { UpdateTaskUseCase(get(),get()) }
+        factory { UpdateTaskUseCase(get(),get(),get()) }
         factory { DeleteTaskUseCase(get(),get()) }
 
-        viewModel { HomeViewModel(get(),get(),get(),get(),get()) }
+        viewModel { HomeViewModel(get(),get(),get(),get()) }
     }
 }

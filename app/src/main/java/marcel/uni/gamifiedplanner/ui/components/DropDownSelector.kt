@@ -31,7 +31,7 @@ fun DropDownSelector(collection: List<String>, selected: String, onSelect: (Stri
         }
         DropdownMenu(
             expanded = expanded,
-            shape = RoundedCornerShape(20.dp),
+            shape = RoundedCornerShape(10.dp),
             onDismissRequest = { expanded = false }) {
             Column(
                 verticalArrangement = Arrangement.Center,
