@@ -7,17 +7,20 @@ import marcel.uni.gamifiedplanner.domain.auth.usecase.LogoutUseCase
 import marcel.uni.gamifiedplanner.domain.auth.usecase.login.LogInUseCase
 import marcel.uni.gamifiedplanner.domain.auth.usecase.register.RegisterUseCase
 import marcel.uni.gamifiedplanner.ui.auth.AuthViewModel
-import org.koin.core.module.dsl.viewModel
+import org.koin.core.module.dsl.bind
+import org.koin.core.module.dsl.factoryOf
+import org.koin.core.module.dsl.singleOf
+import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
 
 class AuthModule {
     val authModule = module {
-        single<FirebaseAuthRepository> { FirebaseAuthRepositoryImpl(get()) }
-        factory { AuthStatusUseCase(get()) }
-        factory { LogInUseCase(get(),get()) }
-        factory { RegisterUseCase(get(),get()) }
-        factory { LogoutUseCase(get()) }
-        viewModel { AuthViewModel(get(), get(), get(), get()) }
+        singleOf(::FirebaseAuthRepositoryImpl) { bind<FirebaseAuthRepository>() }
+        factoryOf(::AuthStatusUseCase)
+        factoryOf(::LogInUseCase)
+        factoryOf(::RegisterUseCase)
+        factoryOf(::LogoutUseCase)
+        viewModelOf(::AuthViewModel)
     }
 }

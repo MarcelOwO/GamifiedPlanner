@@ -1,5 +1,6 @@
 package marcel.uni.gamifiedplanner.di
 
+import android.system.Os.bind
 import marcel.uni.gamifiedplanner.data.user.UserRepositoryImpl
 import marcel.uni.gamifiedplanner.domain.user.repository.UserRepository
 import marcel.uni.gamifiedplanner.domain.user.usecase.ObserveDarkModeUseCase
@@ -17,26 +18,29 @@ import marcel.uni.gamifiedplanner.domain.user.usecase.ObserveUserUsernameUseCase
 import marcel.uni.gamifiedplanner.domain.user.usecase.ObserveXpProgressUseCase
 import marcel.uni.gamifiedplanner.domain.user.usecase.ObserveXpUseCase
 import marcel.uni.gamifiedplanner.domain.user.usecase.SetUserNameUseCase
+import org.koin.core.module.dsl.bind
+import org.koin.core.module.dsl.factoryOf
+import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
 class UserModule {
     val userModule =
         module {
-            single<UserRepository> { UserRepositoryImpl(get()) }
-            factory { AddXpUseCase(get(), get()) }
-            factory { CompleteTaskUseCase(get(), get(), get(),get()) }
-            factory { ObserveDarkModeUseCase(get(), get()) }
-            factory { ObserveLevelUseCase(get(), get()) }
-            factory { ObserveNotificationStateUseCase(get(), get()) }
-            factory { ObserveUserAchievementsUseCase(get(), get()) }
-            factory { ObserveUserInventoryUseCase(get(), get()) }
-            factory { ObserveUserUsernameUseCase(get(),get()) }
-            factory { ObserveUserTaskUseCase(get(), get()) }
-            factory { ObserveXpProgressUseCase(get(), get()) }
-            factory { ObserveXpUseCase(get(), get()) }
-            factory { PurchaseItemUseCase(get(), get(), get()) }
-            factory { SetDarkModeUseCase(get(), get()) }
-            factory { SetNotificationStateUseCase(get(), get()) }
-            factory { SetUserNameUseCase(get(),get()) }
+            singleOf(::UserRepositoryImpl) { bind<UserRepository>() }
+            factoryOf(::AddXpUseCase)
+            factoryOf(::CompleteTaskUseCase)
+            factoryOf(::ObserveDarkModeUseCase)
+            factoryOf(::ObserveLevelUseCase)
+            factoryOf(::ObserveNotificationStateUseCase)
+            factoryOf(::ObserveUserAchievementsUseCase)
+            factoryOf(::ObserveUserInventoryUseCase)
+            factoryOf(::ObserveUserUsernameUseCase)
+            factoryOf(::ObserveUserTaskUseCase)
+            factoryOf(::ObserveXpProgressUseCase)
+            factoryOf(::ObserveXpUseCase)
+            factoryOf(::PurchaseItemUseCase)
+            factoryOf(::SetDarkModeUseCase)
+            factoryOf(::SetNotificationStateUseCase)
+            factoryOf(::SetUserNameUseCase)
         }
 }
