@@ -3,9 +3,9 @@ package marcel.uni.gamifiedplanner.di
 import marcel.uni.gamifiedplanner.ui.header.AppHeaderViewModel
 import marcel.uni.gamifiedplanner.ui.profile.ProfileViewModel
 import marcel.uni.gamifiedplanner.ui.settings.SettingsViewModel
-import marcel.uni.gamifiedplanner.ui.shop.ShopViewModel
 import marcel.uni.gamifiedplanner.ui.stats.StatsViewModel
-import org.koin.core.module.dsl.viewModel
+import marcel.uni.gamifiedplanner.ui.theme.ThemeViewModel
+import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
 
@@ -13,9 +13,10 @@ import org.koin.dsl.module
 class AppModule {
     val appModule =
         module {
-            viewModel { AppHeaderViewModel(get(), get(),get()) }
-            viewModel { StatsViewModel() }
-            viewModel { SettingsViewModel(get(), get(), get(), get(), get()) }
-            viewModel { ProfileViewModel(get(),get()) }
+            viewModelOf(::AppHeaderViewModel)
+            viewModelOf(::StatsViewModel)
+            viewModelOf(::SettingsViewModel)
+            viewModelOf(::ProfileViewModel)
+            viewModelOf(::ThemeViewModel)
         }
 }

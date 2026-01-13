@@ -2,10 +2,12 @@ package marcel.uni.gamifiedplanner.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.Timestamp
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import marcel.uni.gamifiedplanner.domain.logger.AppLogger
 import marcel.uni.gamifiedplanner.domain.task.model.Priority
 import marcel.uni.gamifiedplanner.domain.task.model.Task
 import marcel.uni.gamifiedplanner.domain.task.model.TaskStatus
@@ -20,21 +22,26 @@ class HomeViewModel(
     private val getTasksUseCase: GetTasksUseCase,
     private val updateTaskUseCase: UpdateTaskUseCase,
     private val deleteTaskUseCase: DeleteTaskUseCase,
+    private val logger: AppLogger
 ) : ViewModel() {
 
     fun CreateTask(
         title: String,
-        description: String,
         priority: Priority,
-        status: TaskStatus,
+        duration: Int?,
+        description: String?,
+        startTime: Timestamp?,
         onResult: (PlannerResult<Unit>) -> Unit
     ) {
         viewModelScope.launch {
+            logger.i("Creating task")
             val result = createTaskUseCase(
-                title,
-                description,
-                priority,
-                status
+                title = title,
+                priority = priority,
+                description = description ?: "",
+                status = TaskStatus.OPEN,
+                duration = (duration ?: 0).toLong(),
+                startTime = startTime ?: Timestamp.now()
             )
             onResult(result)
         }
@@ -48,6 +55,7 @@ class HomeViewModel(
         taskStatus: TaskStatus
     ) {
         viewModelScope.launch {
+            logger.i("Updating task")
             updateTaskUseCase(taskId, taskName, taskDescription, taskPriority, taskStatus)
         }
     }
@@ -55,6 +63,7 @@ class HomeViewModel(
 
     fun DeleteTask(taskId: String) {
         viewModelScope.launch {
+            logger.i("Deleting task {$taskId}")
             deleteTaskUseCase.invoke(taskId)
         }
     }

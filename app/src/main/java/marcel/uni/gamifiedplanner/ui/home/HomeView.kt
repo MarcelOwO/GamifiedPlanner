@@ -30,11 +30,14 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.ui.res.painterResource
 import marcel.uni.gamifiedplanner.R
+import marcel.uni.gamifiedplanner.domain.logger.AppLogger
 import marcel.uni.gamifiedplanner.ui.components.CustomSelect
+import org.koin.compose.koinInject
 
 @Composable
 fun HomeView(
-    vm: HomeViewModel = koinViewModel()
+    vm: HomeViewModel = koinViewModel(),
+    logger: AppLogger = koinInject()
 ) {
     var showMenu by remember { mutableStateOf(false) }
 
@@ -45,7 +48,7 @@ fun HomeView(
         modifier = Modifier.padding(5.dp)
     ) {
 
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween){
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
 
             Text(
                 "Tasks",
@@ -54,11 +57,14 @@ fun HomeView(
             )
 
             IconButton(
-                onClick = { showMenu = true },
+                onClick = {
+                    logger.i("Adding task button pressed")
+                    showMenu = true
+                },
             ) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    shape = RoundedCornerShape(20.dp),
+                    shape = RoundedCornerShape(10.dp),
                     color = MaterialTheme.colorScheme.primary,
                 ) {
                     Icon(
@@ -72,6 +78,7 @@ fun HomeView(
         var selectedOption by remember { mutableStateOf("Today") }
 
         CustomSelect(options = listOf("Today", "All"), selectedOption, onSelect = { selected ->
+            logger.i("Task filter selected option: $selected")
             selectedOption = selected
         }
         )
@@ -81,7 +88,7 @@ fun HomeView(
             modifier = Modifier
                 .padding(5.dp)
                 .fillMaxSize(),
-            shape = RoundedCornerShape(20.dp)
+            shape = RoundedCornerShape(10.dp)
 
         ) {
             LazyColumn(
@@ -90,7 +97,24 @@ fun HomeView(
                     .padding(10.dp)
             ) {
                 items(tasks) { task ->
-                    TaskCard(task, vm)
+                    TaskCard(
+                        task,
+                        editTask = { task ->
+                            logger.i("Editing task: ${task.title} ${task.id} ${task.description} ${task.priority} ${task.status} ${task.duration} ${task.startTime} ")
+                            vm.UpdateTasks(
+                                task.id,
+                                task.title,
+                                task.description ?: "",
+                                task.priority,
+                                task.status
+                            )
+                        },
+                        deleteTask = { task ->
+                            logger.i("Deleting task: ${task.title}")
+                            vm.DeleteTask(task.id)
+                        }
+                    )
+
                     Spacer(modifier = Modifier.padding(5.dp))
                 }
             }
@@ -98,7 +122,27 @@ fun HomeView(
     }
 
     AddTaskDialog(
-        showMenu, onDismiss = { showMenu = false }, vm
+        showMenu,
+        onDismiss = { showMenu = false },
+        createTask = { title, priority, description, taskDuration, taskStartTime ->
+            logger.i("Creating task")
+            vm.CreateTask(
+                title,
+                priority,
+                taskDuration,
+                description,
+                taskStartTime,
+                onResult = { result ->
+                    {
+                        if (result.isSuccess) {
+                            showMenu = false
+                        } else {
+                            logger.e("Error creating task")
+                        }
+
+                    }
+                })
+        }
     )
 
 

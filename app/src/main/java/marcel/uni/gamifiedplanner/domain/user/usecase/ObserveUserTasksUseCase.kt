@@ -7,15 +7,21 @@ import kotlinx.coroutines.flow.flowOf
 import marcel.uni.gamifiedplanner.domain.user.model.TaskHistoryItem
 import marcel.uni.gamifiedplanner.domain.user.repository.UserRepository
 import marcel.uni.gamifiedplanner.domain.auth.repository.FirebaseAuthRepository
+import marcel.uni.gamifiedplanner.domain.logger.AppLogger
 
 class ObserveUserTaskUseCase(
     private val userRepo: UserRepository,
-    private val authRepo: FirebaseAuthRepository
+    private val authRepo: FirebaseAuthRepository,
+    private val logger: AppLogger
 ) {
-
     operator fun invoke(): Flow<List<TaskHistoryItem>> {
-        val userId = authRepo.currentUserId ?: return flowOf(emptyList())
-
+        logger.i("Invoking observe user task history usecase")
+        val userId = authRepo.currentUserId
+        if (userId == null) {
+            logger.e("Invoking observe user task history usecase requires user to be logged in")
+            return flowOf(emptyList())
+        }
+        logger.i("Invoking observe user task history usecase was successful")
         return userRepo.observeHistoryItems(userId)
     }
 }

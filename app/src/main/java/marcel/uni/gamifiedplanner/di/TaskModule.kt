@@ -7,18 +7,21 @@ import marcel.uni.gamifiedplanner.domain.task.usecase.DeleteTaskUseCase
 import marcel.uni.gamifiedplanner.domain.task.usecase.GetTasksUseCase
 import marcel.uni.gamifiedplanner.domain.task.usecase.UpdateTaskUseCase
 import marcel.uni.gamifiedplanner.ui.home.HomeViewModel
+import org.koin.core.module.dsl.bind
+import org.koin.core.module.dsl.factoryOf
+import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModel
+import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
 class TaskModule {
 
     val taskModule = module {
-        single<TaskRepository> { TaskRepositoryImpl(get(), get()) }
-        factory { CreateTaskUseCase(get(),get()) }
-        factory { GetTasksUseCase(get(),get()) }
-        factory { UpdateTaskUseCase(get(),get()) }
-        factory { DeleteTaskUseCase(get(),get()) }
-
-        viewModel { HomeViewModel(get(),get(),get(),get()) }
+        singleOf(::TaskRepositoryImpl) { bind<TaskRepository>() }
+        factoryOf(::CreateTaskUseCase)
+        factoryOf(::GetTasksUseCase)
+        factoryOf(::UpdateTaskUseCase)
+        factoryOf(::DeleteTaskUseCase)
+        viewModelOf(::HomeViewModel)
     }
 }

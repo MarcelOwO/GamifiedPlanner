@@ -3,6 +3,7 @@ package marcel.uni.gamifiedplanner.domain.task.usecase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import marcel.uni.gamifiedplanner.domain.auth.repository.FirebaseAuthRepository
+import marcel.uni.gamifiedplanner.domain.logger.AppLogger
 import marcel.uni.gamifiedplanner.domain.task.repository.TaskRepository
 import marcel.uni.gamifiedplanner.domain.task.model.Task
 import marcel.uni.gamifiedplanner.util.PlannerResult
@@ -10,17 +11,21 @@ import kotlin.collections.emptyList
 
 class GetTasksUseCase(
     private val repo: TaskRepository,
-    private val authRepo: FirebaseAuthRepository
+    private val authRepo: FirebaseAuthRepository,
+    private val logger: AppLogger
 ) {
 
     operator fun invoke(): Flow<List<Task>> {
-        val userId =
-            authRepo.currentUserId;
+        logger.i("Invoking get tasks usecase")
 
-        //replace later with proper return message
+        val userId = authRepo.currentUserId
+
         if (userId == null) {
+            logger.e("UserId is null inside get tasks usecase")
             return flowOf(emptyList())
         }
+
+        logger.i("Get task usecase invoked successfully")
 
         return repo.observeTasks(userId)
     }

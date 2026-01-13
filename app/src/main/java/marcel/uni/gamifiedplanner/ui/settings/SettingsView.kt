@@ -47,7 +47,7 @@ fun SettingsView(
             modifier = Modifier
                 .padding(16.dp)
                 .fillMaxSize(),
-            shape = RoundedCornerShape(20.dp),
+            shape = RoundedCornerShape(10.dp),
             tonalElevation = 2.dp
         ) {
             Column(modifier = Modifier.padding(16.dp)){
