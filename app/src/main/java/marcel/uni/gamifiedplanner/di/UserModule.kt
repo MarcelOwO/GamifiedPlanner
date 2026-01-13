@@ -1,6 +1,5 @@
 package marcel.uni.gamifiedplanner.di
 
-import android.system.Os.bind
 import marcel.uni.gamifiedplanner.data.user.UserRepositoryImpl
 import marcel.uni.gamifiedplanner.domain.user.repository.UserRepository
 import marcel.uni.gamifiedplanner.domain.user.usecase.ObserveDarkModeUseCase
@@ -14,10 +13,10 @@ import marcel.uni.gamifiedplanner.domain.user.usecase.CompleteTaskUseCase
 import marcel.uni.gamifiedplanner.domain.user.usecase.ObserveLevelUseCase
 import marcel.uni.gamifiedplanner.domain.user.usecase.ObserveUserAchievementsUseCase
 import marcel.uni.gamifiedplanner.domain.user.usecase.ObserveUserTaskUseCase
-import marcel.uni.gamifiedplanner.domain.user.usecase.ObserveUserUsernameUseCase
+import marcel.uni.gamifiedplanner.domain.user.usecase.profile.ObserveUserUsernameUseCase
 import marcel.uni.gamifiedplanner.domain.user.usecase.ObserveXpProgressUseCase
 import marcel.uni.gamifiedplanner.domain.user.usecase.ObserveXpUseCase
-import marcel.uni.gamifiedplanner.domain.user.usecase.SetUserNameUseCase
+import marcel.uni.gamifiedplanner.domain.user.usecase.profile.SetUserNameUseCase
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf

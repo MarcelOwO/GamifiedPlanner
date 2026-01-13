@@ -1,4 +1,4 @@
-package marcel.uni.gamifiedplanner.domain.user.usecase
+package marcel.uni.gamifiedplanner.domain.user.usecase.profile
 
 import marcel.uni.gamifiedplanner.domain.user.repository.UserRepository
 import marcel.uni.gamifiedplanner.domain.auth.repository.FirebaseAuthRepository
