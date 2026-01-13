@@ -17,11 +17,14 @@ class ObserveLevelUseCase(
     operator fun invoke(): Flow<Int> {
         logger.i("Invoking observe level usecase")
         val userId = authRepo.currentUserId
+
         if (userId == null) {
             logger.e("Invoking observe level usecase requires user to be logged in")
             return flowOf(0)
         }
+
         logger.i("Invoking observe level usecase was successful")
+
         return userRepo
             .observeStats(userId)
             .map { stats ->

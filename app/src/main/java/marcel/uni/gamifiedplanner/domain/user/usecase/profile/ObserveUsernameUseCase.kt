@@ -1,4 +1,4 @@
-package marcel.uni.gamifiedplanner.domain.user.usecase
+package marcel.uni.gamifiedplanner.domain.user.usecase.profile
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
