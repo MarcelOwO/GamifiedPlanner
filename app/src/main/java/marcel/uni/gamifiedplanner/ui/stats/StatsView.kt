@@ -17,6 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import marcel.uni.gamifiedplanner.ui.components.CustomSelect
 import org.koin.androidx.compose.koinViewModel
@@ -25,7 +26,12 @@ import org.koin.androidx.compose.koinViewModel
 fun StatsView(
     vm: StatsViewModel = koinViewModel()
 ) {
-    var selected by remember {mutableStateOf("Today")}
+    var selectedAchievements by remember { mutableStateOf("Today") }
+
+    var selectedCategory by remember { mutableStateOf("Tasks") }
+
+    val tasks by vm.tasks.collectAsStateWithLifecycle()
+    val userAchievements by vm.achievements.collectAsStateWithLifecycle()
 
     Column() {
         Text(
@@ -34,24 +40,35 @@ fun StatsView(
             modifier = Modifier.padding(10.dp)
         )
 
-        Spacer(modifier = Modifier.height(10.dp))
-
-        CustomSelect(listOf("Today","All"),selected=selected,onSelect={
-            selected = it
+        CustomSelect(listOf("Tasks", "Achievements"), selected = selectedCategory, onSelect = {
+            selectedCategory = it
         })
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        Surface(modifier = Modifier
-            .padding(10.dp)
-            .fillMaxSize()
-            ,shape = RoundedCornerShape(20.dp)){
+        if (selectedCategory == "Tasks") {
+            Text("Tasks")
+            CustomSelect(listOf("Today", "All"), selected = selectedAchievements, onSelect = {
+                selectedAchievements = it
+            })
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Surface(
+                modifier = Modifier
+                    .padding(10.dp)
+                    .fillMaxSize(), shape = RoundedCornerShape(20.dp)
+            ) {
+            }
+        } else if (selectedCategory == "Achievements") {
+            Text("Achievements")
+            Surface(
+                modifier = Modifier
+                    .padding(10.dp)
+                    .fillMaxSize(), shape = RoundedCornerShape(20.dp)
+            ) {
+            }
         }
-
-
-
-
-
 
 
     }

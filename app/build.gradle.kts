@@ -57,6 +57,7 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-firestore")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android")
+    implementation("com.jakewharton.timber:timber:5.0.1")
 
     implementation(libs.androidx.navigation.compose)
 

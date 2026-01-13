@@ -77,14 +77,16 @@ fun TaskCard(task: Task, editTask: (task: Task) -> Unit, deleteTask: (task: Task
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 DropDownSelector(
-                    collection = Priority.entries.map { it -> it.name },
-                    task.priority.name,
-                    onSelect = {editTask(task)})
+                    collection = Priority.entries.map { it.name },
+                    selected = task.priority.name,
+                    onSelect = { newPriority ->
+                        editTask(task.copy(priority = Priority.valueOf(newPriority)))
+                    })
                 DropDownSelector(
-                    collection = TaskStatus.entries.map { it -> it.name },
-                    task.status.name,
-                    onSelect = {
-                        editTask(task)
+                    collection = TaskStatus.entries.map { it.name },
+                    selected = task.status.name,
+                    onSelect = { newStatus ->
+                        editTask(task.copy(status = TaskStatus.valueOf(newStatus)))
                     })
             }
 

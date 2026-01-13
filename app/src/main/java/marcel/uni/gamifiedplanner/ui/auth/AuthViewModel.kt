@@ -10,6 +10,7 @@ import marcel.uni.gamifiedplanner.domain.auth.usecase.AuthStatusUseCase
 import marcel.uni.gamifiedplanner.domain.auth.usecase.login.LogInUseCase
 import marcel.uni.gamifiedplanner.domain.auth.usecase.LogoutUseCase
 import marcel.uni.gamifiedplanner.domain.auth.usecase.register.RegisterUseCase
+import marcel.uni.gamifiedplanner.domain.logger.AppLogger
 import marcel.uni.gamifiedplanner.util.PlannerResult
 
 class AuthViewModel(
@@ -17,8 +18,8 @@ class AuthViewModel(
     private val loginUseCase: LogInUseCase,
     private val registerUseCase: RegisterUseCase,
     private val logoutUseCase: LogoutUseCase,
+    private val logger: AppLogger
 ) : ViewModel() {
-
     val isLoggedIn: Flow<Boolean> = statusUseCase().stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
@@ -27,6 +28,7 @@ class AuthViewModel(
 
     fun login(email: String, password: String, onResult: (PlannerResult<Unit>) -> Unit) {
         viewModelScope.launch {
+            logger.i("Logging in")
             loginUseCase(email, password)
                 .also { result ->
                     onResult(result)
@@ -36,6 +38,7 @@ class AuthViewModel(
 
     fun register(email: String,username:String, password: String, onResult: (PlannerResult<Unit>) -> Unit) {
         viewModelScope.launch {
+            logger.i("Registering")
             registerUseCase(email,username, password).also { result ->
                 onResult(result)
             }
@@ -43,6 +46,7 @@ class AuthViewModel(
     }
 
     fun logout() {
+        logger.i("Logging out")
         logoutUseCase()
     }
 }

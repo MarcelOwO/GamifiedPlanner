@@ -30,11 +30,14 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.ui.res.painterResource
 import marcel.uni.gamifiedplanner.R
+import marcel.uni.gamifiedplanner.domain.logger.AppLogger
 import marcel.uni.gamifiedplanner.ui.components.CustomSelect
+import org.koin.compose.koinInject
 
 @Composable
 fun HomeView(
-    vm: HomeViewModel = koinViewModel()
+    vm: HomeViewModel = koinViewModel(),
+    logger: AppLogger = koinInject()
 ) {
     var showMenu by remember { mutableStateOf(false) }
 
@@ -54,7 +57,10 @@ fun HomeView(
             )
 
             IconButton(
-                onClick = { showMenu = true },
+                onClick = {
+                    logger.i("Adding task button pressed")
+                    showMenu = true
+                },
             ) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -72,6 +78,7 @@ fun HomeView(
         var selectedOption by remember { mutableStateOf("Today") }
 
         CustomSelect(options = listOf("Today", "All"), selectedOption, onSelect = { selected ->
+            logger.i("Task filter selected option: $selected")
             selectedOption = selected
         }
         )
@@ -93,18 +100,17 @@ fun HomeView(
                     TaskCard(
                         task,
                         editTask = { task ->
-                            {
-                                vm.UpdateTasks(
-                                    task.id,
-                                    task.title,
-                                    task.description ?: "",
-                                    task.priority,
-                                    task.status
-                                )
-                            }
+                            logger.i("Editing task: ${task.title} ${task.id} ${task.description} ${task.priority} ${task.status} ${task.duration} ${task.startTime} ")
+                            vm.UpdateTasks(
+                                task.id,
+                                task.title,
+                                task.description ?: "",
+                                task.priority,
+                                task.status
+                            )
                         },
-
                         deleteTask = { task ->
+                            logger.i("Deleting task: ${task.title}")
                             vm.DeleteTask(task.id)
                         }
                     )
@@ -119,6 +125,7 @@ fun HomeView(
         showMenu,
         onDismiss = { showMenu = false },
         createTask = { title, priority, description, taskDuration, taskStartTime ->
+            logger.i("Creating task")
             vm.CreateTask(
                 title,
                 priority,
@@ -127,6 +134,11 @@ fun HomeView(
                 taskStartTime,
                 onResult = { result ->
                     {
+                        if (result.isSuccess) {
+                            showMenu = false
+                        } else {
+                            logger.e("Error creating task")
+                        }
 
                     }
                 })

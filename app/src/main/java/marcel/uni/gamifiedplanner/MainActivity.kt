@@ -5,36 +5,46 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
+import com.google.firebase.BuildConfig
 import marcel.uni.gamifiedplanner.di.AchievementModule
 import marcel.uni.gamifiedplanner.di.AppModule
 import marcel.uni.gamifiedplanner.di.AuthModule
 import marcel.uni.gamifiedplanner.di.FirebaseModule
+import marcel.uni.gamifiedplanner.di.LoggingModule
 import marcel.uni.gamifiedplanner.di.ShopModule
 import marcel.uni.gamifiedplanner.di.TaskModule
 import marcel.uni.gamifiedplanner.di.UserModule
 import marcel.uni.gamifiedplanner.ui.RootView
 import marcel.uni.gamifiedplanner.ui.theme.GamifiedPlannerTheme
+import marcel.uni.gamifiedplanner.ui.theme.ThemeHost
+import marcel.uni.gamifiedplanner.ui.theme.ThemeViewModel
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 import org.koin.compose.KoinApplication
+import timber.log.Timber
 
 // Entry point
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        Timber.plant(object : Timber.DebugTree() {
+            override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
+                super.log(priority, "[OwO]_$tag", message, t)
+            }
+        })
+
         enableEdgeToEdge()
         setContent {
-            GamifiedPlannerTheme {
-                App()
-            }
+            App()
         }
     }
 
-
-    // di modules
     @Composable
     fun App() {
         KoinApplication(
             application = {
                 modules(
+                    LoggingModule().loggingModule,
                     AppModule().appModule,
                     FirebaseModule().firebaseModule,
                     TaskModule().taskModule,
@@ -45,7 +55,10 @@ class MainActivity : ComponentActivity() {
                 )
             }
         ) {
-            RootView()
+            val themeViewModel: ThemeViewModel = getViewModel()
+            ThemeHost(vm = themeViewModel){
+                RootView()
+            }
         }
     }
 }

@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import marcel.uni.gamifiedplanner.domain.logger.AppLogger
 import marcel.uni.gamifiedplanner.domain.task.model.Priority
 import marcel.uni.gamifiedplanner.domain.task.model.Task
 import marcel.uni.gamifiedplanner.domain.task.model.TaskStatus
@@ -14,7 +15,6 @@ import marcel.uni.gamifiedplanner.domain.task.usecase.CreateTaskUseCase
 import marcel.uni.gamifiedplanner.domain.task.usecase.DeleteTaskUseCase
 import marcel.uni.gamifiedplanner.domain.task.usecase.GetTasksUseCase
 import marcel.uni.gamifiedplanner.domain.task.usecase.UpdateTaskUseCase
-import marcel.uni.gamifiedplanner.domain.user.usecase.CompleteTaskUseCase
 import marcel.uni.gamifiedplanner.util.PlannerResult
 
 class HomeViewModel(
@@ -22,6 +22,7 @@ class HomeViewModel(
     private val getTasksUseCase: GetTasksUseCase,
     private val updateTaskUseCase: UpdateTaskUseCase,
     private val deleteTaskUseCase: DeleteTaskUseCase,
+    private val logger: AppLogger
 ) : ViewModel() {
 
     fun CreateTask(
@@ -33,6 +34,7 @@ class HomeViewModel(
         onResult: (PlannerResult<Unit>) -> Unit
     ) {
         viewModelScope.launch {
+            logger.i("Creating task")
             val result = createTaskUseCase(
                 title = title,
                 priority = priority,
@@ -53,6 +55,7 @@ class HomeViewModel(
         taskStatus: TaskStatus
     ) {
         viewModelScope.launch {
+            logger.i("Updating task")
             updateTaskUseCase(taskId, taskName, taskDescription, taskPriority, taskStatus)
         }
     }
@@ -60,6 +63,7 @@ class HomeViewModel(
 
     fun DeleteTask(taskId: String) {
         viewModelScope.launch {
+            logger.i("Deleting task {$taskId}")
             deleteTaskUseCase.invoke(taskId)
         }
     }
