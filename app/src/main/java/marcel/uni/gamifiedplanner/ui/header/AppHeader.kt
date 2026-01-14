@@ -32,7 +32,6 @@ import org.koin.androidx.compose.koinViewModel
 import marcel.uni.gamifiedplanner.R
 
 
-
 @Preview
 @Composable
 fun AppHeader(vm: AppHeaderViewModel = koinViewModel(), authVm: AuthViewModel = koinViewModel()) {
@@ -41,6 +40,7 @@ fun AppHeader(vm: AppHeaderViewModel = koinViewModel(), authVm: AuthViewModel = 
     val level by vm.currentLevel.collectAsState()
     val xp by vm.currentXp.collectAsState()
     val progress by vm.xpProgress.collectAsState()
+    val streak by vm.currentStreak.collectAsState()
 
     Column(modifier = Modifier.padding(5.dp)) {
         Row(
@@ -68,11 +68,12 @@ fun AppHeader(vm: AppHeaderViewModel = koinViewModel(), authVm: AuthViewModel = 
                     }
 
                     DropdownMenu(
-                        shape= RoundedCornerShape(10.dp),
+                        shape = RoundedCornerShape(10.dp),
                         expanded = expanded,
                         onDismissRequest = { expanded = false }) {
 
-                        Button(modifier = Modifier.padding(10.dp),
+                        Button(
+                            modifier = Modifier.padding(10.dp),
                             onClick = { authVm.logout() }) {
                             Text("Logout")
                         }
@@ -97,15 +98,15 @@ fun AppHeader(vm: AppHeaderViewModel = koinViewModel(), authVm: AuthViewModel = 
                         verticalArrangement = Arrangement.Center,
                     ) {
 
-                        Text("Loading...",color  =  MaterialTheme.colorScheme.secondary)
+                        Text("Loading...", color = MaterialTheme.colorScheme.secondary)
                     }
                 } else {
                     Column(modifier = Modifier.padding(10.dp)) {
                         Row {
-                            Text("Level ${level}",color  =  MaterialTheme.colorScheme.secondary)
-                            Text("XP ${xp}/100",color  =  MaterialTheme.colorScheme.secondary )
+                            Text("Level $level", color = MaterialTheme.colorScheme.secondary)
+                            Text("XP $xp / 100", color = MaterialTheme.colorScheme.secondary)
                         }
-                    LinearProgressIndicator(progress = { progress.toFloat() / 100 })
+                        LinearProgressIndicator(progress = { progress.toFloat() / 100 })
                     }
                 }
 
@@ -124,7 +125,7 @@ fun AppHeader(vm: AppHeaderViewModel = koinViewModel(), authVm: AuthViewModel = 
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center,
                 ) {
-                    Text("Streak 0",color  =  MaterialTheme.colorScheme.secondary)
+                    Text("Streak $streak", color = MaterialTheme.colorScheme.secondary)
                 }
             }
         }

@@ -8,6 +8,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import marcel.uni.gamifiedplanner.domain.logger.AppLogger
+import marcel.uni.gamifiedplanner.domain.user.usecase.stats.ObserveXpUseCase
+import marcel.uni.gamifiedplanner.domain.user.usecase.stats.ObserveBalanceUseCase
 import marcel.uni.gamifiedplanner.domain.user.usecase.profile.ObserveEmailUseCase
 
 import marcel.uni.gamifiedplanner.domain.user.usecase.profile.ObserveUserUsernameUseCase
@@ -21,8 +23,38 @@ class ProfileViewModel(
     private val observeEmailUseCase: ObserveEmailUseCase,
     private val setUsernameUseCase: SetUserNameUseCase,
     private val setEmailUseCase: SetEmailUseCase,
+    private val observeXpUserCase: ObserveXpUseCase,
+    private val observeCurrencyUseCase: ObserveBalanceUseCase,
     private val logger: AppLogger
 ) : ViewModel() {
+
+    val username: StateFlow<String> = observeUsernameUseCase()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = "",
+        );
+
+    val email: StateFlow<String> = observeEmailUseCase()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = "",
+        );
+
+    val totalCurrency: StateFlow<Long> = observeCurrencyUseCase()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = 0L,
+        );
+
+    val totalXp: StateFlow<Long> = observeXpUserCase()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = 0L,
+        );
 
     fun UpdateUsername(new: String): PlannerResult<Unit> {
         logger.i("Updating username")
@@ -36,13 +68,6 @@ class ProfileViewModel(
         return PlannerResult.Success(Unit)
     }
 
-    val username: StateFlow<String> = observeUsernameUseCase()
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),
-            initialValue = "",
-        );
-
     fun UpdateEmail(new: String): PlannerResult<Unit> {
         logger.i("Updating email")
         if (new.isBlank()) {
@@ -54,12 +79,5 @@ class ProfileViewModel(
         }
         return PlannerResult.Success(Unit)
     }
-
-    val email: StateFlow<String> = observeEmailUseCase()
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),
-            initialValue = "",
-        );
 
 }
