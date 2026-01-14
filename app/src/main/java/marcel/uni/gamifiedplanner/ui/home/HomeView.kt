@@ -1,5 +1,6 @@
 package marcel.uni.gamifiedplanner.ui.home
 
+import android.text.format.DateUtils
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -43,6 +44,19 @@ fun HomeView(
 
     val tasks: List<Task> by vm.tasks.collectAsStateWithLifecycle()
 
+    var selectedOption by remember { mutableStateOf("Today") }
+    val filteredTasks = remember(tasks, selectedOption) {
+        if (selectedOption == "Today") {
+            tasks.filter {
+                DateUtils.isToday(it.startTime?.toDate()?.time ?: 0)
+            }
+        } else {
+            tasks
+        }
+    }
+
+
+
     Column(
         horizontalAlignment = Alignment.End,
         modifier = Modifier.padding(5.dp)
@@ -75,7 +89,6 @@ fun HomeView(
             }
         }
 
-        var selectedOption by remember { mutableStateOf("Today") }
 
         CustomSelect(options = listOf("Today", "All"), selectedOption, onSelect = { selected ->
             logger.i("Task filter selected option: $selected")
@@ -96,27 +109,27 @@ fun HomeView(
                     .fillMaxSize()
                     .padding(10.dp)
             ) {
-                items(tasks) { task ->
-                    TaskCard(
-                        task,
-                        editTask = { task ->
-                            logger.i("Editing task: ${task.title} ${task.id} ${task.description} ${task.priority} ${task.status} ${task.duration} ${task.startTime} ")
-                            vm.UpdateTasks(
-                                task.id,
-                                task.title,
-                                task.description ?: "",
-                                task.priority,
-                                task.status
-                            )
-                        },
-                        deleteTask = { task ->
-                            logger.i("Deleting task: ${task.title}")
-                            vm.DeleteTask(task.id)
-                        }
-                    )
+                items (filteredTasks){ task ->
+                TaskCard(
+                    task,
+                    editTask = { task ->
+                        logger.i("Editing task: ${task.title} ${task.id} ${task.description} ${task.priority} ${task.status} ${task.duration} ${task.startTime} ")
+                        vm.UpdateTasks(
+                            task.id,
+                            task.title,
+                            task.description ?: "",
+                            task.priority,
+                            task.status
+                        )
+                    },
+                    deleteTask = { task ->
+                        logger.i("Deleting task: ${task.title}")
+                        vm.DeleteTask(task.id)
+                    }
+                )
 
-                    Spacer(modifier = Modifier.padding(5.dp))
-                }
+                Spacer(modifier = Modifier.padding(5.dp))
+            }
             }
         }
     }

@@ -1,4 +1,4 @@
-package marcel.uni.gamifiedplanner.domain.user.usecase
+package marcel.uni.gamifiedplanner.domain.user.usecase.settings
 
 import kotlinx.coroutines.flow.first
 import marcel.uni.gamifiedplanner.domain.auth.repository.FirebaseAuthRepository

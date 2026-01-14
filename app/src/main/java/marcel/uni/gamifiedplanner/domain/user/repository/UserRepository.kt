@@ -30,14 +30,14 @@ interface UserRepository {
         email: String,
     )
 
-    suspend fun addXp(
-        uid: String,
-        amount: Long,
-    )
-
     suspend fun updateSettings(
         uid: String,
-        new: UserSettings,
+        new: UserSettings
+    )
+
+    suspend fun updateStats(
+        uid: String,
+        new: UserStats
     )
 
     suspend fun updateProfile(

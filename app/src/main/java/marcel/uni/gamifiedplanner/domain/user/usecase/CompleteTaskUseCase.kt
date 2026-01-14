@@ -8,6 +8,8 @@ import marcel.uni.gamifiedplanner.domain.task.model.Task
 import marcel.uni.gamifiedplanner.domain.task.repository.TaskRepository
 import marcel.uni.gamifiedplanner.domain.user.model.TaskHistoryItem
 import marcel.uni.gamifiedplanner.domain.user.repository.UserRepository
+import marcel.uni.gamifiedplanner.domain.user.usecase.stats.AddBalanceUseCase
+import marcel.uni.gamifiedplanner.domain.user.usecase.stats.AddXpUseCase
 import marcel.uni.gamifiedplanner.util.PlannerResult
 import marcel.uni.gamifiedplanner.util.calculateXp
 import java.util.UUID
@@ -17,6 +19,8 @@ class CompleteTaskUseCase(
     private val authRepo: FirebaseAuthRepository,
     private val taskRepo: TaskRepository,
     private val achievementEngine: AchievementEngine,
+    private val addXpUseCase: AddXpUseCase,
+    private val addBalanceUseCase: AddBalanceUseCase,
     private val logger: AppLogger,
 ) {
     suspend operator fun invoke(taskId: String): PlannerResult<Unit> {
@@ -31,7 +35,7 @@ class CompleteTaskUseCase(
 
         val tasks = taskRepo.observeTasks(userId).first()
 
-        var currentTask = tasks.find { it.id == taskId }
+        val currentTask = tasks.find { it.id == taskId }
 
         if (currentTask == null) {
             logger.e("Task with id $taskId not found for user $userId")
@@ -48,8 +52,11 @@ class CompleteTaskUseCase(
 
         val gainedXp = calculateXp(currentTask.priority)
 
-        userRepo.addXp(userId, gainedXp)
+        addXpUseCase(gainedXp)
+        addBalanceUseCase(10)
+
         userRepo.addTaskHistoryItem(userId, taskHistoryItem)
+
         taskRepo.deleteTask(userId, taskId)
 
         achievementEngine.checkAchievements(userId)

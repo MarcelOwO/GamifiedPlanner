@@ -7,10 +7,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import marcel.uni.gamifiedplanner.domain.auth.usecase.LogoutUseCase
-import marcel.uni.gamifiedplanner.domain.user.usecase.ObserveDarkModeUseCase
-import marcel.uni.gamifiedplanner.domain.user.usecase.ObserveNotificationStateUseCase
-import marcel.uni.gamifiedplanner.domain.user.usecase.SetDarkModeUseCase
-import marcel.uni.gamifiedplanner.domain.user.usecase.SetNotificationStateUseCase
+import marcel.uni.gamifiedplanner.domain.user.usecase.settings.ObserveDarkModeUseCase
+import marcel.uni.gamifiedplanner.domain.user.usecase.settings.ObserveNotificationStateUseCase
+import marcel.uni.gamifiedplanner.domain.user.usecase.settings.SetDarkModeUseCase
+import marcel.uni.gamifiedplanner.domain.user.usecase.settings.SetNotificationStateUseCase
 
 class SettingsViewModel(
     private val toggleDarkModeUseCase: SetDarkModeUseCase,

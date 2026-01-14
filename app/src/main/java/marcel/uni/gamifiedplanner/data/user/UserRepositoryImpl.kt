@@ -112,18 +112,6 @@ class UserRepositoryImpl(
         }
     }
 
-    override suspend fun addXp(
-        uid: String,
-        amount: Long,
-    ) {
-        runCatching {
-            val update = mapOf(firebaseConstants.FIELD_XP to FieldValue.increment(amount))
-            userRef(uid).set(update, SetOptions.merge()).await()
-        }.onFailure { e ->
-            logger.e("Error adding XP: ${e.message}")
-        }
-    }
-
     override suspend fun updateSettings(
         uid: String,
         new: UserSettings,
@@ -138,7 +126,7 @@ class UserRepositoryImpl(
         userRef(uid).update(firebaseConstants.FIELD_PROFILE, new).await()
     }
 
-    suspend fun updateStats(
+    override suspend fun updateStats(
         uid: String,
         new: UserStats,
     ) {

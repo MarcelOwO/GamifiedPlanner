@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -30,6 +31,9 @@ fun ProfileView(
 ) {
     val vmUserName by vm.username.collectAsStateWithLifecycle("")
     val vmEmail by vm.email.collectAsStateWithLifecycle("")
+
+    val totalXp by vm.totalXp.collectAsStateWithLifecycle(0)
+    val balance by vm.totalCurrency.collectAsStateWithLifecycle(0)
 
     var userName by remember { mutableStateOf(vmUserName) }
     var email by remember { mutableStateOf(vmEmail) }
@@ -57,6 +61,8 @@ fun ProfileView(
                 .fillMaxSize(), shape = RoundedCornerShape(20.dp)
         ) {
             Column(modifier = Modifier.padding(10.dp)) {
+
+
                 TextField(
                     value = userName,
                     onValueChange = { userName = it },
@@ -87,6 +93,12 @@ fun ProfileView(
                 }) {
                     Text("Update Profile")
                 }
+
+                HorizontalDivider(modifier = Modifier.height(10.dp))
+
+                Text("Total XP: $totalXp xp")
+                Spacer(modifier = Modifier.height(8.dp))
+                Text("Balance : $balance Coins")
             }
         }
     }
