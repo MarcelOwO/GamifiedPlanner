@@ -7,9 +7,9 @@ data class Task(
     val title: String="",
     val priority: Priority = Priority.MEDIUM,
     val status: TaskStatus = TaskStatus.OPEN,
-    val startTime : Timestamp? = null,
-    val description: String? = null,
-    val duration: Long? = null,
+    val startTime : Timestamp = Timestamp.now(),
+    val description: String = "",
+    val duration: Long = 0, // duration is in minutes
     val createdAt: Timestamp =Timestamp.now()
 )
 

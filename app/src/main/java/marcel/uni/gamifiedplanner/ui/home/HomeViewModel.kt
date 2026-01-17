@@ -13,19 +13,21 @@ import marcel.uni.gamifiedplanner.domain.task.model.Task
 import marcel.uni.gamifiedplanner.domain.task.model.TaskStatus
 import marcel.uni.gamifiedplanner.domain.task.usecase.CreateTaskUseCase
 import marcel.uni.gamifiedplanner.domain.task.usecase.DeleteTaskUseCase
-import marcel.uni.gamifiedplanner.domain.task.usecase.GetTasksUseCase
+import marcel.uni.gamifiedplanner.domain.task.usecase.ObserveTasksUseCase
+import marcel.uni.gamifiedplanner.domain.task.usecase.ObserveTodaysTasksUseCase
 import marcel.uni.gamifiedplanner.domain.task.usecase.UpdateTaskUseCase
 import marcel.uni.gamifiedplanner.util.PlannerResult
 
 class HomeViewModel(
     private val createTaskUseCase: CreateTaskUseCase,
-    private val getTasksUseCase: GetTasksUseCase,
+    private val observeTasksUseCase: ObserveTasksUseCase,
+    private val observeTodaysTasksUseCase: ObserveTodaysTasksUseCase,
     private val updateTaskUseCase: UpdateTaskUseCase,
     private val deleteTaskUseCase: DeleteTaskUseCase,
     private val logger: AppLogger
 ) : ViewModel() {
 
-    fun CreateTask(
+    fun createTask(
         title: String,
         priority: Priority,
         duration: Int?,
@@ -47,7 +49,7 @@ class HomeViewModel(
         }
     }
 
-    fun UpdateTasks(
+    fun updateTask(
         taskId: String,
         taskName: String,
         taskDescription: String,
@@ -61,14 +63,21 @@ class HomeViewModel(
     }
 
 
-    fun DeleteTask(taskId: String) {
+    fun deleteTask(taskId: String) {
         viewModelScope.launch {
             logger.i("Deleting task {$taskId}")
             deleteTaskUseCase.invoke(taskId)
         }
     }
 
-    val tasks: StateFlow<List<Task>> = getTasksUseCase()
+    val tasks: StateFlow<List<Task>> = observeTasksUseCase()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = emptyList()
+        )
+
+    val todayTasks: StateFlow<List<Task>> = observeTodaysTasksUseCase()
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),

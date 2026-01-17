@@ -6,10 +6,9 @@ import marcel.uni.gamifiedplanner.domain.auth.repository.FirebaseAuthRepository
 import marcel.uni.gamifiedplanner.domain.logger.AppLogger
 import marcel.uni.gamifiedplanner.domain.task.repository.TaskRepository
 import marcel.uni.gamifiedplanner.domain.task.model.Task
-import marcel.uni.gamifiedplanner.util.PlannerResult
 import kotlin.collections.emptyList
 
-class GetTasksUseCase(
+class ObserveTasksUseCase(
     private val repo: TaskRepository,
     private val authRepo: FirebaseAuthRepository,
     private val logger: AppLogger

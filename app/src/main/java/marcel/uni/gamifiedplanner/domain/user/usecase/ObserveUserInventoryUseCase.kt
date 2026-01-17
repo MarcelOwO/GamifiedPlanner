@@ -15,7 +15,6 @@ class ObserveUserInventoryUseCase(
     private val logger: AppLogger
 
 ) {
-
     operator fun invoke(): Flow<List<UserInventoryItem>> {
         logger.i("Invoking observe user inventory usecase")
         val userId = authRepo.currentUserId

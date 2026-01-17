@@ -1,7 +1,6 @@
-package marcel.uni.gamifiedplanner.domain.user.usecase
+package marcel.uni.gamifiedplanner.domain.user.usecase.tasks
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 
 import kotlinx.coroutines.flow.flowOf
 import marcel.uni.gamifiedplanner.domain.user.model.TaskHistoryItem

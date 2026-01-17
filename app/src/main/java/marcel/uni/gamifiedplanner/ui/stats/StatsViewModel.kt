@@ -6,13 +6,10 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import marcel.uni.gamifiedplanner.domain.logger.AppLogger
-import marcel.uni.gamifiedplanner.domain.task.model.Task
 import marcel.uni.gamifiedplanner.domain.user.model.TaskHistoryItem
 import marcel.uni.gamifiedplanner.domain.user.model.UserAchievementItem
-import marcel.uni.gamifiedplanner.domain.user.repository.UserRepository
 import marcel.uni.gamifiedplanner.domain.user.usecase.ObserveUserAchievementsUseCase
-import marcel.uni.gamifiedplanner.domain.user.usecase.ObserveUserInventoryUseCase
-import marcel.uni.gamifiedplanner.domain.user.usecase.ObserveUserTaskUseCase
+import marcel.uni.gamifiedplanner.domain.user.usecase.tasks.ObserveUserTaskUseCase
 
 class StatsViewModel(
     private val observeUserAchievementsUseCase: ObserveUserAchievementsUseCase,

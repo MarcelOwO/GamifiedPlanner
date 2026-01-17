@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -38,9 +39,11 @@ fun AppHeader(vm: AppHeaderViewModel = koinViewModel(), authVm: AuthViewModel = 
 
     var expanded by remember { mutableStateOf(false) }
     val level by vm.currentLevel.collectAsState()
-    val xp by vm.currentXp.collectAsState()
     val progress by vm.xpProgress.collectAsState()
     val streak by vm.currentStreak.collectAsState()
+
+    val todaysTasksCount by vm.userTasksCount.collectAsState()
+    val todaysTotalTasksCount by vm.totalTasksCount.collectAsState()
 
     Column(modifier = Modifier.padding(5.dp)) {
         Row(
@@ -82,7 +85,11 @@ fun AppHeader(vm: AppHeaderViewModel = koinViewModel(), authVm: AuthViewModel = 
             }
         }
 
-        Row(modifier = Modifier.fillMaxWidth()) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(5.dp)
+        ) {
             Surface(
                 shape = RoundedCornerShape(10.dp),
                 color = MaterialTheme.colorScheme.tertiary,
@@ -91,23 +98,12 @@ fun AppHeader(vm: AppHeaderViewModel = koinViewModel(), authVm: AuthViewModel = 
                     .padding(5.dp)
                     .fillMaxHeight(0.07f)
             ) {
-                if (level == null || xp == null) {
-                    Column(
-                        modifier = Modifier.padding(10.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center,
-                    ) {
-
-                        Text("Loading...", color = MaterialTheme.colorScheme.secondary)
+                Column(modifier = Modifier.padding(10.dp)) {
+                    Row {
+                        Text("Level $level ", color = MaterialTheme.colorScheme.secondary)
+                        Text("XP $progress / 100", color = MaterialTheme.colorScheme.secondary)
                     }
-                } else {
-                    Column(modifier = Modifier.padding(10.dp)) {
-                        Row {
-                            Text("Level $level", color = MaterialTheme.colorScheme.secondary)
-                            Text("XP $xp / 100", color = MaterialTheme.colorScheme.secondary)
-                        }
-                        LinearProgressIndicator(progress = { progress.toFloat() / 100 })
-                    }
+                    LinearProgressIndicator(progress = { progress.toFloat() / 100 })
                 }
 
 
@@ -126,6 +122,27 @@ fun AppHeader(vm: AppHeaderViewModel = koinViewModel(), authVm: AuthViewModel = 
                     horizontalArrangement = Arrangement.Center,
                 ) {
                     Text("Streak $streak", color = MaterialTheme.colorScheme.secondary)
+                }
+            }
+        }
+        Row(modifier = Modifier.fillMaxWidth()) {
+            Surface(
+                shape = RoundedCornerShape(10.dp),
+                color = MaterialTheme.colorScheme.tertiary,
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(10.dp)
+                    .height(50.dp)
+            ) {
+                Column(modifier=Modifier.padding(5.dp)) {
+                    Text(
+                        "Today's Task Progress",
+                        color = MaterialTheme.colorScheme.secondary,
+                        modifier = Modifier.padding(5.dp)
+                    )
+                    LinearProgressIndicator(
+
+                        progress = { (todaysTasksCount.toFloat() + 1f) / (todaysTotalTasksCount.toFloat() + 1f) })
                 }
             }
         }

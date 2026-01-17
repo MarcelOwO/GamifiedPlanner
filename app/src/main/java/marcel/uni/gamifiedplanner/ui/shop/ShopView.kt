@@ -32,7 +32,6 @@ fun ShopView(
     val inventoryIds by vm.inventoryIds.collectAsStateWithLifecycle()
     val selectedFilter by vm.selectedFilter.collectAsStateWithLifecycle()
 
-
     Column(modifier = Modifier.fillMaxSize()) {
         Text(
             "Shop",
@@ -59,7 +58,6 @@ fun ShopView(
                     onClick = {
                         if (!isOwned) {
                             vm.buyItem(item.id,onResult=({
-
                             }))
                         }
                     }

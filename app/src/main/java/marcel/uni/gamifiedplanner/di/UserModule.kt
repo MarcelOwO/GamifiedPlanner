@@ -9,10 +9,10 @@ import marcel.uni.gamifiedplanner.domain.user.usecase.PurchaseItemUseCase
 import marcel.uni.gamifiedplanner.domain.user.usecase.settings.SetDarkModeUseCase
 import marcel.uni.gamifiedplanner.domain.user.usecase.settings.SetNotificationStateUseCase
 import marcel.uni.gamifiedplanner.domain.user.usecase.stats.AddXpUseCase
-import marcel.uni.gamifiedplanner.domain.user.usecase.CompleteTaskUseCase
+import marcel.uni.gamifiedplanner.domain.user.usecase.tasks.CompleteTaskUseCase
 import marcel.uni.gamifiedplanner.domain.user.usecase.ObserveLevelUseCase
 import marcel.uni.gamifiedplanner.domain.user.usecase.ObserveUserAchievementsUseCase
-import marcel.uni.gamifiedplanner.domain.user.usecase.ObserveUserTaskUseCase
+import marcel.uni.gamifiedplanner.domain.user.usecase.tasks.ObserveUserTaskUseCase
 import marcel.uni.gamifiedplanner.domain.user.usecase.profile.ObserveUserUsernameUseCase
 import marcel.uni.gamifiedplanner.domain.user.usecase.stats.ObserveXpProgressUseCase
 import marcel.uni.gamifiedplanner.domain.user.usecase.stats.ObserveXpUseCase
@@ -23,6 +23,7 @@ import marcel.uni.gamifiedplanner.domain.user.usecase.profile.SetEmailUseCase
 import marcel.uni.gamifiedplanner.domain.user.usecase.profile.SetUserNameUseCase
 import marcel.uni.gamifiedplanner.domain.user.usecase.stats.IncrementStreakUseCase
 import marcel.uni.gamifiedplanner.domain.user.usecase.stats.ObserveStreakUseCase
+import marcel.uni.gamifiedplanner.domain.user.usecase.tasks.ObserveTodaysUsersTaskUseCase
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
@@ -63,6 +64,7 @@ class UserModule {
             factoryOf(::ObserveUserAchievementsUseCase)
             factoryOf(::ObserveUserInventoryUseCase)
             factoryOf(::ObserveUserTaskUseCase)
+            factoryOf(::ObserveTodaysUsersTaskUseCase)
 
             //profile
             factoryOf(::SetUserNameUseCase)

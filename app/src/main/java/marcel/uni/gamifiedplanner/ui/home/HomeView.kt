@@ -43,13 +43,13 @@ fun HomeView(
     var showMenu by remember { mutableStateOf(false) }
 
     val tasks: List<Task> by vm.tasks.collectAsStateWithLifecycle()
+    val todaysTasks: List<Task> by vm.todayTasks.collectAsStateWithLifecycle()
 
     var selectedOption by remember { mutableStateOf("Today") }
+
     val filteredTasks = remember(tasks, selectedOption) {
         if (selectedOption == "Today") {
-            tasks.filter {
-                DateUtils.isToday(it.startTime?.toDate()?.time ?: 0)
-            }
+            todaysTasks
         } else {
             tasks
         }
@@ -109,27 +109,27 @@ fun HomeView(
                     .fillMaxSize()
                     .padding(10.dp)
             ) {
-                items (filteredTasks){ task ->
-                TaskCard(
-                    task,
-                    editTask = { task ->
-                        logger.i("Editing task: ${task.title} ${task.id} ${task.description} ${task.priority} ${task.status} ${task.duration} ${task.startTime} ")
-                        vm.UpdateTasks(
-                            task.id,
-                            task.title,
-                            task.description ?: "",
-                            task.priority,
-                            task.status
-                        )
-                    },
-                    deleteTask = { task ->
-                        logger.i("Deleting task: ${task.title}")
-                        vm.DeleteTask(task.id)
-                    }
-                )
+                items(filteredTasks) { task ->
+                    TaskCard(
+                        task,
+                        editTask = { task ->
+                            logger.i("Editing task: ${task.title} ${task.id} ${task.description} ${task.priority} ${task.status} ${task.duration} ${task.startTime} ")
+                            vm.updateTask(
+                                task.id,
+                                task.title,
+                                task.description,
+                                task.priority,
+                                task.status
+                            )
+                        },
+                        deleteTask = { task ->
+                            logger.i("Deleting task: ${task.title}")
+                            vm.deleteTask(task.id)
+                        }
+                    )
 
-                Spacer(modifier = Modifier.padding(5.dp))
-            }
+                    Spacer(modifier = Modifier.padding(5.dp))
+                }
             }
         }
     }
@@ -139,7 +139,7 @@ fun HomeView(
         onDismiss = { showMenu = false },
         createTask = { title, priority, description, taskDuration, taskStartTime ->
             logger.i("Creating task")
-            vm.CreateTask(
+            vm.createTask(
                 title,
                 priority,
                 taskDuration,

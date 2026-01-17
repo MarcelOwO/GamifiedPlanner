@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import marcel.uni.gamifiedplanner.domain.logger.AppLogger
 import marcel.uni.gamifiedplanner.domain.shop.model.ShopItem
 import marcel.uni.gamifiedplanner.domain.shop.usecase.GetShopItemsUseCase
 import marcel.uni.gamifiedplanner.domain.user.usecase.ObserveUserInventoryUseCase
@@ -20,6 +21,7 @@ class ShopViewModel(
     private val getItemsUseCase: GetShopItemsUseCase,
     private val getInventoryUseCase: ObserveUserInventoryUseCase,
     private val purchaseItemUseCase: PurchaseItemUseCase,
+    private val logger: AppLogger,
 ) : ViewModel() {
     private val _selectedFilter = MutableStateFlow("All")
     val selectedFilter = _selectedFilter.asStateFlow()
@@ -59,6 +61,7 @@ class ShopViewModel(
         onResult: (PlannerResult<Unit>) -> Unit,
     ) {
         viewModelScope.launch {
+            logger.i("Attempting to buy item with id: $itemId")
             purchaseItemUseCase(itemId).also { result ->
                 onResult(result)
             }

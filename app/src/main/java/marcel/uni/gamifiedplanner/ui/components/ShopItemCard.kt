@@ -17,20 +17,30 @@ import androidx.compose.ui.unit.dp
 import marcel.uni.gamifiedplanner.domain.shop.model.ShopItem
 
 @Composable
-fun ShopItemCard(item: ShopItem,isOwned:Boolean=false, onClick: () -> Unit) {
-    Button(shape= RoundedCornerShape(10.dp),
-        modifier=Modifier.padding(10.dp).fillMaxWidth(),onClick= onClick){
-            Column(
-                modifier = Modifier.padding(10.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
-            ) {
-                Text(text = item.name)
-                HorizontalDivider(modifier=Modifier.padding(10.dp))
-                Text(text = "${item.price} Coins")
-                Spacer(modifier=Modifier.height(10.dp))
-                Text(text = item.description)
-            }
+fun ShopItemCard(item: ShopItem, isOwned: Boolean = false, onClick: () -> Unit) {
+    Button(
+        enabled = !isOwned, shape = RoundedCornerShape(10.dp),
+        modifier = Modifier
+            .padding(10.dp)
+            .fillMaxWidth(), onClick = onClick,
+        colors = if (isOwned) androidx.compose.material3.ButtonDefaults.buttonColors(
+            containerColor = androidx.compose.material3.MaterialTheme.colorScheme.primary.copy(
+                alpha = 0.3f
+            )
+        ) else androidx.compose.material3.ButtonDefaults.buttonColors()
+
+    ) {
+        Column(
+            modifier = Modifier.padding(10.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+        ) {
+            Text(text = item.name)
+            HorizontalDivider(modifier = Modifier.padding(10.dp))
+            Text(text = "${item.price} Coins")
+            Spacer(modifier = Modifier.height(10.dp))
+            Text(text = item.description)
+        }
     }
 
 }

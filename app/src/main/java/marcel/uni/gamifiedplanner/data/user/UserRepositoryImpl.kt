@@ -3,7 +3,6 @@ package marcel.uni.gamifiedplanner.data.user
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.SetOptions
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -20,7 +19,6 @@ import marcel.uni.gamifiedplanner.domain.user.repository.UserRepository
 import marcel.uni.gamifiedplanner.util.firebaseConstants
 import marcel.uni.gamifiedplanner.util.observeList
 import marcel.uni.gamifiedplanner.util.observeModel
-import kotlin.text.set
 
 class UserRepositoryImpl(
     private val db: FirebaseFirestore,
@@ -107,6 +105,7 @@ class UserRepositoryImpl(
                         ),
                 )
             userRef(uid).set(newUser).await()
+
         }.onFailure { e ->
             logger.e("Error creating user: ${e.message}")
         }
@@ -150,7 +149,7 @@ class UserRepositoryImpl(
                     }
                     tx.update(userRef(uid), firebaseConstants.FIELD_CURRENCY, currentCurrency - cost)
 
-                    val newItemRef = inventoryColl(uid).document()
+                    val newItemRef = historyColl(uid).document()
 
                     val newItem =
                         mapOf(
@@ -178,7 +177,7 @@ class UserRepositoryImpl(
         taskHistoryItem: TaskHistoryItem,
     ) {
         runCatching {
-            inventoryColl(uid).add(taskHistoryItem).await()
+            historyColl(uid).add(taskHistoryItem).await()
         }.onFailure { e ->
             logger.e("Error adding task history item: ${e.message}")
         }

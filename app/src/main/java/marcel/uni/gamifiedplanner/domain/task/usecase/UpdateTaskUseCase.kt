@@ -6,7 +6,7 @@ import marcel.uni.gamifiedplanner.domain.task.model.Priority
 import marcel.uni.gamifiedplanner.domain.task.model.Task
 import marcel.uni.gamifiedplanner.domain.task.model.TaskStatus
 import marcel.uni.gamifiedplanner.domain.task.repository.TaskRepository
-import marcel.uni.gamifiedplanner.domain.user.usecase.CompleteTaskUseCase
+import marcel.uni.gamifiedplanner.domain.user.usecase.tasks.CompleteTaskUseCase
 import marcel.uni.gamifiedplanner.util.PlannerResult
 
 class UpdateTaskUseCase(
