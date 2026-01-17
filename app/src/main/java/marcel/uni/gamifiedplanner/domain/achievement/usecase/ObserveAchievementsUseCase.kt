@@ -11,7 +11,7 @@ import marcel.uni.gamifiedplanner.domain.user.model.UserAchievementItem
 import marcel.uni.gamifiedplanner.domain.user.repository.UserRepository
 import marcel.uni.gamifiedplanner.util.PlannerResult
 
-class GetAchievementsUseCase(
+class ObserveAchievementsUseCase(
     private val achievementRepo: AchievementRepository,
     private val userRepo: UserRepository,
     private val authRepo: FirebaseAuthRepository,

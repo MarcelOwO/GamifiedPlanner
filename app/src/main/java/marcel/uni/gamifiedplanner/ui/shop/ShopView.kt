@@ -32,11 +32,16 @@ fun ShopView(
     val inventoryIds by vm.inventoryIds.collectAsStateWithLifecycle()
     val selectedFilter by vm.selectedFilter.collectAsStateWithLifecycle()
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    val ownedSet = inventoryIds
+        .map { it.trim() }
+        .filter { it.isNotEmpty() }
+        .toSet()
+
+    Column(modifier = Modifier.fillMaxSize().padding(5.dp)) {
         Text(
             "Shop",
-            style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier.padding(16.dp)
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier.padding(10.dp)
         )
 
         CustomSelect(listOf("All", "Inventory"), selected = selectedFilter, onSelect = {
@@ -51,13 +56,14 @@ fun ShopView(
             modifier = Modifier.fillMaxSize()
         ) {
             items(shopItems) { item ->
-                val isOwned = inventoryIds.contains(item.id)
+                val itemId = item.id.trim()
+                val isOwned = itemId.isNotEmpty() && ownedSet.contains(itemId)
                 ShopItemCard(
                     item = item,
                     isOwned = isOwned,
                     onClick = {
                         if (!isOwned) {
-                            vm.buyItem(item.id,onResult=({
+                            vm.buyItem(item.id, onResult = ({
                             }))
                         }
                     }

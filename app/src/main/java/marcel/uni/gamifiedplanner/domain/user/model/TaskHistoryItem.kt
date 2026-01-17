@@ -10,6 +10,6 @@ data class TaskHistoryItem(
     val id: String="",
     val taskId: String="",
     val taskTitle :String="",
-    val taskPriority: Priority,
+    val taskPriority: Priority = Priority.LOW,
     val completedAt: Timestamp= Timestamp.now(),
 )

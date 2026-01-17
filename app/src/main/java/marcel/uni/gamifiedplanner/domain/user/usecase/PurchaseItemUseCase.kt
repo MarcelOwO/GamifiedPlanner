@@ -15,7 +15,9 @@ class PurchaseItemUseCase(
 ) {
     suspend operator fun invoke(itemId: String): PlannerResult<Unit> {
         logger.i("Invoking purchase item usecase")
+
         val userId = authRepo.currentUserId
+
         if (userId == null) {
             logger.e("Invoking purchase item usecase requires user to be logged in")
             return PlannerResult.Error("User is not logged in")
@@ -31,7 +33,15 @@ class PurchaseItemUseCase(
             return PlannerResult.Error("Item does not exist")
         }
 
+        val boughtItems = userRepo.observeInventoryItems(userId).first().map{it.itemId}.toSet()
+
+        if (boughtItems.contains(itemId)) {
+            logger.e("Item has already been purchased")
+            return PlannerResult.Error("Item has already been purchased")
+        }
+
         userRepo.purchaseItem(userId, itemId, item.price)
+
         logger.i("Invoking purchase item usecase was successful")
 
         return PlannerResult.Success(Unit)

@@ -24,16 +24,24 @@ class UserRepositoryImpl(
     private val db: FirebaseFirestore,
     private val logger: AppLogger,
 ) : UserRepository {
+
+    // main user doc ref
     private fun userRef(uid: String) =
         db
             .collection(firebaseConstants.USERS)
             .document(uid)
 
-    private fun inventoryColl(uid: String) = userRef(uid).collection(firebaseConstants.USERINVENTORY)
+    // doc ref for bought shop items
+    private fun inventoryColl(uid: String) =
+        userRef(uid).collection(firebaseConstants.USERINVENTORY)
 
-    private fun achievementColl(userId: String) = userRef(userId).collection(firebaseConstants.USERACHIEVEMENTS)
+    // doc ref for user completed achievements
+    private fun achievementColl(userId: String) =
+        userRef(userId).collection(firebaseConstants.USERACHIEVEMENTS)
 
-    private fun historyColl(userId: String) = userRef(userId).collection(firebaseConstants.USERTASKHISTORY)
+    // doc ref for tasks completed by the user
+    private fun historyColl(userId: String) =
+        userRef(userId).collection(firebaseConstants.USERTASKHISTORY)
 
     override fun observeUser(uid: String): Flow<User> =
         userRef(uid).observeModel<User>().catch { e ->
@@ -141,28 +149,33 @@ class UserRepositoryImpl(
             db
                 .runTransaction { tx ->
                     val userSnapShot = tx.get(userRef(uid))
-                    val currentCurrency = userSnapShot.getLong(firebaseConstants.FIELD_CURRENCY) ?: 0L
+                    val currentCurrency =
+                        userSnapShot.getLong(firebaseConstants.FIELD_CURRENCY) ?: 0L
 
                     if (currentCurrency < cost) {
                         logger.e("Not enough money to purchase item: $itemId")
                         throw IllegalStateException("Not enough money")
                     }
-                    tx.update(userRef(uid), firebaseConstants.FIELD_CURRENCY, currentCurrency - cost)
+                    tx.update(
+                        userRef(uid),
+                        firebaseConstants.FIELD_CURRENCY,
+                        currentCurrency - cost
+                    )
 
-                    val newItemRef = historyColl(uid).document()
+                    val newItemRef = inventoryColl(uid).document()
 
-                    val newItem =
-                        mapOf(
-                            "id" to newItemRef.id,
-                            "itemId" to itemId,
-                            "acquiredAt" to FieldValue.serverTimestamp(),
-                            "isEquipped" to false,
-                        )
+                    val newItem = UserInventoryItem(
+                        id = newItemRef.id,
+                        itemId = itemId,
+                        acquiredAt = Timestamp.now(),
+                        isEquipped = false,
+                    )
+
                     tx.set(
                         newItemRef,
                         newItem,
                     )
-                    tx.set(newItemRef, newItem)
+
                 }.await()
         }.onFailure { e ->
             logger.e("Error purchasing item: ${e.message}")
@@ -185,7 +198,8 @@ class UserRepositoryImpl(
 
     override suspend fun setLastLogin(uid: String) {
         runCatching {
-            userRef(uid).update(firebaseConstants.FIELD_LASTLOGIN, FieldValue.serverTimestamp()).await()
+            userRef(uid).update(firebaseConstants.FIELD_LASTLOGIN, FieldValue.serverTimestamp())
+                .await()
         }.onFailure { e ->
             logger.e("Error setting last login: ${e.message}")
         }

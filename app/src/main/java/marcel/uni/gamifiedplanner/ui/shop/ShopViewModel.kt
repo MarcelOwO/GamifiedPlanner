@@ -28,7 +28,11 @@ class ShopViewModel(
 
     val inventoryIds: StateFlow<List<String>> =
         getInventoryUseCase()
-            .map { it -> it.map { it.itemId } }
+            .map { inventoryList ->
+                inventoryList.map { item ->
+                    item.itemId
+                }
+            }
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5000),
@@ -42,7 +46,11 @@ class ShopViewModel(
             selectedFilter,
         ) { globalItems, ownedIds, filter ->
             if (filter == "Inventory") {
-                globalItems.filter { it.id in ownedIds }
+                val ownedSet = ownedIds.filter { it.isNotEmpty() }.toSet()
+                globalItems.filter { item ->
+                    val itemId = item.id
+                    itemId.isNotBlank() && itemId in ownedSet
+                }
             } else {
                 globalItems
             }

@@ -46,7 +46,7 @@ fun ProfileView(
         email = vmEmail
     }
 
-    Column {
+    Column(modifier=Modifier.padding(5.dp)) {
         Text(
             "Profile",
             style = MaterialTheme.typography.titleLarge,
@@ -58,7 +58,7 @@ fun ProfileView(
         Surface(
             modifier = Modifier
                 .padding(10.dp)
-                .fillMaxSize(), shape = RoundedCornerShape(20.dp)
+                .fillMaxSize(), shape = RoundedCornerShape(10.dp)
         ) {
             Column(modifier = Modifier.padding(10.dp)) {
 

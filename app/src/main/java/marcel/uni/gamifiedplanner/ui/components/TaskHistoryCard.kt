@@ -25,6 +25,7 @@ fun TaskHistoryCard(task: TaskHistoryItem) {
         modifier = Modifier
             .padding(10.dp)
             .fillMaxWidth(),
+        color =MaterialTheme.colorScheme.tertiary,
         shape = RoundedCornerShape(10.dp)
     ) {
         Column(
@@ -32,29 +33,25 @@ fun TaskHistoryCard(task: TaskHistoryItem) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    text = task.taskTitle,
-                    style = MaterialTheme.typography.titleLarge,
-                    color = MaterialTheme.colorScheme.primary
-                )
-                HorizontalDivider(modifier = Modifier.height(10.dp))
-                Text(
-                    text = "Completed on: ${task.completedAt}",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-                Spacer(modifier = Modifier.height(5.dp))
 
-                Text(
-                    text = "Priority: ${task.taskPriority}",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
+            Text(
+                text = task.taskTitle,
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.primary
+            )
+            HorizontalDivider(modifier = Modifier.height(10.dp))
+            Text(
+                text = "Completed on: ${task.completedAt}",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+            Spacer(modifier = Modifier.height(5.dp))
+
+            Text(
+                text = "Priority: ${task.taskPriority}",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
         }
     }
 }

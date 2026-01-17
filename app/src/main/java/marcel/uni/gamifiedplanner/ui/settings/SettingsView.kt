@@ -35,20 +35,19 @@ fun SettingsView(
     val isNotifEnabled by vm.notificationsEnabled.collectAsStateWithLifecycle()
 
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize().padding(5.dp)) {
 
         Text(
             "Settings",
             style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(10.dp)
         )
 
         Surface(
             modifier = Modifier
                 .padding(16.dp)
                 .fillMaxSize(),
-            shape = RoundedCornerShape(10.dp),
-            tonalElevation = 2.dp
+            shape = RoundedCornerShape(10.dp)
         ) {
             Column(modifier = Modifier.padding(16.dp)){
 

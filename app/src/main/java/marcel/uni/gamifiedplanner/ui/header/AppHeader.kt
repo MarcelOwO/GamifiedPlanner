@@ -134,14 +134,14 @@ fun AppHeader(vm: AppHeaderViewModel = koinViewModel(), authVm: AuthViewModel = 
                     .padding(10.dp)
                     .height(50.dp)
             ) {
-                Column(modifier=Modifier.padding(5.dp)) {
+                Column(modifier=Modifier.padding(5.dp).fillMaxWidth()) {
                     Text(
                         "Today's Task Progress",
                         color = MaterialTheme.colorScheme.secondary,
                         modifier = Modifier.padding(5.dp)
                     )
                     LinearProgressIndicator(
-
+modifier =Modifier.fillMaxWidth(),
                         progress = { (todaysTasksCount.toFloat() + 1f) / (todaysTotalTasksCount.toFloat() + 1f) })
                 }
             }
