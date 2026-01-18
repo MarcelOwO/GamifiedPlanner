@@ -91,7 +91,7 @@ fun TaskCard(task: Task, editTask: (task: Task) -> Unit, deleteTask: (task: Task
             }
 
             HorizontalDivider(modifier = Modifier.padding(10.dp))
-            Text(text = task.description ?: "", modifier = Modifier.padding(10.dp))
+            Text(text = task.description , modifier = Modifier.padding(10.dp))
         }
     }
 }

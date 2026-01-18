@@ -28,9 +28,11 @@ import org.koin.androidx.compose.koinViewModel
 fun ShopView(
     vm: ShopViewModel = koinViewModel(),
 ) {
-    val shopItems by vm.shopItems.collectAsStateWithLifecycle()
-    val inventoryIds by vm.inventoryIds.collectAsStateWithLifecycle()
+
+val filteredItems by  vm.filteredItems.collectAsStateWithLifecycle()
+
     val selectedFilter by vm.selectedFilter.collectAsStateWithLifecycle()
+    val inventoryIds by vm.inventoryIds.collectAsStateWithLifecycle()
 
     val ownedSet = inventoryIds
         .map { it.trim() }
@@ -55,7 +57,7 @@ fun ShopView(
             horizontalArrangement = Arrangement.spacedBy(10.dp),
             modifier = Modifier.fillMaxSize()
         ) {
-            items(shopItems) { item ->
+            items(filteredItems) { item ->
                 val itemId = item.id.trim()
                 val isOwned = itemId.isNotEmpty() && ownedSet.contains(itemId)
                 ShopItemCard(

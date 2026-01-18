@@ -71,7 +71,7 @@ fun StatsView(
             Column(modifier = Modifier.padding(10.dp)) {
                 if (selectedTaskCategory == "Tasks") {
 
-                    Text("Tasks")
+                    Text("Completed Tasks")
 
                     CustomSelect(listOf("Today", "All"), selected = selectedTaskFilter, onSelect = {
                         selectedTaskFilter = it

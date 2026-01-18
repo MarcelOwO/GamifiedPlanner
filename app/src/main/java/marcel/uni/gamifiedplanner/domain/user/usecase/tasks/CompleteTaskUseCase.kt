@@ -10,6 +10,7 @@ import marcel.uni.gamifiedplanner.domain.user.repository.UserRepository
 import marcel.uni.gamifiedplanner.domain.user.usecase.stats.AddBalanceUseCase
 import marcel.uni.gamifiedplanner.domain.user.usecase.stats.AddXpUseCase
 import marcel.uni.gamifiedplanner.util.PlannerResult
+import marcel.uni.gamifiedplanner.util.calculateRewards
 import marcel.uni.gamifiedplanner.util.calculateXp
 import java.util.UUID
 
@@ -52,7 +53,10 @@ class CompleteTaskUseCase(
         val gainedXp = calculateXp(currentTask.priority)
 
         addXpUseCase(gainedXp)
-        addBalanceUseCase(10)
+
+        val balanceReward = calculateRewards(currentTask.priority)
+
+        addBalanceUseCase(balanceReward)
 
         userRepo.addTaskHistoryItem(userId, taskHistoryItem)
 

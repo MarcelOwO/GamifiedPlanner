@@ -1,11 +1,12 @@
 package marcel.uni.gamifiedplanner
 
+
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
-import com.google.firebase.BuildConfig
+
 import marcel.uni.gamifiedplanner.di.AchievementModule
 import marcel.uni.gamifiedplanner.di.AppModule
 import marcel.uni.gamifiedplanner.di.AuthModule
@@ -15,9 +16,10 @@ import marcel.uni.gamifiedplanner.di.ShopModule
 import marcel.uni.gamifiedplanner.di.TaskModule
 import marcel.uni.gamifiedplanner.di.UserModule
 import marcel.uni.gamifiedplanner.ui.RootView
-import marcel.uni.gamifiedplanner.ui.theme.GamifiedPlannerTheme
 import marcel.uni.gamifiedplanner.ui.theme.ThemeHost
 import marcel.uni.gamifiedplanner.ui.theme.ThemeViewModel
+import marcel.uni.gamifiedplanner.util.RequestNotificationPermission
+import marcel.uni.gamifiedplanner.util.createNotificationChannel
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import org.koin.compose.KoinApplication
 import timber.log.Timber
@@ -53,12 +55,24 @@ class MainActivity : ComponentActivity() {
                     ShopModule().shopModule,
                     UserModule().userModule,
                 )
+            }) {
+            createNotificationChannel(context = this@MainActivity)
+
+            RequestNotificationPermission { isGranted ->
+                if (isGranted) {
+                    Timber.i("Notification permission granted")
+                } else {
+                    Timber.i("Notification permission denied")
+                }
             }
-        ) {
+
             val themeViewModel: ThemeViewModel = getViewModel()
-            ThemeHost(vm = themeViewModel){
+
+            ThemeHost(vm = themeViewModel) {
                 RootView()
             }
         }
     }
+
+
 }

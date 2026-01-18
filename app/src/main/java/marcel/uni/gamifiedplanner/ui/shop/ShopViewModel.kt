@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.toSet
 import kotlinx.coroutines.launch
 import marcel.uni.gamifiedplanner.domain.logger.AppLogger
 import marcel.uni.gamifiedplanner.domain.shop.model.ShopItem
@@ -39,26 +40,27 @@ class ShopViewModel(
                 initialValue = emptyList(),
             )
 
-    val shopItems: StateFlow<List<ShopItem>> =
-        combine(
-            getItemsUseCase(),
-            inventoryIds,
-            selectedFilter,
-        ) { globalItems, ownedIds, filter ->
+    private val shopItems: StateFlow<List<ShopItem>> =
+        getItemsUseCase().stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = emptyList(),
+        )
+
+    val filteredItems: StateFlow<List<ShopItem>> =
+        combine(shopItems, inventoryIds, selectedFilter) { items, owned, filter ->
             if (filter == "Inventory") {
-                val ownedSet = ownedIds.filter { it.isNotEmpty() }.toSet()
-                globalItems.filter { item ->
-                    val itemId = item.id
-                    itemId.isNotBlank() && itemId in ownedSet
-                }
+                val ownedSet = owned.map { it.trim() }.toSet()
+                items.filter { it.id.trim() in ownedSet }
             } else {
-                globalItems
+                items
             }
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
             initialValue = emptyList(),
         )
+
 
     fun setFilter(filter: String) {
         _selectedFilter.value = filter

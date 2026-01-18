@@ -43,6 +43,7 @@ fun HomeView(
     var showMenu by remember { mutableStateOf(false) }
 
     val tasks: List<Task> by vm.tasks.collectAsStateWithLifecycle()
+
     val todaysTasks: List<Task> by vm.todayTasks.collectAsStateWithLifecycle()
 
     var selectedOption by remember { mutableStateOf("Today") }

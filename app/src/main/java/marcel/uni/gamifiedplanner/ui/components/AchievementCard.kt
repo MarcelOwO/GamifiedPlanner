@@ -29,11 +29,18 @@ fun AchievementCard(achievement: AchievementDisplay) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text(achievement.name)
+            Text(
+                achievement.name,
+                color = MaterialTheme.colorScheme.primary,
+                style = MaterialTheme.typography.titleLarge
+            )
 
-            HorizontalDivider(modifier=Modifier.padding(10.dp))
+            HorizontalDivider(modifier = Modifier.padding(10.dp))
 
-            Text(achievement.description)
+            Text(achievement.description,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                style = MaterialTheme.typography.bodyMedium
+            )
 
         }
     }

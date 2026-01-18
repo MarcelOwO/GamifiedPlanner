@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import marcel.uni.gamifiedplanner.domain.user.model.TaskHistoryItem
+import marcel.uni.gamifiedplanner.util.toFormatedString
 
 @Composable
 
@@ -41,7 +42,7 @@ fun TaskHistoryCard(task: TaskHistoryItem) {
             )
             HorizontalDivider(modifier = Modifier.height(10.dp))
             Text(
-                text = "Completed on: ${task.completedAt}",
+                text = "Completed on: ${task.completedAt.toFormatedString()}",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
