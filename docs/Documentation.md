@@ -33,7 +33,6 @@ Verwendete Libraries sind in meinem Fall Koin fuer Dependency Injection und Fire
 
 
 
-
 ## 3. Besonderheiten
 
 ## 4. UI & UX

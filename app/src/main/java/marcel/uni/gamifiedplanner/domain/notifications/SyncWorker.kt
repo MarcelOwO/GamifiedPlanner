@@ -16,10 +16,13 @@ class SyncWorker(
 ) : CoroutineWorker(context, params) {
     override suspend fun doWork(): Result {
 
+        logger.i("SyncWorker started")
+
         val tasks = observeTasksUseCase().first()
 
         tasks.forEach { task ->
-            scheduler.scheduleTask(applicationContext, task)
+            logger.i("Scheduling task with id: ${task.id}")
+            scheduler.scheduleTask( task)
         }
 
         return Result.success()

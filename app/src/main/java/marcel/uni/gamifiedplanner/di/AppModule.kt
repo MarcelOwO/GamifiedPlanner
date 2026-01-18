@@ -8,6 +8,7 @@ import marcel.uni.gamifiedplanner.ui.profile.ProfileViewModel
 import marcel.uni.gamifiedplanner.ui.settings.SettingsViewModel
 import marcel.uni.gamifiedplanner.ui.stats.StatsViewModel
 import marcel.uni.gamifiedplanner.ui.theme.ThemeViewModel
+import org.koin.androidx.workmanager.dsl.workerOf
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
@@ -24,7 +25,7 @@ class AppModule {
             viewModelOf(::ProfileViewModel)
             viewModelOf(::ThemeViewModel)
 
-            singleOf(::SyncWorker)
+            workerOf(::SyncWorker)
             singleOf(::TaskScheduler)
 
             factoryOf(::CheckNotificationPermissionUseCase)

@@ -3,6 +3,7 @@ package marcel.uni.gamifiedplanner.domain.task.usecase
 import com.google.firebase.Timestamp
 import marcel.uni.gamifiedplanner.domain.auth.repository.FirebaseAuthRepository
 import marcel.uni.gamifiedplanner.domain.logger.AppLogger
+import marcel.uni.gamifiedplanner.domain.notifications.TaskScheduler
 import marcel.uni.gamifiedplanner.domain.task.model.Priority
 import marcel.uni.gamifiedplanner.domain.task.model.Task
 import marcel.uni.gamifiedplanner.domain.task.model.TaskStatus
@@ -12,6 +13,7 @@ import marcel.uni.gamifiedplanner.util.PlannerResult
 class CreateTaskUseCase(
     private val repository: TaskRepository,
     private val authRepo: FirebaseAuthRepository,
+    private val taskScheduler: TaskScheduler,
     private val logger: AppLogger
 ) {
     suspend operator fun invoke(
@@ -51,6 +53,7 @@ class CreateTaskUseCase(
         )
 
         repository.createTask(userId, task)
+        taskScheduler.scheduleTask(task)
         logger.i("Task created successfully")
         return PlannerResult.Success(Unit)
     }

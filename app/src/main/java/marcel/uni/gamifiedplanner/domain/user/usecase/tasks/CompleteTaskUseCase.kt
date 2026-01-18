@@ -5,6 +5,7 @@ import marcel.uni.gamifiedplanner.domain.achievement.service.AchievementEngine
 import marcel.uni.gamifiedplanner.domain.auth.repository.FirebaseAuthRepository
 import marcel.uni.gamifiedplanner.domain.logger.AppLogger
 import marcel.uni.gamifiedplanner.domain.task.repository.TaskRepository
+import marcel.uni.gamifiedplanner.domain.task.usecase.DeleteTaskUseCase
 import marcel.uni.gamifiedplanner.domain.user.model.TaskHistoryItem
 import marcel.uni.gamifiedplanner.domain.user.repository.UserRepository
 import marcel.uni.gamifiedplanner.domain.user.usecase.stats.AddBalanceUseCase
@@ -19,8 +20,9 @@ class CompleteTaskUseCase(
     private val authRepo: FirebaseAuthRepository,
     private val taskRepo: TaskRepository,
     private val achievementEngine: AchievementEngine,
-    private val addXpUseCase: AddXpUseCase,
-    private val addBalanceUseCase: AddBalanceUseCase,
+    private val addXp: AddXpUseCase,
+    private val addBalance: AddBalanceUseCase,
+    private val deleteTask: DeleteTaskUseCase,
     private val logger: AppLogger,
 ) {
     suspend operator fun invoke(taskId: String): PlannerResult<Unit> {
@@ -52,15 +54,15 @@ class CompleteTaskUseCase(
 
         val gainedXp = calculateXp(currentTask.priority)
 
-        addXpUseCase(gainedXp)
+        addXp(gainedXp)
 
         val balanceReward = calculateRewards(currentTask.priority)
 
-        addBalanceUseCase(balanceReward)
+        addBalance(balanceReward)
 
         userRepo.addTaskHistoryItem(userId, taskHistoryItem)
 
-        taskRepo.deleteTask(userId, taskId)
+        deleteTask(taskId)
 
         achievementEngine.checkAchievements(userId)
 

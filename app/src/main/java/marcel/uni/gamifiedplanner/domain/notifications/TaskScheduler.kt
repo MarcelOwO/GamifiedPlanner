@@ -8,10 +8,10 @@ import marcel.uni.gamifiedplanner.domain.logger.AppLogger
 import marcel.uni.gamifiedplanner.domain.task.model.Task
 
 class TaskScheduler(
+    private val context:Context,
     private val logger: AppLogger
 ) {
     fun scheduleTask(
-        context: Context,
         task: Task,
     ) {
         val appCtx = context.applicationContext
@@ -19,8 +19,8 @@ class TaskScheduler(
             logger.i("Scheduling task alarms for task: ${task.title}")
             val alarmManager = appCtx.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
-            val startMs: Long = task.startTime?.toInstant()?.toEpochMilli() ?: 0L
-            val durationMs: Long = task.duration?.times(60L)?.times(1000) ?: 0L
+            val startMs: Long = task.startTime.toInstant().toEpochMilli()
+            val durationMs: Long = task.duration.times(60L).times(1000)
             val endMs: Long = startMs + durationMs
             val taskId = task.id.hashCode()
 
@@ -43,7 +43,6 @@ class TaskScheduler(
     }
 
     fun cancelTask(
-        context: Context,
         taskId: String
     ) {
         val appCtx = context.applicationContext
@@ -69,6 +68,7 @@ class TaskScheduler(
         title: String,
         isEnd: Boolean
     ): PendingIntent {
+        logger.i("Creating PendingIntent for task: $title, isEnd: $isEnd")
         val intent = Intent(context, TaskAlarmReceiver::class.java).apply {
             putExtra("TASK_TITLE", title)
             putExtra("TASK_ID", id)
@@ -89,6 +89,7 @@ class TaskScheduler(
         taskId: Int,
         isEnd: Boolean
     ): PendingIntent {
+        logger.i("Getting PendingIntent for taskId: $taskId, isEnd: $isEnd")
 
         val intent = Intent(context, TaskAlarmReceiver::class.java).apply {
             putExtra("TASK_ID", taskId)
