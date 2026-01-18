@@ -9,14 +9,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -29,7 +25,7 @@ fun ShopView(
     vm: ShopViewModel = koinViewModel(),
 ) {
 
-val filteredItems by  vm.filteredItems.collectAsStateWithLifecycle()
+    val filteredItems by vm.filteredItems.collectAsStateWithLifecycle()
 
     val selectedFilter by vm.selectedFilter.collectAsStateWithLifecycle()
     val inventoryIds by vm.inventoryIds.collectAsStateWithLifecycle()
@@ -39,7 +35,9 @@ val filteredItems by  vm.filteredItems.collectAsStateWithLifecycle()
         .filter { it.isNotEmpty() }
         .toSet()
 
-    Column(modifier = Modifier.fillMaxSize().padding(5.dp)) {
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .padding(5.dp)) {
         Text(
             "Shop",
             style = MaterialTheme.typography.titleLarge,

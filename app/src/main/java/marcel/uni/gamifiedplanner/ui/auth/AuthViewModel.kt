@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import marcel.uni.gamifiedplanner.domain.auth.usecase.AuthStatusUseCase
-import marcel.uni.gamifiedplanner.domain.auth.usecase.login.LogInUseCase
 import marcel.uni.gamifiedplanner.domain.auth.usecase.LogoutUseCase
+import marcel.uni.gamifiedplanner.domain.auth.usecase.login.LogInUseCase
 import marcel.uni.gamifiedplanner.domain.auth.usecase.register.RegisterUseCase
 import marcel.uni.gamifiedplanner.domain.logger.AppLogger
 import marcel.uni.gamifiedplanner.util.PlannerResult
@@ -36,10 +36,15 @@ class AuthViewModel(
         }
     }
 
-    fun register(email: String,username:String, password: String, onResult: (PlannerResult<Unit>) -> Unit) {
+    fun register(
+        email: String,
+        username: String,
+        password: String,
+        onResult: (PlannerResult<Unit>) -> Unit
+    ) {
         viewModelScope.launch {
             logger.i("Registering")
-            registerUseCase(email,username, password).also { result ->
+            registerUseCase(email, username, password).also { result ->
                 onResult(result)
             }
         }

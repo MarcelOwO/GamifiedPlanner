@@ -1,13 +1,10 @@
 package marcel.uni.gamifiedplanner.domain.achievement.usecase
 
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
-import marcel.uni.gamifiedplanner.domain.achievement.model.Achievement
 import marcel.uni.gamifiedplanner.domain.achievement.model.AchievementDisplay
 import marcel.uni.gamifiedplanner.domain.achievement.repository.AchievementRepository
 import marcel.uni.gamifiedplanner.domain.auth.repository.FirebaseAuthRepository
 import marcel.uni.gamifiedplanner.domain.logger.AppLogger
-import marcel.uni.gamifiedplanner.domain.user.model.UserAchievementItem
 import marcel.uni.gamifiedplanner.domain.user.repository.UserRepository
 import marcel.uni.gamifiedplanner.util.PlannerResult
 

@@ -14,7 +14,7 @@ class SetNotificationStateUseCase(
     suspend operator fun invoke(enabled: Boolean): PlannerResult<Unit> {
         logger.i("Invoking set notification state usecase")
         val userId = authRepo.currentUserId
-        if( userId == null){
+        if (userId == null) {
             logger.e("Invoking set notification state usecase requires user to be logged in")
             return PlannerResult.Error("User was not logged in")
         }

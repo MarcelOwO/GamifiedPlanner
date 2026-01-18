@@ -1,6 +1,5 @@
 package marcel.uni.gamifiedplanner.util
 
-import android.Manifest
 import android.Manifest.permission.POST_NOTIFICATIONS
 import android.app.NotificationChannel
 import android.app.NotificationManager

@@ -33,7 +33,7 @@ class PurchaseItemUseCase(
             return PlannerResult.Error("Item does not exist")
         }
 
-        val boughtItems = userRepo.observeInventoryItems(userId).first().map{it.itemId}.toSet()
+        val boughtItems = userRepo.observeInventoryItems(userId).first().map { it.itemId }.toSet()
 
         if (boughtItems.contains(itemId)) {
             logger.e("Item has already been purchased")

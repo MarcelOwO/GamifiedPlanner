@@ -1,12 +1,11 @@
 package marcel.uni.gamifiedplanner.domain.user.usecase.tasks
 
 import kotlinx.coroutines.flow.Flow
-
 import kotlinx.coroutines.flow.flowOf
-import marcel.uni.gamifiedplanner.domain.user.model.TaskHistoryItem
-import marcel.uni.gamifiedplanner.domain.user.repository.UserRepository
 import marcel.uni.gamifiedplanner.domain.auth.repository.FirebaseAuthRepository
 import marcel.uni.gamifiedplanner.domain.logger.AppLogger
+import marcel.uni.gamifiedplanner.domain.user.model.TaskHistoryItem
+import marcel.uni.gamifiedplanner.domain.user.repository.UserRepository
 
 class ObserveUserTaskUseCase(
     private val userRepo: UserRepository,

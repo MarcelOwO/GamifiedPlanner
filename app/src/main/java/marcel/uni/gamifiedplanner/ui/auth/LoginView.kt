@@ -72,11 +72,7 @@ fun LoginView(
                 TextField(
                     value = email,
                     onValueChange = {
-                        if (EMAIL_ADDRESS.matcher(email).matches().not()) {
-                            isEmailValid = false
-                        } else {
-                            isEmailValid = true
-                        }
+                        isEmailValid = !EMAIL_ADDRESS.matcher(email).matches().not()
                         email = it.trim()
                     },
                     label = { Text("Email") },

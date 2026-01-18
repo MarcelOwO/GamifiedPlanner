@@ -37,7 +37,8 @@ fun AchievementCard(achievement: AchievementDisplay) {
 
             HorizontalDivider(modifier = Modifier.padding(10.dp))
 
-            Text(achievement.description,
+            Text(
+                achievement.description,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 style = MaterialTheme.typography.bodyMedium
             )

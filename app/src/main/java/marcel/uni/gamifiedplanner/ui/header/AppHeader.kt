@@ -28,9 +28,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import marcel.uni.gamifiedplanner.R
 import marcel.uni.gamifiedplanner.ui.auth.AuthViewModel
 import org.koin.androidx.compose.koinViewModel
-import marcel.uni.gamifiedplanner.R
 
 
 @Preview
@@ -134,14 +134,16 @@ fun AppHeader(vm: AppHeaderViewModel = koinViewModel(), authVm: AuthViewModel = 
                     .padding(10.dp)
                     .height(50.dp)
             ) {
-                Column(modifier=Modifier.padding(5.dp).fillMaxWidth()) {
+                Column(modifier = Modifier
+                    .padding(5.dp)
+                    .fillMaxWidth()) {
                     Text(
                         "Today's Task Progress",
                         color = MaterialTheme.colorScheme.secondary,
                         modifier = Modifier.padding(5.dp)
                     )
                     LinearProgressIndicator(
-modifier =Modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth(),
                         progress = { (todaysTasksCount.toFloat() + 1f) / (todaysTotalTasksCount.toFloat() + 1f) })
                 }
             }

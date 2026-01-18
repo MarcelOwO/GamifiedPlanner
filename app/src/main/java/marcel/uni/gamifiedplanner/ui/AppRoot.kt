@@ -8,8 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
-import marcel.uni.gamifiedplanner.ui.header.AppHeader
 import marcel.uni.gamifiedplanner.ui.components.AppNavbar
+import marcel.uni.gamifiedplanner.ui.header.AppHeader
 import marcel.uni.gamifiedplanner.ui.navigation.AppNavHost
 
 
@@ -18,16 +18,18 @@ import marcel.uni.gamifiedplanner.ui.navigation.AppNavHost
 fun AppRoot() {
     val navController = rememberNavController()
 
-    Scaffold(modifier = Modifier.fillMaxSize(),
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
         topBar = {
-            Column(modifier=Modifier.padding(top=20.dp)) {
+            Column(modifier = Modifier.padding(top = 20.dp)) {
                 AppHeader()
                 AppNavbar(navController)
             }
         }
-    ) { innerPadding->
+    ) { innerPadding ->
         AppNavHost(
             navController,
-            innerPadding)
+            innerPadding
+        )
     }
 }

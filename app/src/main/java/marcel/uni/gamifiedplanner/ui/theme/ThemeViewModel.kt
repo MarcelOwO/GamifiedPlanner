@@ -10,9 +10,9 @@ import marcel.uni.gamifiedplanner.domain.user.usecase.settings.ObserveDarkModeUs
 class ThemeViewModel(
     private val observeDarkModeUseCase: ObserveDarkModeUseCase,
     private val logger: AppLogger
-): ViewModel() {
+) : ViewModel() {
 
-   val darkMode = observeDarkModeUseCase().stateIn(
+    val darkMode = observeDarkModeUseCase().stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
         initialValue = false

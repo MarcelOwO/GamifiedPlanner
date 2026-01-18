@@ -9,7 +9,7 @@ import marcel.uni.gamifiedplanner.ui.navigation.AuthNavHost
 @Composable
 fun AuthRoot() {
     val navController = rememberNavController()
-    Scaffold() { innerPadding ->
+    Scaffold { innerPadding ->
         AuthNavHost(navController, innerPadding)
     }
 

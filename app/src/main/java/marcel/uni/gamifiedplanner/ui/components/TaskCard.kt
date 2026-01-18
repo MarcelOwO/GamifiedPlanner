@@ -22,7 +22,6 @@ import marcel.uni.gamifiedplanner.R
 import marcel.uni.gamifiedplanner.domain.task.model.Priority
 import marcel.uni.gamifiedplanner.domain.task.model.Task
 import marcel.uni.gamifiedplanner.domain.task.model.TaskStatus
-import marcel.uni.gamifiedplanner.ui.home.HomeViewModel
 
 @Composable
 fun TaskCard(task: Task, editTask: (task: Task) -> Unit, deleteTask: (task: Task) -> Unit) {
@@ -91,7 +90,7 @@ fun TaskCard(task: Task, editTask: (task: Task) -> Unit, deleteTask: (task: Task
             }
 
             HorizontalDivider(modifier = Modifier.padding(10.dp))
-            Text(text = task.description , modifier = Modifier.padding(10.dp))
+            Text(text = task.description, modifier = Modifier.padding(10.dp))
         }
     }
 }

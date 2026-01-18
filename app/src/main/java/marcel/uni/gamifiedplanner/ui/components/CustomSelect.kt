@@ -1,6 +1,5 @@
 package marcel.uni.gamifiedplanner.ui.components
 
-import android.provider.CalendarContract
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -10,7 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -18,7 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import marcel.uni.gamifiedplanner.ui.navigation.AppRoutes
 
 @Composable
 fun CustomSelect(options: List<String>, selected: String, onSelect: (String) -> Unit) {
@@ -49,13 +46,13 @@ fun CustomSelect(options: List<String>, selected: String, onSelect: (String) -> 
         ) {
             options.forEach { option ->
                 Button(
-                    modifier = Modifier.defaultMinSize(0.dp,0.dp),
-                    contentPadding= PaddingValues(0.dp),
+                    modifier = Modifier.defaultMinSize(0.dp, 0.dp),
+                    contentPadding = PaddingValues(0.dp),
                     colors = if (option == selected) selectedButtonColors else unSelctedButtonColors,
                     onClick = { onSelect(option) },
                     shape = RoundedCornerShape(10.dp)
                 ) {
-                    Text(option,color  =  MaterialTheme.colorScheme.secondary)
+                    Text(option, color = MaterialTheme.colorScheme.secondary)
                 }
             }
         }

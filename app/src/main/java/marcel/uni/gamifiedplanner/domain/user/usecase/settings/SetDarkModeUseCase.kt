@@ -1,10 +1,10 @@
 package marcel.uni.gamifiedplanner.domain.user.usecase.settings
 
-import marcel.uni.gamifiedplanner.domain.user.repository.UserRepository
-import marcel.uni.gamifiedplanner.domain.auth.repository.FirebaseAuthRepository
-import marcel.uni.gamifiedplanner.util.PlannerResult
 import kotlinx.coroutines.flow.first
+import marcel.uni.gamifiedplanner.domain.auth.repository.FirebaseAuthRepository
 import marcel.uni.gamifiedplanner.domain.logger.AppLogger
+import marcel.uni.gamifiedplanner.domain.user.repository.UserRepository
+import marcel.uni.gamifiedplanner.util.PlannerResult
 
 class SetDarkModeUseCase(
     private val userRepo: UserRepository,

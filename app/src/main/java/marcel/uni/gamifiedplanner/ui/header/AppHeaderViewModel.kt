@@ -4,16 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import marcel.uni.gamifiedplanner.domain.task.usecase.ObserveTasksUseCase
 import marcel.uni.gamifiedplanner.domain.task.usecase.ObserveTodaysTasksUseCase
 import marcel.uni.gamifiedplanner.domain.user.usecase.ObserveLevelUseCase
-import marcel.uni.gamifiedplanner.domain.user.usecase.tasks.ObserveUserTaskUseCase
 import marcel.uni.gamifiedplanner.domain.user.usecase.stats.ObserveStreakUseCase
 import marcel.uni.gamifiedplanner.domain.user.usecase.stats.ObserveXpProgressUseCase
-import marcel.uni.gamifiedplanner.domain.user.usecase.stats.ObserveXpUseCase
 import marcel.uni.gamifiedplanner.domain.user.usecase.tasks.ObserveTodaysUsersTaskUseCase
 
 class AppHeaderViewModel(

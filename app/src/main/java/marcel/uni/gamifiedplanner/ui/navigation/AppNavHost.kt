@@ -14,25 +14,25 @@ import marcel.uni.gamifiedplanner.ui.shop.ShopView
 import marcel.uni.gamifiedplanner.ui.stats.StatsView
 
 @Composable
-fun AppNavHost(nav: NavHostController, padding: PaddingValues){
+fun AppNavHost(nav: NavHostController, padding: PaddingValues) {
     NavHost(
-        navController= nav,
-        startDestination= AppRoutes.Home,
-        modifier= Modifier.padding(padding)
+        navController = nav,
+        startDestination = AppRoutes.Home,
+        modifier = Modifier.padding(padding)
     ) {
-        composable(AppRoutes.Home){
+        composable(AppRoutes.Home) {
             HomeView()
         }
-        composable(AppRoutes.Stats){
+        composable(AppRoutes.Stats) {
             StatsView()
         }
-        composable(AppRoutes.Shop){
+        composable(AppRoutes.Shop) {
             ShopView()
         }
-        composable(AppRoutes.Settings){
+        composable(AppRoutes.Settings) {
             SettingsView()
         }
-        composable(AppRoutes.Profile){
+        composable(AppRoutes.Profile) {
             ProfileView()
         }
 

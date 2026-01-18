@@ -1,7 +1,7 @@
 package marcel.uni.gamifiedplanner.di
 
-import marcel.uni.gamifiedplanner.domain.auth.repository.FirebaseAuthRepository
 import marcel.uni.gamifiedplanner.data.auth.FirebaseAuthRepositoryImpl
+import marcel.uni.gamifiedplanner.domain.auth.repository.FirebaseAuthRepository
 import marcel.uni.gamifiedplanner.domain.auth.usecase.AuthStatusUseCase
 import marcel.uni.gamifiedplanner.domain.auth.usecase.LogoutUseCase
 import marcel.uni.gamifiedplanner.domain.auth.usecase.login.LogInUseCase

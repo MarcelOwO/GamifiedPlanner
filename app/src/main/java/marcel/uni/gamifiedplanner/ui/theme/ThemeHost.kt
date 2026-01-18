@@ -5,9 +5,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 
 @Composable
-fun ThemeHost(vm:ThemeViewModel,content: @Composable ()->Unit){
+fun ThemeHost(vm: ThemeViewModel, content: @Composable () -> Unit) {
     val dark by vm.darkMode.collectAsState()
-    GamifiedPlannerTheme(darkTheme = dark){
+    GamifiedPlannerTheme(darkTheme = dark) {
         content()
     }
 }

@@ -11,7 +11,6 @@ import marcel.uni.gamifiedplanner.domain.task.model.Task
 import marcel.uni.gamifiedplanner.domain.task.repository.TaskRepository
 import marcel.uni.gamifiedplanner.util.firebaseConstants
 import marcel.uni.gamifiedplanner.util.observeList
-import java.util.UUID
 
 class TaskRepositoryImpl(
     private val auth: FirebaseAuthRepository,

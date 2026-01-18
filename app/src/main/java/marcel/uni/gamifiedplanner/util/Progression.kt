@@ -11,12 +11,11 @@ fun calculateProgress(xp: Long): Long {
     return xp - 100 * level
 }
 
-fun calculateXp(taskPriority: Priority): Long =
-    when (taskPriority) {
-        Priority.LOW -> 10
-        Priority.MEDIUM -> 50
-        Priority.HIGH -> 100
-    }
+fun calculateXp(taskPriority: Priority): Long = when (taskPriority) {
+    Priority.LOW -> 10
+    Priority.MEDIUM -> 50
+    Priority.HIGH -> 100
+}
 
 fun calculateRewards(taskPriority: Priority): Long {
     return when (taskPriority) {

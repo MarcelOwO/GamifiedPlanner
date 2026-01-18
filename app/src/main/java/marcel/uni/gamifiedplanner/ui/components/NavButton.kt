@@ -25,8 +25,8 @@ fun NavButton(label: String, route: String, nav: NavHostController) {
     )
     Button(
         colors = buttonColor,
-        modifier = Modifier.defaultMinSize(0.dp,0.dp),
-        contentPadding= PaddingValues(0.dp),
+        modifier = Modifier.defaultMinSize(0.dp, 0.dp),
+        contentPadding = PaddingValues(0.dp),
         shape = RoundedCornerShape(10.dp),
         onClick = { nav.navigate(route) },
     ) {

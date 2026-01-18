@@ -11,8 +11,11 @@ import androidx.navigation.NavHostController
 @Composable
 fun AppNavbar(nav: NavHostController) {
     var selectedOption by remember { mutableStateOf("Home") }
-    CustomSelect(options = listOf("Home", "Shop","Stats","Settings","Profile"),selectedOption,onSelect = { selected ->
+    CustomSelect(
+        options = listOf("Home", "Shop", "Stats", "Settings", "Profile"),
+        selectedOption,
+        onSelect = { selected ->
             selectedOption = selected
             nav.navigate(selected)
-    })
+        })
 }

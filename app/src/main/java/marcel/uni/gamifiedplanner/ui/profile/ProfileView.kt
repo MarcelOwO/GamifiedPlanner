@@ -46,7 +46,7 @@ fun ProfileView(
         email = vmEmail
     }
 
-    Column(modifier=Modifier.padding(5.dp)) {
+    Column(modifier = Modifier.padding(5.dp)) {
         Text(
             "Profile",
             style = MaterialTheme.typography.titleLarge,

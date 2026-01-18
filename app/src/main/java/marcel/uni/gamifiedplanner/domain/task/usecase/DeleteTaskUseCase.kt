@@ -14,7 +14,7 @@ class DeleteTaskUseCase(
         logger.i("Invoking delete task usecase")
 
         val userId =
-            authRepo.currentUserId ?: return PlannerResult.Error("User is not logged in");
+            authRepo.currentUserId ?: return PlannerResult.Error("User is not logged in")
 
         repo.deleteTask(userId, taskId)
 

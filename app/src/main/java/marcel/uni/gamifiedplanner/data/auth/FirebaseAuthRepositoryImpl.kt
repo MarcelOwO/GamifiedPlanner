@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import marcel.uni.gamifiedplanner.domain.auth.repository.FirebaseAuthRepository
 import marcel.uni.gamifiedplanner.domain.logger.AppLogger
-import marcel.uni.gamifiedplanner.util.PlannerResult
 import kotlin.coroutines.resume
 
 //

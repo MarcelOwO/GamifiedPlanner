@@ -3,10 +3,10 @@ package marcel.uni.gamifiedplanner.domain.task.usecase
 import com.google.firebase.Timestamp
 import marcel.uni.gamifiedplanner.domain.auth.repository.FirebaseAuthRepository
 import marcel.uni.gamifiedplanner.domain.logger.AppLogger
-import marcel.uni.gamifiedplanner.domain.task.repository.TaskRepository
 import marcel.uni.gamifiedplanner.domain.task.model.Priority
 import marcel.uni.gamifiedplanner.domain.task.model.Task
 import marcel.uni.gamifiedplanner.domain.task.model.TaskStatus
+import marcel.uni.gamifiedplanner.domain.task.repository.TaskRepository
 import marcel.uni.gamifiedplanner.util.PlannerResult
 
 class CreateTaskUseCase(
@@ -24,7 +24,7 @@ class CreateTaskUseCase(
     ): PlannerResult<Unit> {
         logger.i("Invoking create task usecase")
         val userId =
-            authRepo.currentUserId ?: return PlannerResult.Error("User is not logged in");
+            authRepo.currentUserId ?: return PlannerResult.Error("User is not logged in")
 
         if (title.isEmpty()) {
             logger.e("Title cannot be empty inside create task usecase")

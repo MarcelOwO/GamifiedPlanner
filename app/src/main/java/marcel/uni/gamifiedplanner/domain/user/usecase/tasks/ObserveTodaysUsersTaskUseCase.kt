@@ -1,7 +1,6 @@
 package marcel.uni.gamifiedplanner.domain.user.usecase.tasks
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import marcel.uni.gamifiedplanner.domain.auth.repository.FirebaseAuthRepository

@@ -79,7 +79,7 @@ fun StatsView(
 
                     Spacer(modifier = Modifier.height(10.dp))
 
-                    LazyColumn() {
+                    LazyColumn {
                         items(filteredTasks) { task ->
                             TaskHistoryCard(task)
                         }
@@ -90,7 +90,7 @@ fun StatsView(
 
                     Text("Achievements")
 
-                    LazyColumn() {
+                    LazyColumn {
                         items(achievements) { achievement ->
                             AchievementCard(achievement)
 

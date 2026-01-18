@@ -36,7 +36,7 @@ fun RegisterView(
     vm: AuthViewModel = koinViewModel()
 ) {
     var email by remember { mutableStateOf("") }
-    var username by remember {mutableStateOf("")}
+    var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
     var showPassword by remember { mutableStateOf(false) }
@@ -111,7 +111,7 @@ fun RegisterView(
                 }
 
                 Button(onClick = {
-                    vm.register(email,"Default User", password, { result ->
+                    vm.register(email, "Default User", password, { result ->
                         result.onFailure { error ->
                             errorMessage = error.message
                         }

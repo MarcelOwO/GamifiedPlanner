@@ -11,7 +11,7 @@ class AddBalanceUseCase(
     private val authRepo: FirebaseAuthRepository,
     private val logger: AppLogger
 ) {
-    suspend operator fun invoke(amount:Long): PlannerResult<Unit> {
+    suspend operator fun invoke(amount: Long): PlannerResult<Unit> {
         logger.i("Invoking add currency usecase")
 
         val userId = authRepo.currentUserId
@@ -21,7 +21,7 @@ class AddBalanceUseCase(
             return PlannerResult.Error("User not logged in")
         }
 
-        val currentStats =userRepo.observeStats(userId).first()
+        val currentStats = userRepo.observeStats(userId).first()
 
         val newStats =
             currentStats.copy(

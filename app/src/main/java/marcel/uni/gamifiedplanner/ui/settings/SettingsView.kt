@@ -17,14 +17,11 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.google.common.math.LinearTransformation.vertical
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -35,7 +32,9 @@ fun SettingsView(
     val isNotifEnabled by vm.notificationsEnabled.collectAsStateWithLifecycle()
 
 
-    Column(modifier = Modifier.fillMaxSize().padding(5.dp)) {
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .padding(5.dp)) {
 
         Text(
             "Settings",
@@ -49,48 +48,50 @@ fun SettingsView(
                 .fillMaxSize(),
             shape = RoundedCornerShape(10.dp)
         ) {
-            Column(modifier = Modifier.padding(16.dp)){
+            Column(modifier = Modifier.padding(16.dp)) {
 
-                Text("Appearance",color = MaterialTheme.colorScheme.primary)
+                Text("Appearance", color = MaterialTheme.colorScheme.primary)
 
-                Row(modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical=16.dp),
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 16.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
-                ){
+                ) {
                     Text("Dark Mode")
                     Switch(
-                        checked =  isDark,
-                        onCheckedChange = {vm.toggleDarkMode(it)}
+                        checked = isDark,
+                        onCheckedChange = { vm.toggleDarkMode(it) }
                     )
                 }
 
-                HorizontalDivider(modifier =Modifier.padding(vertical=10.dp))
+                HorizontalDivider(modifier = Modifier.padding(vertical = 10.dp))
 
-                Text("General",color = MaterialTheme.colorScheme.primary)
+                Text("General", color = MaterialTheme.colorScheme.primary)
 
-                Row(modifier=Modifier
-                    .fillMaxWidth()
-                    .padding(vertical =10.dp),
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 10.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
-                ){
+                ) {
                     Text("Enable Reminders")
                     Switch(
                         checked = isNotifEnabled,
-                        onCheckedChange={vm.toggleNotifications(it)}
+                        onCheckedChange = { vm.toggleNotifications(it) }
                     )
                 }
-                Spacer(modifier =Modifier.height(20.dp))
+                Spacer(modifier = Modifier.height(20.dp))
 
                 Button(
-                    onClick ={vm.logout()},
+                    onClick = { vm.logout() },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.errorContainer,
                         contentColor = MaterialTheme.colorScheme.onErrorContainer,
                     )
-                ){
+                ) {
                     Text("Sign Out")
                 }
             }

@@ -8,6 +8,6 @@ import org.koin.dsl.module
 
 class LoggingModule {
     val loggingModule = module {
-        singleOf(::TimberLogger){bind<AppLogger>()}
+        singleOf(::TimberLogger) { bind<AppLogger>() }
     }
 }

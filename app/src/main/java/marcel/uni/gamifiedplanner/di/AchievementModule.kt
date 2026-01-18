@@ -13,7 +13,7 @@ import org.koin.dsl.module
 class AchievementModule {
     val achievementModule =
         module {
-            singleOf(::AchievementRepositoryImpl) {bind<AchievementRepository>()}
+            singleOf(::AchievementRepositoryImpl) { bind<AchievementRepository>() }
             factoryOf(::ObserveAchievementsUseCase)
             singleOf(::AchievementEngine)
         }

@@ -4,9 +4,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import marcel.uni.gamifiedplanner.domain.auth.repository.FirebaseAuthRepository
 import marcel.uni.gamifiedplanner.domain.logger.AppLogger
-import marcel.uni.gamifiedplanner.domain.task.repository.TaskRepository
 import marcel.uni.gamifiedplanner.domain.task.model.Task
-import kotlin.collections.emptyList
+import marcel.uni.gamifiedplanner.domain.task.repository.TaskRepository
 
 class ObserveTasksUseCase(
     private val repo: TaskRepository,
