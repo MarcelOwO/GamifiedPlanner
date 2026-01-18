@@ -31,21 +31,23 @@ import marcel.uni.gamifiedplanner.domain.task.model.Task
 import marcel.uni.gamifiedplanner.ui.components.AddTaskDialog
 import marcel.uni.gamifiedplanner.ui.components.CustomSelect
 import marcel.uni.gamifiedplanner.ui.components.TaskCard
+import marcel.uni.gamifiedplanner.ui.components.UpdateTaskDialog
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
 
 @Composable
 fun HomeView(
-    vm: HomeViewModel = koinViewModel(),
-    logger: AppLogger = koinInject()
+    vm: HomeViewModel = koinViewModel(), logger: AppLogger = koinInject()
 ) {
-    var showMenu by remember { mutableStateOf(false) }
+    var showAddMenu by remember { mutableStateOf(false) }
+    var showUpdateMenu by remember { mutableStateOf(false) }
 
     val tasks: List<Task> by vm.tasks.collectAsStateWithLifecycle()
 
     val todaysTasks: List<Task> by vm.todayTasks.collectAsStateWithLifecycle()
 
     var selectedOption by remember { mutableStateOf("Today") }
+    var selectedTask by remember { mutableStateOf<Task?>(null) }
 
     val filteredTasks = remember(tasks, selectedOption) {
         if (selectedOption == "Today") {
@@ -55,11 +57,8 @@ fun HomeView(
         }
     }
 
-
-
     Column(
-        horizontalAlignment = Alignment.End,
-        modifier = Modifier.padding(5.dp)
+        horizontalAlignment = Alignment.End, modifier = Modifier.padding(5.dp)
     ) {
 
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
@@ -73,7 +72,7 @@ fun HomeView(
             IconButton(
                 onClick = {
                     logger.i("Adding task button pressed")
-                    showMenu = true
+                    showAddMenu = true
                 },
             ) {
                 Surface(
@@ -93,8 +92,7 @@ fun HomeView(
         CustomSelect(options = listOf("Today", "All"), selectedOption, onSelect = { selected ->
             logger.i("Task filter selected option: $selected")
             selectedOption = selected
-        }
-        )
+        })
 
         Surface(
             color = MaterialTheme.colorScheme.tertiary,
@@ -110,23 +108,25 @@ fun HomeView(
                     .padding(10.dp)
             ) {
                 items(filteredTasks) { task ->
-                    TaskCard(
-                        task,
-                        editTask = { task ->
-                            logger.i("Editing task: ${task.title} ${task.id} ${task.description} ${task.priority} ${task.status} ${task.duration} ${task.startTime} ")
-                            vm.updateTask(
-                                task.id,
-                                task.title,
-                                task.description,
-                                task.priority,
-                                task.status
-                            )
-                        },
-                        deleteTask = { task ->
-                            logger.i("Deleting task: ${task.title}")
-                            vm.deleteTask(task.id)
-                        }
-                    )
+                    TaskCard(task, editTask = { task ->
+                        logger.i("Editing task: ${task.title} ${task.id} ${task.description} ${task.priority} ${task.status} ${task.duration} ${task.startTime} ")
+                        selectedTask = task
+                        showUpdateMenu = true
+                    }, deleteTask = { task ->
+                        logger.i("Deleting task: ${task.title}")
+                        vm.deleteTask(task.id)
+                    }, updateStatus = { task ->
+                        vm.updateTask(
+                            taskId = task.id,
+                            taskName = task.title,
+                            taskDescription = task.description,
+                            taskPriority = task.priority,
+                            taskStatus = task.status,
+                            taskDuration = task.duration,
+                            taskStartTime = task.startTime,
+                        )
+
+                    })
 
                     Spacer(modifier = Modifier.padding(5.dp))
                 }
@@ -135,26 +135,40 @@ fun HomeView(
     }
 
     AddTaskDialog(
-        showMenu,
-        onDismiss = { showMenu = false },
+        showAddMenu,
+        onDismiss = { showAddMenu = false },
         createTask = { title, priority, description, taskDuration, taskStartTime ->
             logger.i("Creating task")
             vm.createTask(
-                title,
-                priority,
-                taskDuration,
-                description,
-                taskStartTime,
-                onResult = { result ->
+                title, priority, taskDuration, description, taskStartTime, onResult = { result ->
                     {
                         if (result.isSuccess) {
-                            showMenu = false
+                            showAddMenu = false
                         } else {
                             logger.e("Error creating task")
                         }
 
                     }
                 })
+        })
+
+    UpdateTaskDialog(
+        task = selectedTask,
+        show = showUpdateMenu,
+        onDismiss = { showUpdateMenu = false },
+        updateTask = { id, title, priority, description, taskDuration, taskStartTime ->
+
+            logger.i("Updating task: ${id}")
+
+            vm.updateTask(
+                taskId = id,
+                taskName = title,
+                taskDescription = description,
+                taskPriority = priority,
+                taskStatus = null,
+                taskDuration = taskDuration,
+                taskStartTime = taskStartTime,
+            )
         }
     )
 

@@ -19,20 +19,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import marcel.uni.gamifiedplanner.R
-import marcel.uni.gamifiedplanner.domain.task.model.Priority
 import marcel.uni.gamifiedplanner.domain.task.model.Task
 import marcel.uni.gamifiedplanner.domain.task.model.TaskStatus
+import marcel.uni.gamifiedplanner.util.toFormatedString
 
 @Composable
-fun TaskCard(task: Task, editTask: (task: Task) -> Unit, deleteTask: (task: Task) -> Unit) {
+fun TaskCard(
+    task: Task,
+    editTask: (task: Task) -> Unit,
+    deleteTask: (task: Task) -> Unit,
+    updateStatus: (task: Task) -> Unit
+) {
     Surface(
         modifier = Modifier
-            .padding(10.dp)
+            .padding(5.dp)
             .fillMaxWidth(),
         shape = RoundedCornerShape(10.dp)
     ) {
         Column(
-            modifier = Modifier.padding(10.dp),
+            modifier = Modifier.padding(5.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
@@ -41,7 +46,7 @@ fun TaskCard(task: Task, editTask: (task: Task) -> Unit, deleteTask: (task: Task
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
-                Spacer(modifier = Modifier.padding(10.dp))
+                Spacer(modifier = Modifier.padding(5.dp))
                 Text(
                     text = task.title,
                     style = MaterialTheme.typography.titleLarge,
@@ -75,22 +80,37 @@ fun TaskCard(task: Task, editTask: (task: Task) -> Unit, deleteTask: (task: Task
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                DropDownSelector(
-                    collection = Priority.entries.map { it.name },
-                    selected = task.priority.name,
-                    onSelect = { newPriority ->
-                        editTask(task.copy(priority = Priority.valueOf(newPriority)))
-                    })
-                DropDownSelector(
-                    collection = TaskStatus.entries.map { it.name },
-                    selected = task.status.name,
-                    onSelect = { newStatus ->
-                        editTask(task.copy(status = TaskStatus.valueOf(newStatus)))
-                    })
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text("Priority:")
+                    Text("   ${task.priority.name}")
+                }
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+
+                ) {
+                    Text("Status:")
+                    DropDownSelector(
+                        collection = TaskStatus.entries.map { it.name },
+                        selected = task.status.name,
+                        onSelect = { newStatus ->
+                            updateStatus(task.copy(status = TaskStatus.valueOf(newStatus)))
+                        })
+                }
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text("Start Time: ${task.startTime.toFormatedString()}")
+                    Text("Duration: ${task.duration} mins")
+                }
             }
 
-            HorizontalDivider(modifier = Modifier.padding(10.dp))
-            Text(text = task.description, modifier = Modifier.padding(10.dp))
+            HorizontalDivider(modifier = Modifier.padding(5.dp))
+            Text(text = task.description, modifier = Modifier.padding(5.dp))
         }
     }
 }

@@ -65,8 +65,11 @@ fun SettingsView(
                         onCheckedChange = { vm.toggleDarkMode(it) }
                     )
                 }
+                Spacer(modifier = Modifier.height(10.dp))
 
                 HorizontalDivider(modifier = Modifier.padding(vertical = 10.dp))
+
+                Spacer(modifier=Modifier.height(10.dp))
 
                 Text("General", color = MaterialTheme.colorScheme.primary)
 

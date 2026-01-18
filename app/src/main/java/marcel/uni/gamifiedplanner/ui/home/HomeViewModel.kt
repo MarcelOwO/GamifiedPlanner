@@ -51,14 +51,24 @@ class HomeViewModel(
 
     fun updateTask(
         taskId: String,
-        taskName: String,
-        taskDescription: String,
-        taskPriority: Priority,
-        taskStatus: TaskStatus
+        taskName: String?,
+        taskDescription: String?,
+        taskPriority: Priority?,
+        taskStatus: TaskStatus?,
+        taskDuration: Long?,
+        taskStartTime: Timestamp?
     ) {
         viewModelScope.launch {
             logger.i("Updating task")
-            updateTaskUseCase(taskId, taskName, taskDescription, taskPriority, taskStatus)
+            updateTaskUseCase(
+                taskId,
+                taskName,
+                taskDescription,
+                taskPriority,
+                taskStatus,
+                taskDuration,
+                taskStartTime,
+            )
         }
     }
 

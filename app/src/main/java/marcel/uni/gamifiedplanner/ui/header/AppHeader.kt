@@ -76,8 +76,7 @@ fun AppHeader(vm: AppHeaderViewModel = koinViewModel(), authVm: AuthViewModel = 
                         onDismissRequest = { expanded = false }) {
 
                         Button(
-                            modifier = Modifier.padding(10.dp),
-                            onClick = { authVm.logout() }) {
+                            modifier = Modifier.padding(10.dp), onClick = { authVm.logout() }) {
                             Text("Logout")
                         }
                     }
@@ -134,9 +133,11 @@ fun AppHeader(vm: AppHeaderViewModel = koinViewModel(), authVm: AuthViewModel = 
                     .padding(10.dp)
                     .height(50.dp)
             ) {
-                Column(modifier = Modifier
-                    .padding(5.dp)
-                    .fillMaxWidth()) {
+                Column(
+                    modifier = Modifier
+                        .padding(5.dp)
+                        .fillMaxWidth()
+                ) {
                     Text(
                         "Today's Task Progress",
                         color = MaterialTheme.colorScheme.secondary,

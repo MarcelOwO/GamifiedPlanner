@@ -93,9 +93,10 @@ fun ProfileView(
                 }) {
                     Text("Update Profile")
                 }
+                Spacer(modifier = Modifier.height(10.dp))
 
                 HorizontalDivider(modifier = Modifier.height(10.dp))
-
+                Spacer(modifier = Modifier.height(10.dp))
                 Text("Total XP: $totalXp xp")
                 Spacer(modifier = Modifier.height(8.dp))
                 Text("Balance : $balance Coins")

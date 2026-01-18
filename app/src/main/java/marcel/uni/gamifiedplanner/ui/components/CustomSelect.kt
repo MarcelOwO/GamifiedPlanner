@@ -35,19 +35,19 @@ fun CustomSelect(options: List<String>, selected: String, onSelect: (String) -> 
     Surface(
         shape = RoundedCornerShape(10.dp),
         color = MaterialTheme.colorScheme.tertiary,
-        modifier = Modifier.padding(10.dp)
+        modifier = Modifier.padding(vertical = 5.dp, horizontal = 10.dp)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(5.dp),
+                .padding(vertical = 2.dp, horizontal = 5.dp),
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically,
         ) {
             options.forEach { option ->
                 Button(
                     modifier = Modifier.defaultMinSize(0.dp, 0.dp),
-                    contentPadding = PaddingValues(0.dp),
+                    contentPadding = PaddingValues(vertical =4.dp,horizontal=8.dp),
                     colors = if (option == selected) selectedButtonColors else unSelctedButtonColors,
                     onClick = { onSelect(option) },
                     shape = RoundedCornerShape(10.dp)
